@@ -134,7 +134,7 @@ namespace RatioMaster {
     #region Tabs
 
     private void EditCurrent(string fileName) {
-      ((RM) tab.SelectedTab.Controls[0]).loadTorrentFileInfo(fileName);
+      ((RM) tab.SelectedTab.Controls[0]).LoadTorrentFileInfo(fileName);
     }
 
     private void Add(string fileName) {
@@ -155,7 +155,7 @@ namespace RatioMaster {
       tab.SelectedTab = page1;
       lblTabs.Text = allit.ToString();
       if (fileName != "") {
-        ((RM) tab.SelectedTab.Controls[0]).loadTorrentFileInfo(fileName);
+        ((RM) tab.SelectedTab.Controls[0]).LoadTorrentFileInfo(fileName);
       }
 
       page1.ToolTipText = "Double click to rename this tab";
@@ -506,7 +506,7 @@ namespace RatioMaster {
         }
 
         foreach (TabPage tabb in tab.TabPages) {
-          ((RM) tabb.Controls[0]).updateTextBox(((RM) tabb.Controls[0]).uploadRate, value.ToString());
+          ((RM) tabb.Controls[0]).UpdateTextBox(((RM) tabb.Controls[0]).uploadRate, value.ToString());
         }
       }
     }
@@ -524,7 +524,7 @@ namespace RatioMaster {
         }
 
         foreach (TabPage tabb in tab.TabPages) {
-          ((RM) tabb.Controls[0]).updateTextBox(((RM) tabb.Controls[0]).downloadRate, value.ToString());
+          ((RM) tabb.Controls[0]).UpdateTextBox(((RM) tabb.Controls[0]).downloadRate, value.ToString());
         }
       }
     }

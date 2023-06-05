@@ -29,8 +29,6 @@ namespace RatioMaster {
     // internal delegate SocketEx createSocketCallback();
     internal delegate void SetTextCallback(string logLine);
 
-    internal delegate void updateScrapCallback(string seedStr, string leechStr, string finishedStr);
-
     private TorrentClient currentClient;
     private ProxyInfo currentProxy;
     internal TorrentInfo currentTorrent;
@@ -68,7 +66,7 @@ namespace RatioMaster {
         }
       }
 
-      loadTorrentFileInfo(s[0]);
+      LoadTorrentFileInfo(s[0]);
     }
 
     internal void Form1_DragEnter(object sender, DragEventArgs e) {
@@ -239,7 +237,7 @@ namespace RatioMaster {
         while (true) {
           socket1 = localListen.AcceptSocket();
           var buffer1 = new byte[0x43];
-          if (socket1 != null && socket1.Connected) {
+          if (socket1.Connected) {
             var stream1 = new NetworkStream(socket1);
             stream1.ReadTimeout = 0x3e8;
             try {
@@ -251,7 +249,7 @@ namespace RatioMaster {
             text1 = encoding1.GetString(buffer1, 0, buffer1.Length);
             if (text1.IndexOf("BitTorrent protocol") >= 0 &&
                 text1.IndexOf(encoding1.GetString(currentTorrentFile.InfoHash)) >= 0) {
-              var buffer2 = createHandshakeResponse();
+              var buffer2 = CreateHandshakeResponse();
               stream1.Write(buffer2, 0, buffer2.Length);
             }
 
@@ -263,7 +261,6 @@ namespace RatioMaster {
       }
       catch (Exception exception1) {
         AddLogLine("Error in AcceptTcpConnection(): " + exception1.Message);
-        return;
       }
       finally {
         if (socket1 != null) {
@@ -275,7 +272,7 @@ namespace RatioMaster {
       }
     }
 
-    private Socket createRegularSocket() {
+    private Socket CreateRegularSocket() {
       Socket socket1 = null;
       try {
         socket1 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -287,16 +284,9 @@ namespace RatioMaster {
       return socket1;
     }
 
-    private byte[] createChokeResponse() {
-      var buffer2 = new byte[5];
-      buffer2[3] = 1;
-      return buffer2;
-    }
-
-    private byte[] createHandshakeResponse() {
+    private byte[] CreateHandshakeResponse() {
       var num1 = 0;
       var encoding1 = Encoding.GetEncoding(0x6faf);
-      new StringBuilder();
       var text1 = "BitTorrent protocol";
       var buffer1 = new byte[0x100];
       buffer1[num1++] = (byte) text1.Length;
@@ -494,7 +484,7 @@ namespace RatioMaster {
 
     #region Get(open) torrent
 
-    internal void loadTorrentFileInfo(string torrentFilePath) {
+    internal void LoadTorrentFileInfo(string torrentFilePath) {
       try {
         currentTorrentFile = new Torrent(torrentFilePath);
         torrentFile.Text = torrentFilePath;
@@ -509,7 +499,7 @@ namespace RatioMaster {
       }
     }
 
-    private TorrentInfo getCurrentTorrent() {
+    private TorrentInfo GetCurrentTorrent() {
       Uri trackerUri;
       var torrent = new TorrentInfo(0, 0);
       try {
@@ -593,12 +583,11 @@ namespace RatioMaster {
     internal void openFileDialog1_FileOk(object sender, CancelEventArgs e) {
       try {
         if (openFileDialog1.FileName == "") return;
-        loadTorrentFileInfo(openFileDialog1.FileName);
+        LoadTorrentFileInfo(openFileDialog1.FileName);
         var file = new FileInfo(openFileDialog1.FileName);
         DefaultDirectory = file.DirectoryName;
       }
       catch {
-        return;
       }
     }
 
@@ -639,15 +628,15 @@ namespace RatioMaster {
         }
       }
 
-      updateScrapStats("", "", "");
-      totalRunningTimeCounter = 0;
+      UpdateScrapStats("", "", "");
+      TotalRunningTimeCounter = 0;
       timerValue.Text = "updating...";
 
       // txtStopValue.Text = res.ToString();
       updateProcessStarted = true;
       seedMode = false;
       requestScrap = checkRequestScrap.Checked;
-      updateScrapStats("", "", "");
+      UpdateScrapStats("", "", "");
       StartButton.Enabled = false;
       StartButton.BackColor = SystemColors.Control;
       StopButton.Enabled = true;
@@ -666,28 +655,28 @@ namespace RatioMaster {
       customPeersNum.Enabled = false;
       customPort.Enabled = false;
       currentClient = TorrentClientFactory.GetClient(GetClientName());
-      currentTorrent = getCurrentTorrent();
-      currentProxy = getCurrentProxy();
+      currentTorrent = GetCurrentTorrent();
+      currentProxy = GetCurrentProxy();
       AddClientInfo();
       OpenTcpListener();
-      var myThread = new Thread(startProcess);
+      var myThread = new Thread(StartProcess);
       myThread.Name = "startProcess() Thread";
       myThread.Start();
       serverUpdateTimer.Start();
       remWork = 0;
       if ((string) cmbStopAfter.SelectedItem == "After time:") RemaningWork.Start();
-      requestScrapeFromTracker(currentTorrent);
+      RequestScrapeFromTracker(currentTorrent);
     }
 
-    private void stopTimerAndCounters() {
+    private void StopTimerAndCounters() {
       if (StartButton.InvokeRequired) {
-        stopTimerAndCountersCallback callback1 = stopTimerAndCounters;
+        StopTimerAndCountersCallback callback1 = StopTimerAndCounters;
         Invoke(callback1, new object[0]);
       }
       else {
         Seeders = -1;
         Leechers = -1;
-        totalRunningTimeCounter = 0;
+        TotalRunningTimeCounter = 0;
         lblTotalTime.Text = "00:00";
         if (StartButton.Enabled) return;
         StartButton.Enabled = true;
@@ -720,8 +709,8 @@ namespace RatioMaster {
 
     internal void StopButton_Click(object sender, EventArgs e) {
       if (!StopButton.Enabled) return;
-      stopTimerAndCounters();
-      var thread1 = new Thread(stopProcess);
+      StopTimerAndCounters();
+      var thread1 = new Thread(StopProcess);
       thread1.Name = "stopProcess() Thread";
       thread1.Start();
     }
@@ -807,10 +796,10 @@ namespace RatioMaster {
 
     private bool haveInitialPeers;
 
-    private bool sendEventToTracker(TorrentInfo torrentInfo, string eventType) {
+    private bool SendEventToTracker(TorrentInfo torrentInfo, string eventType) {
       scrapStatsUpdated = false;
       currentTorrent = torrentInfo;
-      var urlString = getUrlString(torrentInfo, eventType);
+      var urlString = GetUrlString(torrentInfo, eventType);
       ValueDictionary dictionary1;
       try {
         var uri = new Uri(urlString);
@@ -834,18 +823,18 @@ namespace RatioMaster {
             }
 
             if (dictionary1.Contains("interval")) {
-              updateInterval(BEncode.String(dictionary1["interval"]));
+              UpdateInterval(BEncode.String(dictionary1["interval"]));
             }
 
             if (dictionary1.Contains("complete") && dictionary1.Contains("incomplete")) {
               if (dictionary1.Contains("complete") && dictionary1.Contains("incomplete")) {
-                updateScrapStats(BEncode.String(dictionary1["complete"]), BEncode.String(dictionary1["incomplete"]),
+                UpdateScrapStats(BEncode.String(dictionary1["complete"]), BEncode.String(dictionary1["incomplete"]),
                   "");
 
                 decimal leechers = BEncode.String(dictionary1["incomplete"]).ParseValidInt(0);
                 if (leechers == 0) {
                   AddLogLine("Min number of leechers reached... setting upload speed to 0");
-                  updateTextBox(uploadRate, "0");
+                  UpdateTextBox(uploadRate, "0");
                   chkRandUP.Checked = false;
                 }
               }
@@ -901,13 +890,13 @@ namespace RatioMaster {
       }
     }
 
-    private delegate void stopTimerAndCountersCallback();
+    private delegate void StopTimerAndCountersCallback();
 
     private delegate void SetIntervalCallback(string param);
 
-    internal void updateInterval(string param) {
+    internal void UpdateInterval(string param) {
       if (interval.InvokeRequired) {
-        SetIntervalCallback del = updateInterval;
+        SetIntervalCallback del = UpdateInterval;
         Invoke(del, new object[] {param});
       }
       else {
@@ -931,7 +920,7 @@ namespace RatioMaster {
       return denominator * (value / denominator);
     }
 
-    private string getUrlString(TorrentInfo torrentInfo, string eventType) {
+    private string GetUrlString(TorrentInfo torrentInfo, string eventType) {
       // Random random = new Random();
       var uploaded = "0";
       if (torrentInfo.uploaded > 0) {
@@ -956,7 +945,7 @@ namespace RatioMaster {
       var left = torrentInfo.left.ToString();
       var key = torrentInfo.key;
       var port = torrentInfo.port;
-      var peerID = torrentInfo.peerID;
+      var peerId = torrentInfo.peerID;
       string urlString;
       urlString = torrentInfo.tracker;
       if (urlString.Contains("?")) {
@@ -970,7 +959,7 @@ namespace RatioMaster {
       if (!eventType.Contains("stopped")) urlString = urlString.Replace("&trackerid=48", "");
       urlString += currentClient.Query;
       urlString = urlString.Replace("{infohash}", HashUrlEncode(torrentInfo.hash, currentClient.HashUpperCase));
-      urlString = urlString.Replace("{peerid}", peerID);
+      urlString = urlString.Replace("{peerid}", peerId);
       urlString = urlString.Replace("{port}", port);
       urlString = urlString.Replace("{uploaded}", uploaded);
       urlString = urlString.Replace("{downloaded}", downloaded);
@@ -988,12 +977,12 @@ namespace RatioMaster {
 
     #region Scrape
 
-    private void requestScrapeFromTracker(TorrentInfo torrentInfo) {
+    private void RequestScrapeFromTracker(TorrentInfo torrentInfo) {
       Seeders = -1;
       Leechers = -1;
       if (checkRequestScrap.Checked && !scrapStatsUpdated) {
         try {
-          var text1 = getScrapeUrlString(torrentInfo);
+          var text1 = GetScrapeUrlString(torrentInfo);
           if (text1 == "") {
             AddLogLine("This tracker doesnt seem to support scrape");
           }
@@ -1014,12 +1003,12 @@ namespace RatioMaster {
                 AddLogLine("complete: " + BEncode.String(dictionary2["complete"]));
                 AddLogLine("downloaded: " + BEncode.String(dictionary2["downloaded"]));
                 AddLogLine("incomplete: " + BEncode.String(dictionary2["incomplete"]));
-                updateScrapStats(BEncode.String(dictionary2["complete"]), BEncode.String(dictionary2["incomplete"]),
+                UpdateScrapStats(BEncode.String(dictionary2["complete"]), BEncode.String(dictionary2["incomplete"]),
                   BEncode.String(dictionary2["downloaded"]));
                 decimal leechers = BEncode.String(dictionary2["incomplete"]).ParseValidInt(-1);
                 if (Leechers != -1 && leechers == 0) {
                   AddLogLine("Min number of leechers reached... setting upload speed to 0");
-                  updateTextBox(uploadRate, "0");
+                  UpdateTextBox(uploadRate, "0");
                   chkRandUP.Checked = false;
                 }
               }
@@ -1035,7 +1024,7 @@ namespace RatioMaster {
       }
     }
 
-    internal string getScrapeUrlString(TorrentInfo torrentInfo) {
+    internal string GetScrapeUrlString(TorrentInfo torrentInfo) {
       string urlString;
       urlString = torrentInfo.tracker;
       var index = urlString.LastIndexOf("/");
@@ -1061,12 +1050,12 @@ namespace RatioMaster {
 
     private delegate void SetCountersCallback(TorrentInfo torrentInfo);
 
-    private void updateCounters(TorrentInfo torrentInfo) {
+    private void UpdateCounters(TorrentInfo torrentInfo) {
       try {
         // Random random = new Random();
         // modify Upload Rate
         uploadCount.Text = FormatFileSize((ulong) torrentInfo.uploaded);
-        var uploadedR = torrentInfo.uploadRate + RandomSP(txtRandUpMin.Text, txtRandUpMax.Text, chkRandUP.Checked);
+        var uploadedR = torrentInfo.uploadRate + RandomSp(txtRandUpMin.Text, txtRandUpMax.Text, chkRandUP.Checked);
 
         // Int64 uploadedR = torrentInfo.uploadRate + (Int64)random.Next(10 * 1024) - 5 * 1024;
         if (uploadedR < 0) {
@@ -1080,7 +1069,7 @@ namespace RatioMaster {
         if (!seedMode && torrentInfo.downloadRate > 0) // dont update download stats
         {
           var downloadedR = torrentInfo.downloadRate +
-                            RandomSP(txtRandDownMin.Text, txtRandDownMax.Text, chkRandDown.Checked);
+                            RandomSp(txtRandDownMin.Text, txtRandDownMax.Text, chkRandDown.Checked);
 
           // Int64 downloadedR = torrentInfo.downloadRate + (Int64)random.Next(10 * 1024) - 5 * 1024;
           if (downloadedR < 0) {
@@ -1100,7 +1089,7 @@ namespace RatioMaster {
             currentTorrent = torrentInfo;
             seedMode = true;
             temporaryIntervalCounter = 0;
-            var myThread = new Thread(completedProcess);
+            var myThread = new Thread(CompletedProcess);
             myThread.Name = "completedProcess() Thread";
             myThread.Start();
           }
@@ -1115,7 +1104,7 @@ namespace RatioMaster {
         else {
           // finishedPercent = (((((float)currentTorrentFile.totalLength - (float)torrentInfo.totalsize) + (float)torrentInfo.downloaded) / (float)currentTorrentFile.totalLength) * 100);
           finishedPercent = (currentTorrentFile.totalLength - (float) torrentInfo.left) /
-            (float) currentTorrentFile.totalLength * 100.0;
+            currentTorrentFile.totalLength * 100.0;
           fileSize.Text = finishedPercent >= 100 ? "100" : SetPrecision(finishedPercent.ToString(), 2);
         }
 
@@ -1132,7 +1121,7 @@ namespace RatioMaster {
       }
       catch (Exception e) {
         AddLogLine(e.Message);
-        SetCountersCallback d = updateCounters;
+        SetCountersCallback d = UpdateCounters;
         Invoke(d, new object[] {torrentInfo});
       }
     }
@@ -1149,7 +1138,7 @@ namespace RatioMaster {
     private int Seeders = -1;
     private int Leechers = -1;
 
-    internal void updateScrapStats(string seedStr, string leechStr, string finishedStr) {
+    internal void UpdateScrapStats(string seedStr, string leechStr, string finishedStr) {
       try {
         Seeders = int.Parse(seedStr);
         Leechers = int.Parse(leechStr);
@@ -1198,30 +1187,29 @@ namespace RatioMaster {
       }
       catch (Exception ex) {
         AddLogLine("Error in stopping module!!!: " + ex.Message);
-        return;
       }
     }
 
-    internal int totalRunningTimeCounter;
+    internal int TotalRunningTimeCounter;
 
     internal void serverUpdateTimer_Tick(object sender, EventArgs e) {
       if (updateProcessStarted) {
         if (haveInitialPeers) {
-          updateCounters(currentTorrent);
+          UpdateCounters(currentTorrent);
         }
 
         var num1 = currentTorrent.interval - temporaryIntervalCounter;
-        totalRunningTimeCounter++;
-        lblTotalTime.Text = ConvertToTime(totalRunningTimeCounter);
+        TotalRunningTimeCounter++;
+        lblTotalTime.Text = ConvertToTime(TotalRunningTimeCounter);
         StopModule();
         if (num1 > 0) {
           temporaryIntervalCounter++;
           timerValue.Text = ConvertToTime(num1);
         }
         else {
-          randomiseSpeeds();
+          RandomiseSpeeds();
           OpenTcpListener();
-          var thread1 = new Thread(continueProcess);
+          var thread1 = new Thread(ContinueProcess);
           temporaryIntervalCounter = 0;
           timerValue.Text = "0";
           thread1.Name = "continueProcess() Thread";
@@ -1230,16 +1218,16 @@ namespace RatioMaster {
       }
     }
 
-    internal void randomiseSpeeds() {
+    internal void RandomiseSpeeds() {
       try {
         if (checkRandomUpload.Checked) {
-          uploadRate.Text = (RandomSP(RandomUploadFrom.Text, RandomUploadTo.Text, true) / 1024).ToString();
+          uploadRate.Text = (RandomSp(RandomUploadFrom.Text, RandomUploadTo.Text, true) / 1024).ToString();
 
           // uploadRate.Text = ((int)random1.Next(int.Parse(RandomUploadFrom.Text), int.Parse(RandomUploadTo.Text)) + (int)single1).ToString();
         }
 
         if (checkRandomDownload.Checked) {
-          downloadRate.Text = (RandomSP(RandomDownloadFrom.Text, RandomDownloadTo.Text, true) / 1024).ToString();
+          downloadRate.Text = (RandomSp(RandomDownloadFrom.Text, RandomDownloadTo.Text, true) / 1024).ToString();
 
           // downloadRate.Text = ((int)random1.Next(int.Parse(RandomDownloadFrom.Text), int.Parse(RandomDownloadTo.Text)) + (int)single2).ToString();
         }
@@ -1249,7 +1237,7 @@ namespace RatioMaster {
       }
     }
 
-    internal int RandomSP(string min, string max, bool ret) {
+    internal int RandomSp(string min, string max, bool ret) {
       if (ret == false) return rand.Next(10);
       var minn = int.Parse(min);
       var maxx = int.Parse(max);
@@ -1271,11 +1259,11 @@ namespace RatioMaster {
 
     #region Help functions
 
-    private delegate void updateTextBoxCallback(TextBox textbox, string text);
+    private delegate void UpdateTextBoxCallback(TextBox textbox, string text);
 
-    internal void updateTextBox(TextBox textbox, string text) {
+    internal void UpdateTextBox(TextBox textbox, string text) {
       if (textbox.InvokeRequired) {
-        updateTextBoxCallback callback1 = updateTextBox;
+        UpdateTextBoxCallback callback1 = UpdateTextBox;
         Invoke(callback1, new object[] {textbox, text});
       }
       else {
@@ -1283,23 +1271,9 @@ namespace RatioMaster {
       }
     }
 
-    private delegate void updateLabelCallback(Label textbox, string text);
-
-    private void updateTextBox(Label textbox, string text) {
-      if (textbox.InvokeRequired) {
-        updateLabelCallback callback1 = updateTextBox;
-        Invoke(callback1, new object[] {textbox, text});
-      }
-      else {
-        textbox.Text = text;
-      }
-    }
+    private delegate void UpdateLabelCallback(Label textbox, string text);
 
     internal static string FormatFileSize(ulong fileSize) {
-      if (fileSize < 0) {
-        throw new ArgumentOutOfRangeException("fileSize");
-      }
-
       if (fileSize >= 0x40000000) {
         return string.Format("{0:########0.00} GB", (double) fileSize / 1073741824);
       }
@@ -1367,7 +1341,7 @@ namespace RatioMaster {
 
     #endregion
 
-    internal SocketEx createSocket() {
+    internal SocketEx CreateSocket() {
       // create SocketEx object according to proxy settings
       SocketEx sock = null;
       try {
@@ -1382,8 +1356,8 @@ namespace RatioMaster {
       return sock;
     }
 
-    private ProxyInfo getCurrentProxy() {
-      var _usedEnc = Encoding.GetEncoding(0x4e4);
+    private ProxyInfo GetCurrentProxy() {
+      var usedEnc = Encoding.GetEncoding(0x4e4);
       var curProxy = new ProxyInfo();
       switch (comboProxyType.SelectedIndex) {
         case 0:
@@ -1408,8 +1382,8 @@ namespace RatioMaster {
 
       curProxy.ProxyServer = textProxyHost.Text;
       curProxy.ProxyPort = textProxyPort.Text.ParseValidInt(0);
-      curProxy.ProxyUser = _usedEnc.GetBytes(textProxyUser.Text);
-      curProxy.ProxyPassword = _usedEnc.GetBytes(textProxyPass.Text);
+      curProxy.ProxyUser = usedEnc.GetBytes(textProxyUser.Text);
+      curProxy.ProxyPassword = usedEnc.GetBytes(textProxyPass.Text);
 
       // Add log info
       var enc = Encoding.ASCII;
@@ -1423,7 +1397,7 @@ namespace RatioMaster {
     }
 
     private TrackerResponse MakeWebRequestEx(Uri reqUri) {
-      var _usedEnc = Encoding.GetEncoding(0x4e4);
+      var usedEnc = Encoding.GetEncoding(0x4e4);
       SocketEx sock = null;
       TrackerResponse trackerResponse;
       try {
@@ -1431,7 +1405,7 @@ namespace RatioMaster {
         var port = reqUri.Port;
         var path = reqUri.PathAndQuery;
         AddLogLine("Connecting to tracker (" + host + ") in port " + port);
-        sock = createSocket();
+        sock = CreateSocket();
         sock.PreAuthenticate = false;
         var num2 = 0;
         var flag1 = false;
@@ -1440,13 +1414,11 @@ namespace RatioMaster {
             sock.Connect(host, port);
             flag1 = true;
             AddLogLine("Connected Successfully");
-            continue;
           }
           catch (Exception exception1) {
             AddLogLine("Exception: " + exception1.Message + "; Type: " + exception1.GetType());
             AddLogLine("Failed connection attempt: " + num2);
             num2++;
-            continue;
           }
         }
 
@@ -1454,7 +1426,7 @@ namespace RatioMaster {
                   currentClient.Headers.Replace("{host}", host) + "\r\n";
         AddLogLine("======== Sending Command to Tracker ========");
         AddLogLine(cmd);
-        sock.Send(_usedEnc.GetBytes(cmd));
+        sock.Send(usedEnc.GetBytes(cmd));
 
         // simple reading loop
         // read while have the data
@@ -1508,39 +1480,38 @@ namespace RatioMaster {
       if (txtStopValue.Text == "0") {
         return;
       }
-      else {
-        remWork++;
-        var RW = int.Parse(txtStopValue.Text);
-        var diff = RW - remWork;
-        txtRemTime.Text = ConvertToTime(diff);
-        if (remWork >= RW) {
-          txtRemTime.Text = "0";
-          RemaningWork.Stop();
-          StopButton_Click(null, null);
-        }
+
+      remWork++;
+      var rw = int.Parse(txtStopValue.Text);
+      var diff = rw - remWork;
+      txtRemTime.Text = ConvertToTime(diff);
+      if (remWork >= rw) {
+        txtRemTime.Text = "0";
+        RemaningWork.Stop();
+        StopButton_Click(null, null);
       }
     }
 
     #region Process
 
-    internal void stopProcess() {
-      sendEventToTracker(currentTorrent, "&event=stopped");
+    internal void StopProcess() {
+      SendEventToTracker(currentTorrent, "&event=stopped");
     }
 
-    internal void completedProcess() {
-      sendEventToTracker(currentTorrent, "&event=completed");
-      requestScrapeFromTracker(currentTorrent);
+    internal void CompletedProcess() {
+      SendEventToTracker(currentTorrent, "&event=completed");
+      RequestScrapeFromTracker(currentTorrent);
     }
 
-    internal void continueProcess() {
-      sendEventToTracker(currentTorrent, "");
-      requestScrapeFromTracker(currentTorrent);
+    internal void ContinueProcess() {
+      SendEventToTracker(currentTorrent, "");
+      RequestScrapeFromTracker(currentTorrent);
     }
 
-    internal void startProcess() {
-      if (sendEventToTracker(currentTorrent, "&event=started")) {
+    internal void StartProcess() {
+      if (SendEventToTracker(currentTorrent, "&event=started")) {
         updateProcessStarted = true;
-        requestScrapeFromTracker(currentTorrent);
+        RequestScrapeFromTracker(currentTorrent);
       }
     }
 
@@ -1700,7 +1671,7 @@ namespace RatioMaster {
         var startoffset = currentClient.StartOffset;
         var process = currentClient.ProcessName;
         var pversion = cmbVersion.SelectedItem.ToString();
-        if (GETDATA(process, pversion, searchstring, startoffset, maxoffset)) {
+        if (Getdata(process, pversion, searchstring, startoffset, maxoffset)) {
           customKey.Text = currentClient.Key;
           customPeerID.Text = currentClient.PeerID;
           customPort.Text = currentTorrent.port;
@@ -1713,12 +1684,12 @@ namespace RatioMaster {
       }
     }
 
-    internal bool GETDATA(string client, string pversion, string SearchString, long startoffset, long maxoffset) {
+    internal bool Getdata(string client, string pversion, string searchString, long startoffset, long maxoffset) {
       try {
         ProcessMemoryReader pReader;
         var absoluteEndOffset = maxoffset;
         var absoluteStartOffset = startoffset;
-        var clientSearchString = SearchString;
+        var clientSearchString = searchString;
         uint bufferSize = 0x10000;
         var currentClientProcessName = client.ToLower();
         long currentOffset;
@@ -1745,7 +1716,7 @@ namespace RatioMaster {
           var buffer1 = pReader.ReadProcessMemory((IntPtr) currentOffset, bufferSize, out num1);
 
           // pReader.saveArrayToFile(buffer1, @"D:\Projects\NRPG Ratio\NRPG RatioMaster MULTIPLE\RatioMaster source\bin\Release\tests\test" + currentOffset.ToString() + ".txt");
-          num2 = getStringOffsetInsideArray(buffer1, enc, clientSearchString);
+          num2 = GetStringOffsetInsideArray(buffer1, enc, clientSearchString);
           if (num2 >= 0) {
             flag1 = true;
             var text1 = enc.GetString(buffer1);
@@ -1814,7 +1785,7 @@ namespace RatioMaster {
       return processArray1[0];
     }
 
-    private static int getStringOffsetInsideArray(byte[] memory, Encoding enc, string clientSearchString) {
+    private static int GetStringOffsetInsideArray(byte[] memory, Encoding enc, string clientSearchString) {
       return enc.GetString(memory).IndexOf(clientSearchString);
     }
 

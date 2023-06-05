@@ -22,12 +22,11 @@ namespace RatioMaster
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        internal void InitializeComponent()
-        {
+        private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             this.btnDefault = new System.Windows.Forms.Button();
             this.txtRemTime = new System.Windows.Forms.ToolStripStatusLabel();
@@ -52,7 +51,7 @@ namespace RatioMaster
             this.manualUpdateButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
-            this.magneticPanel9 = new MagneticPanel();
+            this.magneticPanel9 = new RatioMaster.MagneticPanel();
             this.RandomDownloadTo = new System.Windows.Forms.TextBox();
             this.RandomDownloadFrom = new System.Windows.Forms.TextBox();
             this.checkRandomUpload = new System.Windows.Forms.CheckBox();
@@ -63,12 +62,12 @@ namespace RatioMaster
             this.lblRandomDownloadFrom = new System.Windows.Forms.Label();
             this.RandomUploadFrom = new System.Windows.Forms.TextBox();
             this.lblRandomDownloadTo = new System.Windows.Forms.Label();
-            this.magneticPanel8 = new MagneticPanel();
+            this.magneticPanel8 = new RatioMaster.MagneticPanel();
             this.logWindow = new System.Windows.Forms.RichTextBox();
             this.checkLogEnabled = new System.Windows.Forms.CheckBox();
             this.clearLogButton = new System.Windows.Forms.Button();
             this.btnSaveLog = new System.Windows.Forms.Button();
-            this.magneticPanel7 = new MagneticPanel();
+            this.magneticPanel7 = new RatioMaster.MagneticPanel();
             this.customPeersNum = new System.Windows.Forms.TextBox();
             this.lblcustomPeersNum = new System.Windows.Forms.Label();
             this.lblGenStatus = new System.Windows.Forms.Label();
@@ -79,7 +78,7 @@ namespace RatioMaster
             this.customPeerID = new System.Windows.Forms.TextBox();
             this.customKey = new System.Windows.Forms.TextBox();
             this.keyLabel = new System.Windows.Forms.Label();
-            this.magneticPanel6 = new MagneticPanel();
+            this.magneticPanel6 = new RatioMaster.MagneticPanel();
             this.lblStopAfter = new System.Windows.Forms.Label();
             this.cmbStopAfter = new System.Windows.Forms.ComboBox();
             this.txtStopValue = new System.Windows.Forms.TextBox();
@@ -91,7 +90,7 @@ namespace RatioMaster
             this.cmbClient = new System.Windows.Forms.ComboBox();
             this.interval = new System.Windows.Forms.TextBox();
             this.ClientLabel = new System.Windows.Forms.Label();
-            this.magneticPanel5 = new MagneticPanel();
+            this.magneticPanel5 = new RatioMaster.MagneticPanel();
             this.uploadRateLabel = new System.Windows.Forms.Label();
             this.uploadRate = new System.Windows.Forms.TextBox();
             this.txtRandDownMax = new System.Windows.Forms.TextBox();
@@ -106,14 +105,14 @@ namespace RatioMaster
             this.lblUpMin = new System.Windows.Forms.Label();
             this.lblDownMin = new System.Windows.Forms.Label();
             this.lblUpMax = new System.Windows.Forms.Label();
-            this.magneticPanel4 = new MagneticPanel();
+            this.magneticPanel4 = new RatioMaster.MagneticPanel();
             this.txtTorrentSize = new System.Windows.Forms.TextBox();
             this.trackerAddress = new System.Windows.Forms.TextBox();
             this.lblTorrentSize = new System.Windows.Forms.Label();
             this.TrackerLabel = new System.Windows.Forms.Label();
             this.shaHash = new System.Windows.Forms.TextBox();
             this.hashLabel = new System.Windows.Forms.Label();
-            this.magneticPanel3 = new MagneticPanel();
+            this.magneticPanel3 = new RatioMaster.MagneticPanel();
             this.labelProxyType = new System.Windows.Forms.Label();
             this.labelProxyHost = new System.Windows.Forms.Label();
             this.textProxyPass = new System.Windows.Forms.TextBox();
@@ -124,11 +123,11 @@ namespace RatioMaster
             this.labelProxyPort = new System.Windows.Forms.Label();
             this.labelProxyPass = new System.Windows.Forms.Label();
             this.textProxyUser = new System.Windows.Forms.TextBox();
-            this.magneticPanel2 = new MagneticPanel();
+            this.magneticPanel2 = new RatioMaster.MagneticPanel();
             this.checkIgnoreFailureReason = new System.Windows.Forms.CheckBox();
             this.checkRequestScrap = new System.Windows.Forms.CheckBox();
             this.checkTCPListen = new System.Windows.Forms.CheckBox();
-            this.magneticPanel1 = new MagneticPanel();
+            this.magneticPanel1 = new RatioMaster.MagneticPanel();
             this.browseButton = new System.Windows.Forms.Button();
             this.torrentFile = new System.Windows.Forms.TextBox();
             this.info.SuspendLayout();
@@ -145,13 +144,14 @@ namespace RatioMaster
             // 
             // btnDefault
             // 
-            this.btnDefault.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnDefault.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (192)))), ((int) (((byte) (255)))), ((int) (((byte) (255)))));
             this.btnDefault.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDefault.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDefault.Location = new System.Drawing.Point(353, 378);
+            this.btnDefault.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.btnDefault.Location = new System.Drawing.Point(530, 582);
+            this.btnDefault.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnDefault.Name = "btnDefault";
-            this.btnDefault.Size = new System.Drawing.Size(120, 34);
+            this.btnDefault.Size = new System.Drawing.Size(180, 52);
             this.btnDefault.TabIndex = 11;
             this.btnDefault.Text = "Set default values";
             this.btnDefault.UseVisualStyleBackColor = false;
@@ -160,25 +160,25 @@ namespace RatioMaster
             // txtRemTime
             // 
             this.txtRemTime.Name = "txtRemTime";
-            this.txtRemTime.Size = new System.Drawing.Size(13, 17);
+            this.txtRemTime.Size = new System.Drawing.Size(22, 25);
             this.txtRemTime.Text = "0";
             // 
             // lblUpdateIn
             // 
             this.lblUpdateIn.Name = "lblUpdateIn";
-            this.lblUpdateIn.Size = new System.Drawing.Size(57, 17);
+            this.lblUpdateIn.Size = new System.Drawing.Size(93, 25);
             this.lblUpdateIn.Text = "Update in:";
             // 
             // timerValue
             // 
             this.timerValue.Name = "timerValue";
-            this.timerValue.Size = new System.Drawing.Size(13, 17);
+            this.timerValue.Size = new System.Drawing.Size(22, 25);
             this.timerValue.Text = "0";
             // 
             // lblRemTime
             // 
             this.lblRemTime.Name = "lblRemTime";
-            this.lblRemTime.Size = new System.Drawing.Size(58, 17);
+            this.lblRemTime.Size = new System.Drawing.Size(95, 25);
             this.lblRemTime.Text = "Remaning:";
             // 
             // RemaningWork
@@ -195,84 +195,72 @@ namespace RatioMaster
             // info
             // 
             this.info.BackColor = System.Drawing.SystemColors.Control;
-            this.info.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblUpdateIn,
-            this.timerValue,
-            this.uploadCountLabel,
-            this.uploadCount,
-            this.downloadCountLabel,
-            this.downloadCount,
-            this.lableTorrentRatio,
-            this.lblTorrentRatio,
-            this.seedLabel,
-            this.leechLabel,
-            this.lblTotalTimeCap,
-            this.lblTotalTime,
-            this.lblRemTime,
-            this.txtRemTime});
-            this.info.Location = new System.Drawing.Point(0, 415);
+            this.info.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.lblUpdateIn, this.timerValue, this.uploadCountLabel, this.uploadCount, this.downloadCountLabel, this.downloadCount, this.lableTorrentRatio, this.lblTorrentRatio, this.seedLabel, this.leechLabel, this.lblTotalTimeCap, this.lblTotalTime, this.lblRemTime, this.txtRemTime});
+            this.info.Location = new System.Drawing.Point(0, 642);
             this.info.Name = "info";
-            this.info.Size = new System.Drawing.Size(957, 22);
+            this.info.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
+            this.info.Size = new System.Drawing.Size(1436, 30);
+            this.info.SizingGrip = false;
             this.info.TabIndex = 12;
             // 
             // uploadCountLabel
             // 
             this.uploadCountLabel.Name = "uploadCountLabel";
-            this.uploadCountLabel.Size = new System.Drawing.Size(56, 17);
+            this.uploadCountLabel.Size = new System.Drawing.Size(94, 25);
             this.uploadCountLabel.Text = "Uploaded:";
             // 
             // uploadCount
             // 
             this.uploadCount.Name = "uploadCount";
-            this.uploadCount.Size = new System.Drawing.Size(13, 17);
+            this.uploadCount.Size = new System.Drawing.Size(22, 25);
             this.uploadCount.Text = "0";
             // 
             // downloadCountLabel
             // 
             this.downloadCountLabel.Name = "downloadCountLabel";
-            this.downloadCountLabel.Size = new System.Drawing.Size(70, 17);
+            this.downloadCountLabel.Size = new System.Drawing.Size(118, 25);
             this.downloadCountLabel.Text = "Downloaded:";
             // 
             // downloadCount
             // 
             this.downloadCount.Name = "downloadCount";
-            this.downloadCount.Size = new System.Drawing.Size(13, 17);
+            this.downloadCount.Size = new System.Drawing.Size(22, 25);
             this.downloadCount.Text = "0";
             // 
             // lableTorrentRatio
             // 
             this.lableTorrentRatio.Name = "lableTorrentRatio";
-            this.lableTorrentRatio.Size = new System.Drawing.Size(75, 17);
-            this.lableTorrentRatio.Text = "Torrent Ratio:";
+            this.lableTorrentRatio.Size = new System.Drawing.Size(57, 25);
+            this.lableTorrentRatio.Text = "Ratio:";
             // 
             // lblTorrentRatio
             // 
             this.lblTorrentRatio.Name = "lblTorrentRatio";
-            this.lblTorrentRatio.Size = new System.Drawing.Size(23, 17);
+            this.lblTorrentRatio.Size = new System.Drawing.Size(36, 25);
             this.lblTorrentRatio.Text = "0.0";
             // 
             // seedLabel
             // 
             this.seedLabel.Name = "seedLabel";
-            this.seedLabel.Size = new System.Drawing.Size(59, 17);
-            this.seedLabel.Text = "Seeders: 0";
+            this.seedLabel.Size = new System.Drawing.Size(78, 25);
+            this.seedLabel.Text = "Seeds: 0";
             // 
             // leechLabel
             // 
             this.leechLabel.Name = "leechLabel";
-            this.leechLabel.Size = new System.Drawing.Size(63, 17);
-            this.leechLabel.Text = "Leechers: 0";
+            this.leechLabel.Size = new System.Drawing.Size(72, 25);
+            this.leechLabel.Text = "Peers: 0";
             // 
             // lblTotalTimeCap
             // 
             this.lblTotalTimeCap.Name = "lblTotalTimeCap";
-            this.lblTotalTimeCap.Size = new System.Drawing.Size(58, 17);
-            this.lblTotalTimeCap.Text = "Total time:";
+            this.lblTotalTimeCap.Size = new System.Drawing.Size(54, 25);
+            this.lblTotalTimeCap.Text = "Time:";
             // 
             // lblTotalTime
             // 
             this.lblTotalTime.Name = "lblTotalTime";
-            this.lblTotalTime.Size = new System.Drawing.Size(35, 17);
+            this.lblTotalTime.Size = new System.Drawing.Size(56, 25);
             this.lblTotalTime.Text = "00:00";
             // 
             // serverUpdateTimer
@@ -292,11 +280,12 @@ namespace RatioMaster
             this.manualUpdateButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.manualUpdateButton.Enabled = false;
             this.manualUpdateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.manualUpdateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.manualUpdateButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.manualUpdateButton.Location = new System.Drawing.Point(237, 378);
+            this.manualUpdateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.manualUpdateButton.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (64)))), ((int) (((byte) (0)))), ((int) (((byte) (64)))));
+            this.manualUpdateButton.Location = new System.Drawing.Point(356, 582);
+            this.manualUpdateButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.manualUpdateButton.Name = "manualUpdateButton";
-            this.manualUpdateButton.Size = new System.Drawing.Size(110, 34);
+            this.manualUpdateButton.Size = new System.Drawing.Size(165, 52);
             this.manualUpdateButton.TabIndex = 10;
             this.manualUpdateButton.Text = "Manual Update";
             this.manualUpdateButton.UseVisualStyleBackColor = false;
@@ -307,11 +296,12 @@ namespace RatioMaster
             this.StartButton.BackColor = System.Drawing.Color.Silver;
             this.StartButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.StartButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.StartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.StartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.StartButton.ForeColor = System.Drawing.Color.Blue;
-            this.StartButton.Location = new System.Drawing.Point(5, 378);
+            this.StartButton.Location = new System.Drawing.Point(8, 582);
+            this.StartButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(110, 34);
+            this.StartButton.Size = new System.Drawing.Size(165, 52);
             this.StartButton.TabIndex = 8;
             this.StartButton.Text = "START";
             this.StartButton.UseVisualStyleBackColor = false;
@@ -323,11 +313,12 @@ namespace RatioMaster
             this.StopButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.StopButton.Enabled = false;
             this.StopButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.StopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.StopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.StopButton.ForeColor = System.Drawing.Color.Red;
-            this.StopButton.Location = new System.Drawing.Point(121, 378);
+            this.StopButton.Location = new System.Drawing.Point(182, 582);
+            this.StopButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.StopButton.Name = "StopButton";
-            this.StopButton.Size = new System.Drawing.Size(110, 34);
+            this.StopButton.Size = new System.Drawing.Size(165, 52);
             this.StopButton.TabIndex = 9;
             this.StopButton.Text = "STOP";
             this.StopButton.UseVisualStyleBackColor = false;
@@ -335,7 +326,10 @@ namespace RatioMaster
             // 
             // magneticPanel9
             // 
-            this.magneticPanel9.BevelStyle = BevelStyles.Flat;
+            this.magneticPanel9.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanel9.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
+            this.magneticPanel9.CaptionForeColor = System.Drawing.Color.Black;
+            this.magneticPanel9.CaptionStartColor = System.Drawing.Color.LightBlue;
             this.magneticPanel9.Controls.Add(this.RandomDownloadTo);
             this.magneticPanel9.Controls.Add(this.RandomDownloadFrom);
             this.magneticPanel9.Controls.Add(this.checkRandomUpload);
@@ -346,29 +340,31 @@ namespace RatioMaster
             this.magneticPanel9.Controls.Add(this.lblRandomDownloadFrom);
             this.magneticPanel9.Controls.Add(this.RandomUploadFrom);
             this.magneticPanel9.Controls.Add(this.lblRandomDownloadTo);
-            this.magneticPanel9.ExpandSize = new System.Drawing.Size(472, 58);
-            this.magneticPanel9.Location = new System.Drawing.Point(482, 125);
-            this.magneticPanel9.Marker = PanelMarkerStyle.Arrow;
+            this.magneticPanel9.ExpandSize = new System.Drawing.Size(708, 89);
+            this.magneticPanel9.Location = new System.Drawing.Point(723, 192);
+            this.magneticPanel9.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.magneticPanel9.Name = "magneticPanel9";
-            this.magneticPanel9.Size = new System.Drawing.Size(472, 58);
+            this.magneticPanel9.Size = new System.Drawing.Size(708, 89);
             this.magneticPanel9.TabIndex = 28;
             this.magneticPanel9.Text = "On Next Update Get Random Speeds";
             // 
             // RandomDownloadTo
             // 
             this.RandomDownloadTo.BackColor = System.Drawing.Color.White;
-            this.RandomDownloadTo.Location = new System.Drawing.Point(417, 28);
+            this.RandomDownloadTo.Location = new System.Drawing.Point(626, 43);
+            this.RandomDownloadTo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RandomDownloadTo.Name = "RandomDownloadTo";
-            this.RandomDownloadTo.Size = new System.Drawing.Size(37, 20);
+            this.RandomDownloadTo.Size = new System.Drawing.Size(54, 26);
             this.RandomDownloadTo.TabIndex = 9;
             this.RandomDownloadTo.Text = "50";
             // 
             // RandomDownloadFrom
             // 
             this.RandomDownloadFrom.BackColor = System.Drawing.Color.White;
-            this.RandomDownloadFrom.Location = new System.Drawing.Point(338, 28);
+            this.RandomDownloadFrom.Location = new System.Drawing.Point(507, 43);
+            this.RandomDownloadFrom.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RandomDownloadFrom.Name = "RandomDownloadFrom";
-            this.RandomDownloadFrom.Size = new System.Drawing.Size(37, 20);
+            this.RandomDownloadFrom.Size = new System.Drawing.Size(54, 26);
             this.RandomDownloadFrom.TabIndex = 7;
             this.RandomDownloadFrom.Text = "10";
             // 
@@ -376,9 +372,10 @@ namespace RatioMaster
             // 
             this.checkRandomUpload.AutoSize = true;
             this.checkRandomUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkRandomUpload.Location = new System.Drawing.Point(7, 29);
+            this.checkRandomUpload.Location = new System.Drawing.Point(10, 45);
+            this.checkRandomUpload.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.checkRandomUpload.Name = "checkRandomUpload";
-            this.checkRandomUpload.Size = new System.Drawing.Size(57, 17);
+            this.checkRandomUpload.Size = new System.Drawing.Size(81, 24);
             this.checkRandomUpload.TabIndex = 0;
             this.checkRandomUpload.Text = "Upload";
             this.checkRandomUpload.UseVisualStyleBackColor = true;
@@ -387,9 +384,10 @@ namespace RatioMaster
             // 
             this.checkRandomDownload.AutoSize = true;
             this.checkRandomDownload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkRandomDownload.Location = new System.Drawing.Point(225, 29);
+            this.checkRandomDownload.Location = new System.Drawing.Point(338, 45);
+            this.checkRandomDownload.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.checkRandomDownload.Name = "checkRandomDownload";
-            this.checkRandomDownload.Size = new System.Drawing.Size(74, 17);
+            this.checkRandomDownload.Size = new System.Drawing.Size(105, 24);
             this.checkRandomDownload.TabIndex = 5;
             this.checkRandomDownload.Text = "Download:";
             this.checkRandomDownload.UseVisualStyleBackColor = true;
@@ -397,80 +395,90 @@ namespace RatioMaster
             // lblRandomUploadFrom
             // 
             this.lblRandomUploadFrom.AutoSize = true;
-            this.lblRandomUploadFrom.Location = new System.Drawing.Point(70, 31);
+            this.lblRandomUploadFrom.Location = new System.Drawing.Point(105, 48);
+            this.lblRandomUploadFrom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRandomUploadFrom.Name = "lblRandomUploadFrom";
-            this.lblRandomUploadFrom.Size = new System.Drawing.Size(27, 13);
+            this.lblRandomUploadFrom.Size = new System.Drawing.Size(38, 20);
             this.lblRandomUploadFrom.TabIndex = 1;
             this.lblRandomUploadFrom.Text = "Min:";
             // 
             // RandomUploadTo
             // 
             this.RandomUploadTo.BackColor = System.Drawing.Color.White;
-            this.RandomUploadTo.Location = new System.Drawing.Point(182, 28);
+            this.RandomUploadTo.Location = new System.Drawing.Point(273, 43);
+            this.RandomUploadTo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RandomUploadTo.Name = "RandomUploadTo";
-            this.RandomUploadTo.Size = new System.Drawing.Size(37, 20);
+            this.RandomUploadTo.Size = new System.Drawing.Size(54, 26);
             this.RandomUploadTo.TabIndex = 4;
             this.RandomUploadTo.Text = "100";
             // 
             // lblRandomUploadTo
             // 
             this.lblRandomUploadTo.AutoSize = true;
-            this.lblRandomUploadTo.Location = new System.Drawing.Point(146, 31);
+            this.lblRandomUploadTo.Location = new System.Drawing.Point(219, 48);
+            this.lblRandomUploadTo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRandomUploadTo.Name = "lblRandomUploadTo";
-            this.lblRandomUploadTo.Size = new System.Drawing.Size(30, 13);
+            this.lblRandomUploadTo.Size = new System.Drawing.Size(42, 20);
             this.lblRandomUploadTo.TabIndex = 3;
             this.lblRandomUploadTo.Text = "Max:";
             // 
             // lblRandomDownloadFrom
             // 
             this.lblRandomDownloadFrom.AutoSize = true;
-            this.lblRandomDownloadFrom.Location = new System.Drawing.Point(305, 31);
+            this.lblRandomDownloadFrom.Location = new System.Drawing.Point(458, 48);
+            this.lblRandomDownloadFrom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRandomDownloadFrom.Name = "lblRandomDownloadFrom";
-            this.lblRandomDownloadFrom.Size = new System.Drawing.Size(27, 13);
+            this.lblRandomDownloadFrom.Size = new System.Drawing.Size(38, 20);
             this.lblRandomDownloadFrom.TabIndex = 6;
             this.lblRandomDownloadFrom.Text = "Min:";
             // 
             // RandomUploadFrom
             // 
             this.RandomUploadFrom.BackColor = System.Drawing.Color.White;
-            this.RandomUploadFrom.Location = new System.Drawing.Point(103, 28);
+            this.RandomUploadFrom.Location = new System.Drawing.Point(154, 43);
+            this.RandomUploadFrom.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RandomUploadFrom.Name = "RandomUploadFrom";
-            this.RandomUploadFrom.Size = new System.Drawing.Size(37, 20);
+            this.RandomUploadFrom.Size = new System.Drawing.Size(54, 26);
             this.RandomUploadFrom.TabIndex = 2;
             this.RandomUploadFrom.Text = "50";
             // 
             // lblRandomDownloadTo
             // 
             this.lblRandomDownloadTo.AutoSize = true;
-            this.lblRandomDownloadTo.Location = new System.Drawing.Point(381, 31);
+            this.lblRandomDownloadTo.Location = new System.Drawing.Point(572, 48);
+            this.lblRandomDownloadTo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRandomDownloadTo.Name = "lblRandomDownloadTo";
-            this.lblRandomDownloadTo.Size = new System.Drawing.Size(30, 13);
+            this.lblRandomDownloadTo.Size = new System.Drawing.Size(42, 20);
             this.lblRandomDownloadTo.TabIndex = 8;
             this.lblRandomDownloadTo.Text = "Max:";
             // 
             // magneticPanel8
             // 
-            this.magneticPanel8.BevelStyle = BevelStyles.Flat;
+            this.magneticPanel8.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanel8.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
+            this.magneticPanel8.CaptionForeColor = System.Drawing.Color.Black;
+            this.magneticPanel8.CaptionStartColor = System.Drawing.Color.LightBlue;
             this.magneticPanel8.Controls.Add(this.logWindow);
             this.magneticPanel8.Controls.Add(this.checkLogEnabled);
             this.magneticPanel8.Controls.Add(this.clearLogButton);
             this.magneticPanel8.Controls.Add(this.btnSaveLog);
-            this.magneticPanel8.ExpandSize = new System.Drawing.Size(472, 223);
-            this.magneticPanel8.Location = new System.Drawing.Point(482, 189);
-            this.magneticPanel8.Marker = PanelMarkerStyle.Arrow;
+            this.magneticPanel8.ExpandSize = new System.Drawing.Size(708, 343);
+            this.magneticPanel8.Location = new System.Drawing.Point(724, 294);
+            this.magneticPanel8.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.magneticPanel8.Name = "magneticPanel8";
-            this.magneticPanel8.Size = new System.Drawing.Size(472, 223);
+            this.magneticPanel8.Size = new System.Drawing.Size(708, 343);
             this.magneticPanel8.TabIndex = 27;
             this.magneticPanel8.Text = "Log";
             // 
             // logWindow
             // 
             this.logWindow.BackColor = System.Drawing.Color.Black;
-            this.logWindow.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.logWindow.Location = new System.Drawing.Point(3, 45);
+            this.logWindow.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (224)))), ((int) (((byte) (224)))), ((int) (((byte) (224)))));
+            this.logWindow.Location = new System.Drawing.Point(4, 69);
+            this.logWindow.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.logWindow.Name = "logWindow";
             this.logWindow.ReadOnly = true;
-            this.logWindow.Size = new System.Drawing.Size(466, 175);
+            this.logWindow.Size = new System.Drawing.Size(697, 267);
             this.logWindow.TabIndex = 3;
             this.logWindow.Text = "------------------------------------- LOG -------------------------------------\n";
             // 
@@ -480,23 +488,25 @@ namespace RatioMaster
             this.checkLogEnabled.Checked = true;
             this.checkLogEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkLogEnabled.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkLogEnabled.Location = new System.Drawing.Point(4, 23);
+            this.checkLogEnabled.Location = new System.Drawing.Point(6, 35);
+            this.checkLogEnabled.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.checkLogEnabled.Name = "checkLogEnabled";
-            this.checkLogEnabled.Size = new System.Drawing.Size(77, 17);
+            this.checkLogEnabled.Size = new System.Drawing.Size(111, 24);
             this.checkLogEnabled.TabIndex = 0;
             this.checkLogEnabled.Text = "Enable Log";
             this.checkLogEnabled.UseVisualStyleBackColor = true;
             // 
             // clearLogButton
             // 
-            this.clearLogButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.clearLogButton.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (224)))), ((int) (((byte) (224)))), ((int) (((byte) (224)))));
             this.clearLogButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.clearLogButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.clearLogButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.clearLogButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.clearLogButton.ForeColor = System.Drawing.Color.Blue;
-            this.clearLogButton.Location = new System.Drawing.Point(296, 19);
+            this.clearLogButton.Location = new System.Drawing.Point(444, 29);
+            this.clearLogButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.clearLogButton.Name = "clearLogButton";
-            this.clearLogButton.Size = new System.Drawing.Size(85, 24);
+            this.clearLogButton.Size = new System.Drawing.Size(128, 37);
             this.clearLogButton.TabIndex = 2;
             this.clearLogButton.Text = "Clear Log";
             this.clearLogButton.UseVisualStyleBackColor = false;
@@ -504,13 +514,14 @@ namespace RatioMaster
             // 
             // btnSaveLog
             // 
-            this.btnSaveLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnSaveLog.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (224)))), ((int) (((byte) (224)))), ((int) (((byte) (224)))));
             this.btnSaveLog.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSaveLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSaveLog.Location = new System.Drawing.Point(387, 19);
+            this.btnSaveLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.btnSaveLog.Location = new System.Drawing.Point(580, 29);
+            this.btnSaveLog.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSaveLog.Name = "btnSaveLog";
-            this.btnSaveLog.Size = new System.Drawing.Size(82, 24);
+            this.btnSaveLog.Size = new System.Drawing.Size(123, 37);
             this.btnSaveLog.TabIndex = 1;
             this.btnSaveLog.Text = "Save Log";
             this.btnSaveLog.UseVisualStyleBackColor = false;
@@ -518,7 +529,10 @@ namespace RatioMaster
             // 
             // magneticPanel7
             // 
-            this.magneticPanel7.BevelStyle = BevelStyles.Flat;
+            this.magneticPanel7.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanel7.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
+            this.magneticPanel7.CaptionForeColor = System.Drawing.Color.Black;
+            this.magneticPanel7.CaptionStartColor = System.Drawing.Color.LightBlue;
             this.magneticPanel7.Controls.Add(this.customPeersNum);
             this.magneticPanel7.Controls.Add(this.lblcustomPeersNum);
             this.magneticPanel7.Controls.Add(this.lblGenStatus);
@@ -529,37 +543,40 @@ namespace RatioMaster
             this.magneticPanel7.Controls.Add(this.customPeerID);
             this.magneticPanel7.Controls.Add(this.customKey);
             this.magneticPanel7.Controls.Add(this.keyLabel);
-            this.magneticPanel7.ExpandSize = new System.Drawing.Size(473, 89);
-            this.magneticPanel7.Location = new System.Drawing.Point(3, 283);
-            this.magneticPanel7.Marker = PanelMarkerStyle.Arrow;
+            this.magneticPanel7.ExpandSize = new System.Drawing.Size(710, 137);
+            this.magneticPanel7.Location = new System.Drawing.Point(4, 435);
+            this.magneticPanel7.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.magneticPanel7.Name = "magneticPanel7";
-            this.magneticPanel7.Size = new System.Drawing.Size(473, 89);
+            this.magneticPanel7.Size = new System.Drawing.Size(710, 137);
             this.magneticPanel7.TabIndex = 26;
             this.magneticPanel7.Text = "Custom Client Simulation";
             // 
             // customPeersNum
             // 
-            this.customPeersNum.Location = new System.Drawing.Point(419, 21);
+            this.customPeersNum.Location = new System.Drawing.Point(628, 32);
+            this.customPeersNum.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.customPeersNum.Name = "customPeersNum";
-            this.customPeersNum.Size = new System.Drawing.Size(51, 20);
+            this.customPeersNum.Size = new System.Drawing.Size(74, 26);
             this.customPeersNum.TabIndex = 34;
             // 
             // lblcustomPeersNum
             // 
             this.lblcustomPeersNum.AutoSize = true;
-            this.lblcustomPeersNum.Location = new System.Drawing.Point(325, 24);
+            this.lblcustomPeersNum.Location = new System.Drawing.Point(488, 37);
+            this.lblcustomPeersNum.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblcustomPeersNum.Name = "lblcustomPeersNum";
-            this.lblcustomPeersNum.Size = new System.Drawing.Size(88, 13);
+            this.lblcustomPeersNum.Size = new System.Drawing.Size(131, 20);
             this.lblcustomPeersNum.TabIndex = 33;
             this.lblcustomPeersNum.Text = "Number of peers:";
             // 
             // lblGenStatus
             // 
             this.lblGenStatus.AutoSize = true;
-            this.lblGenStatus.Location = new System.Drawing.Point(139, 70);
+            this.lblGenStatus.Location = new System.Drawing.Point(208, 108);
+            this.lblGenStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGenStatus.Name = "lblGenStatus";
             this.lblGenStatus.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblGenStatus.Size = new System.Drawing.Size(93, 13);
+            this.lblGenStatus.Size = new System.Drawing.Size(141, 20);
             this.lblGenStatus.TabIndex = 30;
             this.lblGenStatus.Text = "Generation status:";
             this.lblGenStatus.TextAlign = System.Drawing.ContentAlignment.BottomRight;
@@ -567,17 +584,19 @@ namespace RatioMaster
             // customPort
             // 
             this.customPort.BackColor = System.Drawing.Color.White;
-            this.customPort.Location = new System.Drawing.Point(270, 21);
+            this.customPort.Location = new System.Drawing.Point(405, 32);
+            this.customPort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.customPort.Name = "customPort";
-            this.customPort.Size = new System.Drawing.Size(49, 20);
+            this.customPort.Size = new System.Drawing.Size(72, 26);
             this.customPort.TabIndex = 32;
             // 
             // portLabel
             // 
             this.portLabel.AutoSize = true;
-            this.portLabel.Location = new System.Drawing.Point(235, 24);
+            this.portLabel.Location = new System.Drawing.Point(352, 37);
+            this.portLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.portLabel.Name = "portLabel";
-            this.portLabel.Size = new System.Drawing.Size(29, 13);
+            this.portLabel.Size = new System.Drawing.Size(42, 20);
             this.portLabel.TabIndex = 31;
             this.portLabel.Text = "Port:";
             // 
@@ -587,9 +606,10 @@ namespace RatioMaster
             this.chkNewValues.Checked = true;
             this.chkNewValues.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkNewValues.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkNewValues.Location = new System.Drawing.Point(6, 68);
+            this.chkNewValues.Location = new System.Drawing.Point(9, 105);
+            this.chkNewValues.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkNewValues.Name = "chkNewValues";
-            this.chkNewValues.Size = new System.Drawing.Size(133, 17);
+            this.chkNewValues.Size = new System.Drawing.Size(188, 24);
             this.chkNewValues.TabIndex = 29;
             this.chkNewValues.Text = "Always get new values";
             this.chkNewValues.UseVisualStyleBackColor = true;
@@ -597,40 +617,47 @@ namespace RatioMaster
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 48);
+            this.label4.Location = new System.Drawing.Point(4, 74);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(46, 13);
+            this.label4.Size = new System.Drawing.Size(67, 20);
             this.label4.TabIndex = 27;
             this.label4.Text = "Peer ID:";
             // 
             // customPeerID
             // 
             this.customPeerID.BackColor = System.Drawing.Color.White;
-            this.customPeerID.Location = new System.Drawing.Point(66, 45);
+            this.customPeerID.Location = new System.Drawing.Point(99, 69);
+            this.customPeerID.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.customPeerID.Name = "customPeerID";
-            this.customPeerID.Size = new System.Drawing.Size(404, 20);
+            this.customPeerID.Size = new System.Drawing.Size(604, 26);
             this.customPeerID.TabIndex = 28;
             // 
             // customKey
             // 
             this.customKey.BackColor = System.Drawing.Color.White;
-            this.customKey.Location = new System.Drawing.Point(66, 21);
+            this.customKey.Location = new System.Drawing.Point(99, 32);
+            this.customKey.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.customKey.Name = "customKey";
-            this.customKey.Size = new System.Drawing.Size(163, 20);
+            this.customKey.Size = new System.Drawing.Size(242, 26);
             this.customKey.TabIndex = 26;
             // 
             // keyLabel
             // 
             this.keyLabel.AutoSize = true;
-            this.keyLabel.Location = new System.Drawing.Point(3, 24);
+            this.keyLabel.Location = new System.Drawing.Point(4, 37);
+            this.keyLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.keyLabel.Name = "keyLabel";
-            this.keyLabel.Size = new System.Drawing.Size(57, 13);
+            this.keyLabel.Size = new System.Drawing.Size(83, 20);
             this.keyLabel.TabIndex = 25;
             this.keyLabel.Text = "Client Key:";
             // 
             // magneticPanel6
             // 
-            this.magneticPanel6.BevelStyle = BevelStyles.Flat;
+            this.magneticPanel6.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanel6.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
+            this.magneticPanel6.CaptionForeColor = System.Drawing.Color.Black;
+            this.magneticPanel6.CaptionStartColor = System.Drawing.Color.LightBlue;
             this.magneticPanel6.Controls.Add(this.lblStopAfter);
             this.magneticPanel6.Controls.Add(this.cmbStopAfter);
             this.magneticPanel6.Controls.Add(this.txtStopValue);
@@ -642,20 +669,21 @@ namespace RatioMaster
             this.magneticPanel6.Controls.Add(this.cmbClient);
             this.magneticPanel6.Controls.Add(this.interval);
             this.magneticPanel6.Controls.Add(this.ClientLabel);
-            this.magneticPanel6.ExpandSize = new System.Drawing.Size(473, 70);
-            this.magneticPanel6.Location = new System.Drawing.Point(3, 207);
-            this.magneticPanel6.Marker = PanelMarkerStyle.Arrow;
+            this.magneticPanel6.ExpandSize = new System.Drawing.Size(710, 108);
+            this.magneticPanel6.Location = new System.Drawing.Point(4, 318);
+            this.magneticPanel6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.magneticPanel6.Name = "magneticPanel6";
-            this.magneticPanel6.Size = new System.Drawing.Size(473, 70);
+            this.magneticPanel6.Size = new System.Drawing.Size(710, 108);
             this.magneticPanel6.TabIndex = 25;
             this.magneticPanel6.Text = "Options";
             // 
             // lblStopAfter
             // 
             this.lblStopAfter.AutoSize = true;
-            this.lblStopAfter.Location = new System.Drawing.Point(396, 48);
+            this.lblStopAfter.Location = new System.Drawing.Point(594, 74);
+            this.lblStopAfter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStopAfter.Name = "lblStopAfter";
-            this.lblStopAfter.Size = new System.Drawing.Size(25, 13);
+            this.lblStopAfter.Size = new System.Drawing.Size(36, 20);
             this.lblStopAfter.TabIndex = 26;
             this.lblStopAfter.Text = "???";
             // 
@@ -664,26 +692,21 @@ namespace RatioMaster
             this.cmbStopAfter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStopAfter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbStopAfter.FormattingEnabled = true;
-            this.cmbStopAfter.Items.AddRange(new object[] {
-            "Never",
-            "After time:",
-            "When seeders <",
-            "When leechers <",
-            "When uploaded >",
-            "When downloaded >",
-            "When leechers/seeders <"});
-            this.cmbStopAfter.Location = new System.Drawing.Point(174, 45);
+            this.cmbStopAfter.Items.AddRange(new object[] {"Never", "After time:", "When seeders <", "When leechers <", "When uploaded >", "When downloaded >", "When leechers/seeders <"});
+            this.cmbStopAfter.Location = new System.Drawing.Point(261, 69);
+            this.cmbStopAfter.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbStopAfter.Name = "cmbStopAfter";
-            this.cmbStopAfter.Size = new System.Drawing.Size(151, 21);
+            this.cmbStopAfter.Size = new System.Drawing.Size(224, 28);
             this.cmbStopAfter.TabIndex = 25;
             this.cmbStopAfter.SelectedIndexChanged += new System.EventHandler(this.cmbStopAfter_SelectedIndexChanged);
             // 
             // txtStopValue
             // 
             this.txtStopValue.BackColor = System.Drawing.Color.White;
-            this.txtStopValue.Location = new System.Drawing.Point(331, 45);
+            this.txtStopValue.Location = new System.Drawing.Point(496, 69);
+            this.txtStopValue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtStopValue.Name = "txtStopValue";
-            this.txtStopValue.Size = new System.Drawing.Size(59, 20);
+            this.txtStopValue.Size = new System.Drawing.Size(86, 26);
             this.txtStopValue.TabIndex = 24;
             this.txtStopValue.Text = "0";
             this.txtStopValue.TextChanged += new System.EventHandler(this.txtStopValue_TextChanged);
@@ -691,28 +714,31 @@ namespace RatioMaster
             // intervalLabel
             // 
             this.intervalLabel.AutoSize = true;
-            this.intervalLabel.Location = new System.Drawing.Point(3, 24);
+            this.intervalLabel.Location = new System.Drawing.Point(4, 37);
+            this.intervalLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.intervalLabel.Name = "intervalLabel";
-            this.intervalLabel.Size = new System.Drawing.Size(97, 13);
+            this.intervalLabel.Size = new System.Drawing.Size(144, 20);
             this.intervalLabel.TabIndex = 14;
             this.intervalLabel.Text = "Update Interval (s):";
             // 
             // lblRemWork
             // 
             this.lblRemWork.AutoSize = true;
-            this.lblRemWork.Location = new System.Drawing.Point(129, 48);
+            this.lblRemWork.Location = new System.Drawing.Point(194, 74);
+            this.lblRemWork.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRemWork.Name = "lblRemWork";
-            this.lblRemWork.Size = new System.Drawing.Size(39, 13);
+            this.lblRemWork.Size = new System.Drawing.Size(55, 20);
             this.lblRemWork.TabIndex = 23;
             this.lblRemWork.Text = "STOP:";
             // 
             // fileSize
             // 
             this.fileSize.BackColor = System.Drawing.Color.White;
-            this.fileSize.Location = new System.Drawing.Point(75, 45);
+            this.fileSize.Location = new System.Drawing.Point(112, 69);
+            this.fileSize.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.fileSize.MaxLength = 5;
             this.fileSize.Name = "fileSize";
-            this.fileSize.Size = new System.Drawing.Size(48, 20);
+            this.fileSize.Size = new System.Drawing.Size(70, 26);
             this.fileSize.TabIndex = 20;
             this.fileSize.Text = "0";
             this.fileSize.TextChanged += new System.EventHandler(this.fileSize_TextChanged);
@@ -723,18 +749,20 @@ namespace RatioMaster
             this.cmbVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbVersion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbVersion.FormattingEnabled = true;
-            this.cmbVersion.Location = new System.Drawing.Point(342, 20);
+            this.cmbVersion.Location = new System.Drawing.Point(513, 31);
+            this.cmbVersion.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbVersion.Name = "cmbVersion";
-            this.cmbVersion.Size = new System.Drawing.Size(128, 21);
+            this.cmbVersion.Size = new System.Drawing.Size(190, 28);
             this.cmbVersion.TabIndex = 18;
             this.cmbVersion.SelectedValueChanged += new System.EventHandler(this.cmbVersion_SelectedValueChanged);
             // 
             // FileSizeLabel
             // 
             this.FileSizeLabel.AutoSize = true;
-            this.FileSizeLabel.Location = new System.Drawing.Point(3, 48);
+            this.FileSizeLabel.Location = new System.Drawing.Point(4, 74);
+            this.FileSizeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.FileSizeLabel.Name = "FileSizeLabel";
-            this.FileSizeLabel.Size = new System.Drawing.Size(66, 13);
+            this.FileSizeLabel.Size = new System.Drawing.Size(101, 20);
             this.FileSizeLabel.TabIndex = 19;
             this.FileSizeLabel.Text = "Finished (%):";
             // 
@@ -745,50 +773,40 @@ namespace RatioMaster
             this.cmbClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbClient.FormattingEnabled = true;
             this.cmbClient.IntegralHeight = false;
-            this.cmbClient.Items.AddRange(new object[] {
-            "uTorrent",
-            "BitComet",
-            "Azureus",
-            "Vuze",
-            "BitTorrent",
-			"Transmission",
-            "ABC",
-            "BitLord",
-            "BTuga",
-            "BitTornado",
-            "Burst",
-            "BitTyrant",
-            "BitSpirit",
-            "Deluge",
-            "KTorrent",
-            "Gnome BT"});
-            this.cmbClient.Location = new System.Drawing.Point(197, 20);
+            this.cmbClient.Items.AddRange(new object[] {"uTorrent", "BitComet", "Azureus", "Vuze", "BitTorrent", "Transmission", "ABC", "BitLord", "BTuga", "BitTornado", "Burst", "BitTyrant", "BitSpirit", "Deluge", "KTorrent", "Gnome BT"});
+            this.cmbClient.Location = new System.Drawing.Point(296, 31);
+            this.cmbClient.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbClient.Name = "cmbClient";
-            this.cmbClient.Size = new System.Drawing.Size(139, 21);
+            this.cmbClient.Size = new System.Drawing.Size(206, 28);
             this.cmbClient.TabIndex = 17;
             this.cmbClient.SelectedIndexChanged += new System.EventHandler(this.cmbClient_SelectedIndexChanged);
             // 
             // interval
             // 
             this.interval.BackColor = System.Drawing.Color.White;
-            this.interval.Location = new System.Drawing.Point(106, 21);
+            this.interval.Location = new System.Drawing.Point(159, 32);
+            this.interval.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.interval.Name = "interval";
-            this.interval.Size = new System.Drawing.Size(43, 20);
+            this.interval.Size = new System.Drawing.Size(62, 26);
             this.interval.TabIndex = 15;
             this.interval.Text = "1800";
             // 
             // ClientLabel
             // 
             this.ClientLabel.AutoSize = true;
-            this.ClientLabel.Location = new System.Drawing.Point(155, 24);
+            this.ClientLabel.Location = new System.Drawing.Point(232, 37);
+            this.ClientLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.ClientLabel.Name = "ClientLabel";
-            this.ClientLabel.Size = new System.Drawing.Size(36, 13);
+            this.ClientLabel.Size = new System.Drawing.Size(53, 20);
             this.ClientLabel.TabIndex = 16;
             this.ClientLabel.Text = "Client:";
             // 
             // magneticPanel5
             // 
-            this.magneticPanel5.BevelStyle = BevelStyles.Flat;
+            this.magneticPanel5.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanel5.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
+            this.magneticPanel5.CaptionForeColor = System.Drawing.Color.Black;
+            this.magneticPanel5.CaptionStartColor = System.Drawing.Color.LightBlue;
             this.magneticPanel5.Controls.Add(this.uploadRateLabel);
             this.magneticPanel5.Controls.Add(this.uploadRate);
             this.magneticPanel5.Controls.Add(this.txtRandDownMax);
@@ -803,29 +821,31 @@ namespace RatioMaster
             this.magneticPanel5.Controls.Add(this.lblUpMin);
             this.magneticPanel5.Controls.Add(this.lblDownMin);
             this.magneticPanel5.Controls.Add(this.lblUpMax);
-            this.magneticPanel5.ExpandSize = new System.Drawing.Size(473, 70);
-            this.magneticPanel5.Location = new System.Drawing.Point(3, 131);
-            this.magneticPanel5.Marker = PanelMarkerStyle.Arrow;
+            this.magneticPanel5.ExpandSize = new System.Drawing.Size(710, 108);
+            this.magneticPanel5.Location = new System.Drawing.Point(4, 202);
+            this.magneticPanel5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.magneticPanel5.Name = "magneticPanel5";
-            this.magneticPanel5.Size = new System.Drawing.Size(473, 70);
+            this.magneticPanel5.Size = new System.Drawing.Size(710, 108);
             this.magneticPanel5.TabIndex = 25;
             this.magneticPanel5.Text = "Speed Options";
             // 
             // uploadRateLabel
             // 
             this.uploadRateLabel.AutoSize = true;
-            this.uploadRateLabel.Location = new System.Drawing.Point(3, 24);
+            this.uploadRateLabel.Location = new System.Drawing.Point(4, 37);
+            this.uploadRateLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.uploadRateLabel.Name = "uploadRateLabel";
-            this.uploadRateLabel.Size = new System.Drawing.Size(110, 13);
+            this.uploadRateLabel.Size = new System.Drawing.Size(160, 20);
             this.uploadRateLabel.TabIndex = 0;
             this.uploadRateLabel.Text = "Upload Speed (kB/s):";
             // 
             // uploadRate
             // 
             this.uploadRate.BackColor = System.Drawing.Color.White;
-            this.uploadRate.Location = new System.Drawing.Point(133, 21);
+            this.uploadRate.Location = new System.Drawing.Point(200, 32);
+            this.uploadRate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.uploadRate.Name = "uploadRate";
-            this.uploadRate.Size = new System.Drawing.Size(55, 20);
+            this.uploadRate.Size = new System.Drawing.Size(80, 26);
             this.uploadRate.TabIndex = 1;
             this.uploadRate.Text = "60";
             this.uploadRate.TextChanged += new System.EventHandler(this.uploadRate_TextChanged);
@@ -833,36 +853,40 @@ namespace RatioMaster
             // txtRandDownMax
             // 
             this.txtRandDownMax.BackColor = System.Drawing.Color.White;
-            this.txtRandDownMax.Location = new System.Drawing.Point(427, 45);
+            this.txtRandDownMax.Location = new System.Drawing.Point(640, 69);
+            this.txtRandDownMax.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtRandDownMax.Name = "txtRandDownMax";
-            this.txtRandDownMax.Size = new System.Drawing.Size(43, 20);
+            this.txtRandDownMax.Size = new System.Drawing.Size(62, 26);
             this.txtRandDownMax.TabIndex = 13;
             this.txtRandDownMax.Text = "10";
             // 
             // downloadRateLabel
             // 
             this.downloadRateLabel.AutoSize = true;
-            this.downloadRateLabel.Location = new System.Drawing.Point(3, 48);
+            this.downloadRateLabel.Location = new System.Drawing.Point(4, 74);
+            this.downloadRateLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.downloadRateLabel.Name = "downloadRateLabel";
-            this.downloadRateLabel.Size = new System.Drawing.Size(124, 13);
+            this.downloadRateLabel.Size = new System.Drawing.Size(180, 20);
             this.downloadRateLabel.TabIndex = 7;
             this.downloadRateLabel.Text = "Download Speed (kB/s):";
             // 
             // txtRandUpMax
             // 
             this.txtRandUpMax.BackColor = System.Drawing.Color.White;
-            this.txtRandUpMax.Location = new System.Drawing.Point(427, 21);
+            this.txtRandUpMax.Location = new System.Drawing.Point(640, 32);
+            this.txtRandUpMax.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtRandUpMax.Name = "txtRandUpMax";
-            this.txtRandUpMax.Size = new System.Drawing.Size(43, 20);
+            this.txtRandUpMax.Size = new System.Drawing.Size(62, 26);
             this.txtRandUpMax.TabIndex = 6;
             this.txtRandUpMax.Text = "10";
             // 
             // downloadRate
             // 
             this.downloadRate.BackColor = System.Drawing.Color.White;
-            this.downloadRate.Location = new System.Drawing.Point(133, 45);
+            this.downloadRate.Location = new System.Drawing.Point(200, 69);
+            this.downloadRate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.downloadRate.Name = "downloadRate";
-            this.downloadRate.Size = new System.Drawing.Size(55, 20);
+            this.downloadRate.Size = new System.Drawing.Size(80, 26);
             this.downloadRate.TabIndex = 8;
             this.downloadRate.Text = "25";
             this.downloadRate.TextChanged += new System.EventHandler(this.downloadRate_TextChanged);
@@ -870,9 +894,10 @@ namespace RatioMaster
             // txtRandDownMin
             // 
             this.txtRandDownMin.BackColor = System.Drawing.Color.White;
-            this.txtRandDownMin.Location = new System.Drawing.Point(342, 45);
+            this.txtRandDownMin.Location = new System.Drawing.Point(513, 69);
+            this.txtRandDownMin.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtRandDownMin.Name = "txtRandDownMin";
-            this.txtRandDownMin.Size = new System.Drawing.Size(43, 20);
+            this.txtRandDownMin.Size = new System.Drawing.Size(62, 26);
             this.txtRandDownMin.TabIndex = 11;
             this.txtRandDownMin.Text = "1";
             // 
@@ -882,9 +907,10 @@ namespace RatioMaster
             this.chkRandUP.Checked = true;
             this.chkRandUP.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkRandUP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkRandUP.Location = new System.Drawing.Point(194, 22);
+            this.chkRandUP.Location = new System.Drawing.Point(291, 34);
+            this.chkRandUP.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkRandUP.Name = "chkRandUP";
-            this.chkRandUP.Size = new System.Drawing.Size(109, 17);
+            this.chkRandUP.Size = new System.Drawing.Size(157, 24);
             this.chkRandUP.TabIndex = 2;
             this.chkRandUP.Text = "+ Random values:";
             this.chkRandUP.UseVisualStyleBackColor = true;
@@ -892,9 +918,10 @@ namespace RatioMaster
             // txtRandUpMin
             // 
             this.txtRandUpMin.BackColor = System.Drawing.Color.White;
-            this.txtRandUpMin.Location = new System.Drawing.Point(342, 21);
+            this.txtRandUpMin.Location = new System.Drawing.Point(513, 32);
+            this.txtRandUpMin.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtRandUpMin.Name = "txtRandUpMin";
-            this.txtRandUpMin.Size = new System.Drawing.Size(43, 20);
+            this.txtRandUpMin.Size = new System.Drawing.Size(62, 26);
             this.txtRandUpMin.TabIndex = 4;
             this.txtRandUpMin.Text = "1";
             // 
@@ -904,9 +931,10 @@ namespace RatioMaster
             this.chkRandDown.Checked = true;
             this.chkRandDown.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkRandDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkRandDown.Location = new System.Drawing.Point(194, 46);
+            this.chkRandDown.Location = new System.Drawing.Point(291, 71);
+            this.chkRandDown.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkRandDown.Name = "chkRandDown";
-            this.chkRandDown.Size = new System.Drawing.Size(109, 17);
+            this.chkRandDown.Size = new System.Drawing.Size(157, 24);
             this.chkRandDown.TabIndex = 9;
             this.chkRandDown.Text = "+ Random values:";
             this.chkRandDown.UseVisualStyleBackColor = true;
@@ -914,110 +942,126 @@ namespace RatioMaster
             // lblDownMax
             // 
             this.lblDownMax.AutoSize = true;
-            this.lblDownMax.Location = new System.Drawing.Point(391, 48);
+            this.lblDownMax.Location = new System.Drawing.Point(586, 74);
+            this.lblDownMax.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDownMax.Name = "lblDownMax";
-            this.lblDownMax.Size = new System.Drawing.Size(30, 13);
+            this.lblDownMax.Size = new System.Drawing.Size(42, 20);
             this.lblDownMax.TabIndex = 12;
             this.lblDownMax.Text = "Max:";
             // 
             // lblUpMin
             // 
             this.lblUpMin.AutoSize = true;
-            this.lblUpMin.Location = new System.Drawing.Point(309, 24);
+            this.lblUpMin.Location = new System.Drawing.Point(464, 37);
+            this.lblUpMin.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUpMin.Name = "lblUpMin";
-            this.lblUpMin.Size = new System.Drawing.Size(27, 13);
+            this.lblUpMin.Size = new System.Drawing.Size(38, 20);
             this.lblUpMin.TabIndex = 3;
             this.lblUpMin.Text = "Min:";
             // 
             // lblDownMin
             // 
             this.lblDownMin.AutoSize = true;
-            this.lblDownMin.Location = new System.Drawing.Point(309, 48);
+            this.lblDownMin.Location = new System.Drawing.Point(464, 74);
+            this.lblDownMin.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDownMin.Name = "lblDownMin";
-            this.lblDownMin.Size = new System.Drawing.Size(27, 13);
+            this.lblDownMin.Size = new System.Drawing.Size(38, 20);
             this.lblDownMin.TabIndex = 10;
             this.lblDownMin.Text = "Min:";
             // 
             // lblUpMax
             // 
             this.lblUpMax.AutoSize = true;
-            this.lblUpMax.Location = new System.Drawing.Point(391, 24);
+            this.lblUpMax.Location = new System.Drawing.Point(586, 37);
+            this.lblUpMax.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUpMax.Name = "lblUpMax";
-            this.lblUpMax.Size = new System.Drawing.Size(30, 13);
+            this.lblUpMax.Size = new System.Drawing.Size(42, 20);
             this.lblUpMax.TabIndex = 5;
             this.lblUpMax.Text = "Max:";
             // 
             // magneticPanel4
             // 
-            this.magneticPanel4.BevelStyle = BevelStyles.Flat;
+            this.magneticPanel4.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanel4.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
+            this.magneticPanel4.CaptionForeColor = System.Drawing.Color.Black;
+            this.magneticPanel4.CaptionStartColor = System.Drawing.Color.LightBlue;
             this.magneticPanel4.Controls.Add(this.txtTorrentSize);
             this.magneticPanel4.Controls.Add(this.trackerAddress);
             this.magneticPanel4.Controls.Add(this.lblTorrentSize);
             this.magneticPanel4.Controls.Add(this.TrackerLabel);
             this.magneticPanel4.Controls.Add(this.shaHash);
             this.magneticPanel4.Controls.Add(this.hashLabel);
-            this.magneticPanel4.ExpandSize = new System.Drawing.Size(473, 70);
-            this.magneticPanel4.Location = new System.Drawing.Point(3, 55);
-            this.magneticPanel4.Marker = PanelMarkerStyle.Arrow;
+            this.magneticPanel4.ExpandSize = new System.Drawing.Size(710, 108);
+            this.magneticPanel4.Location = new System.Drawing.Point(4, 85);
+            this.magneticPanel4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.magneticPanel4.Name = "magneticPanel4";
-            this.magneticPanel4.Size = new System.Drawing.Size(473, 70);
+            this.magneticPanel4.Size = new System.Drawing.Size(710, 108);
             this.magneticPanel4.TabIndex = 25;
             this.magneticPanel4.Text = "Torrent Info";
             // 
             // txtTorrentSize
             // 
-            this.txtTorrentSize.Location = new System.Drawing.Point(399, 45);
+            this.txtTorrentSize.Location = new System.Drawing.Point(598, 69);
+            this.txtTorrentSize.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtTorrentSize.Name = "txtTorrentSize";
             this.txtTorrentSize.ReadOnly = true;
-            this.txtTorrentSize.Size = new System.Drawing.Size(71, 20);
+            this.txtTorrentSize.Size = new System.Drawing.Size(104, 26);
             this.txtTorrentSize.TabIndex = 5;
             // 
             // trackerAddress
             // 
             this.trackerAddress.BackColor = System.Drawing.Color.White;
-            this.trackerAddress.Location = new System.Drawing.Point(56, 21);
+            this.trackerAddress.Location = new System.Drawing.Point(84, 32);
+            this.trackerAddress.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.trackerAddress.Name = "trackerAddress";
-            this.trackerAddress.Size = new System.Drawing.Size(414, 20);
+            this.trackerAddress.Size = new System.Drawing.Size(619, 26);
             this.trackerAddress.TabIndex = 1;
             // 
             // lblTorrentSize
             // 
             this.lblTorrentSize.AutoSize = true;
-            this.lblTorrentSize.Location = new System.Drawing.Point(363, 48);
+            this.lblTorrentSize.Location = new System.Drawing.Point(544, 74);
+            this.lblTorrentSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTorrentSize.Name = "lblTorrentSize";
-            this.lblTorrentSize.Size = new System.Drawing.Size(30, 13);
+            this.lblTorrentSize.Size = new System.Drawing.Size(44, 20);
             this.lblTorrentSize.TabIndex = 4;
             this.lblTorrentSize.Text = "Size:";
             // 
             // TrackerLabel
             // 
             this.TrackerLabel.AutoSize = true;
-            this.TrackerLabel.Location = new System.Drawing.Point(3, 24);
+            this.TrackerLabel.Location = new System.Drawing.Point(4, 37);
+            this.TrackerLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.TrackerLabel.Name = "TrackerLabel";
-            this.TrackerLabel.Size = new System.Drawing.Size(47, 13);
+            this.TrackerLabel.Size = new System.Drawing.Size(66, 20);
             this.TrackerLabel.TabIndex = 0;
             this.TrackerLabel.Text = "Tracker:";
             // 
             // shaHash
             // 
-            this.shaHash.Location = new System.Drawing.Point(56, 45);
+            this.shaHash.Location = new System.Drawing.Point(84, 69);
+            this.shaHash.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.shaHash.Name = "shaHash";
             this.shaHash.ReadOnly = true;
-            this.shaHash.Size = new System.Drawing.Size(301, 20);
+            this.shaHash.Size = new System.Drawing.Size(450, 26);
             this.shaHash.TabIndex = 3;
             // 
             // hashLabel
             // 
             this.hashLabel.AutoSize = true;
-            this.hashLabel.Location = new System.Drawing.Point(3, 48);
+            this.hashLabel.Location = new System.Drawing.Point(4, 74);
+            this.hashLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.hashLabel.Name = "hashLabel";
-            this.hashLabel.Size = new System.Drawing.Size(40, 13);
+            this.hashLabel.Size = new System.Drawing.Size(59, 20);
             this.hashLabel.TabIndex = 2;
             this.hashLabel.Text = "HASH:\r\n";
             // 
             // magneticPanel3
             // 
-            this.magneticPanel3.BevelStyle = BevelStyles.Flat;
+            this.magneticPanel3.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanel3.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
+            this.magneticPanel3.CaptionForeColor = System.Drawing.Color.Black;
+            this.magneticPanel3.CaptionStartColor = System.Drawing.Color.LightBlue;
             this.magneticPanel3.Controls.Add(this.labelProxyType);
             this.magneticPanel3.Controls.Add(this.labelProxyHost);
             this.magneticPanel3.Controls.Add(this.textProxyPass);
@@ -1028,38 +1072,41 @@ namespace RatioMaster
             this.magneticPanel3.Controls.Add(this.labelProxyPort);
             this.magneticPanel3.Controls.Add(this.labelProxyPass);
             this.magneticPanel3.Controls.Add(this.textProxyUser);
-            this.magneticPanel3.ExpandSize = new System.Drawing.Size(472, 70);
-            this.magneticPanel3.Location = new System.Drawing.Point(482, 49);
-            this.magneticPanel3.Marker = PanelMarkerStyle.Arrow;
+            this.magneticPanel3.ExpandSize = new System.Drawing.Size(708, 108);
+            this.magneticPanel3.Location = new System.Drawing.Point(723, 75);
+            this.magneticPanel3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.magneticPanel3.Name = "magneticPanel3";
-            this.magneticPanel3.Size = new System.Drawing.Size(472, 70);
+            this.magneticPanel3.Size = new System.Drawing.Size(708, 108);
             this.magneticPanel3.TabIndex = 6;
             this.magneticPanel3.Text = "Proxy Server Settings";
             // 
             // labelProxyType
             // 
             this.labelProxyType.AutoSize = true;
-            this.labelProxyType.Location = new System.Drawing.Point(3, 24);
+            this.labelProxyType.Location = new System.Drawing.Point(4, 37);
+            this.labelProxyType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelProxyType.Name = "labelProxyType";
-            this.labelProxyType.Size = new System.Drawing.Size(63, 13);
+            this.labelProxyType.Size = new System.Drawing.Size(89, 20);
             this.labelProxyType.TabIndex = 0;
             this.labelProxyType.Text = "Proxy Type:";
             // 
             // labelProxyHost
             // 
             this.labelProxyHost.AutoSize = true;
-            this.labelProxyHost.Location = new System.Drawing.Point(3, 48);
+            this.labelProxyHost.Location = new System.Drawing.Point(4, 74);
+            this.labelProxyHost.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelProxyHost.Name = "labelProxyHost";
-            this.labelProxyHost.Size = new System.Drawing.Size(61, 13);
+            this.labelProxyHost.Size = new System.Drawing.Size(89, 20);
             this.labelProxyHost.TabIndex = 6;
             this.labelProxyHost.Text = "Proxy Host:";
             // 
             // textProxyPass
             // 
             this.textProxyPass.BackColor = System.Drawing.Color.White;
-            this.textProxyPass.Location = new System.Drawing.Point(401, 21);
+            this.textProxyPass.Location = new System.Drawing.Point(602, 32);
+            this.textProxyPass.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textProxyPass.Name = "textProxyPass";
-            this.textProxyPass.Size = new System.Drawing.Size(68, 20);
+            this.textProxyPass.Size = new System.Drawing.Size(100, 26);
             this.textProxyPass.TabIndex = 5;
             // 
             // comboProxyType
@@ -1068,79 +1115,84 @@ namespace RatioMaster
             this.comboProxyType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboProxyType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboProxyType.FormattingEnabled = true;
-            this.comboProxyType.Items.AddRange(new object[] {
-            "None",
-            "HTTP",
-            "SOCKS4",
-            "SOCKS4a",
-            "SOCKS5"});
-            this.comboProxyType.Location = new System.Drawing.Point(72, 20);
+            this.comboProxyType.Items.AddRange(new object[] {"None", "HTTP", "SOCKS4", "SOCKS4a", "SOCKS5"});
+            this.comboProxyType.Location = new System.Drawing.Point(108, 31);
+            this.comboProxyType.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboProxyType.Name = "comboProxyType";
-            this.comboProxyType.Size = new System.Drawing.Size(93, 21);
+            this.comboProxyType.Size = new System.Drawing.Size(138, 28);
             this.comboProxyType.TabIndex = 1;
             // 
             // textProxyHost
             // 
             this.textProxyHost.BackColor = System.Drawing.Color.White;
-            this.textProxyHost.Location = new System.Drawing.Point(72, 45);
+            this.textProxyHost.Location = new System.Drawing.Point(108, 69);
+            this.textProxyHost.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textProxyHost.Name = "textProxyHost";
-            this.textProxyHost.Size = new System.Drawing.Size(255, 20);
+            this.textProxyHost.Size = new System.Drawing.Size(380, 26);
             this.textProxyHost.TabIndex = 7;
             // 
             // labelProxyUser
             // 
             this.labelProxyUser.AutoSize = true;
-            this.labelProxyUser.Location = new System.Drawing.Point(169, 24);
+            this.labelProxyUser.Location = new System.Drawing.Point(254, 37);
+            this.labelProxyUser.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelProxyUser.Name = "labelProxyUser";
-            this.labelProxyUser.Size = new System.Drawing.Size(61, 13);
+            this.labelProxyUser.Size = new System.Drawing.Size(89, 20);
             this.labelProxyUser.TabIndex = 2;
             this.labelProxyUser.Text = "Proxy User:";
             // 
             // textProxyPort
             // 
             this.textProxyPort.BackColor = System.Drawing.Color.White;
-            this.textProxyPort.Location = new System.Drawing.Point(401, 45);
+            this.textProxyPort.Location = new System.Drawing.Point(602, 69);
+            this.textProxyPort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textProxyPort.Name = "textProxyPort";
-            this.textProxyPort.Size = new System.Drawing.Size(68, 20);
+            this.textProxyPort.Size = new System.Drawing.Size(100, 26);
             this.textProxyPort.TabIndex = 9;
             // 
             // labelProxyPort
             // 
             this.labelProxyPort.AutoSize = true;
-            this.labelProxyPort.Location = new System.Drawing.Point(333, 48);
+            this.labelProxyPort.Location = new System.Drawing.Point(500, 74);
+            this.labelProxyPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelProxyPort.Name = "labelProxyPort";
-            this.labelProxyPort.Size = new System.Drawing.Size(58, 13);
+            this.labelProxyPort.Size = new System.Drawing.Size(84, 20);
             this.labelProxyPort.TabIndex = 8;
             this.labelProxyPort.Text = "Proxy Port:";
             // 
             // labelProxyPass
             // 
             this.labelProxyPass.AutoSize = true;
-            this.labelProxyPass.Location = new System.Drawing.Point(333, 24);
+            this.labelProxyPass.Location = new System.Drawing.Point(500, 37);
+            this.labelProxyPass.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelProxyPass.Name = "labelProxyPass";
-            this.labelProxyPass.Size = new System.Drawing.Size(62, 13);
+            this.labelProxyPass.Size = new System.Drawing.Size(90, 20);
             this.labelProxyPass.TabIndex = 4;
             this.labelProxyPass.Text = "Proxy Pass:";
             // 
             // textProxyUser
             // 
             this.textProxyUser.BackColor = System.Drawing.Color.White;
-            this.textProxyUser.Location = new System.Drawing.Point(236, 21);
+            this.textProxyUser.Location = new System.Drawing.Point(354, 32);
+            this.textProxyUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textProxyUser.Name = "textProxyUser";
-            this.textProxyUser.Size = new System.Drawing.Size(91, 20);
+            this.textProxyUser.Size = new System.Drawing.Size(134, 26);
             this.textProxyUser.TabIndex = 3;
             // 
             // magneticPanel2
             // 
-            this.magneticPanel2.BevelStyle = BevelStyles.Flat;
+            this.magneticPanel2.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanel2.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
+            this.magneticPanel2.CaptionForeColor = System.Drawing.Color.Black;
+            this.magneticPanel2.CaptionStartColor = System.Drawing.Color.LightBlue;
             this.magneticPanel2.Controls.Add(this.checkIgnoreFailureReason);
             this.magneticPanel2.Controls.Add(this.checkRequestScrap);
             this.magneticPanel2.Controls.Add(this.checkTCPListen);
-            this.magneticPanel2.ExpandSize = new System.Drawing.Size(472, 40);
-            this.magneticPanel2.Location = new System.Drawing.Point(482, 3);
-            this.magneticPanel2.Marker = PanelMarkerStyle.Arrow;
+            this.magneticPanel2.ExpandSize = new System.Drawing.Size(708, 62);
+            this.magneticPanel2.Location = new System.Drawing.Point(723, 5);
+            this.magneticPanel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.magneticPanel2.Name = "magneticPanel2";
-            this.magneticPanel2.Size = new System.Drawing.Size(472, 40);
+            this.magneticPanel2.Size = new System.Drawing.Size(708, 62);
             this.magneticPanel2.TabIndex = 6;
             this.magneticPanel2.Text = "Other Settings";
             // 
@@ -1148,9 +1200,10 @@ namespace RatioMaster
             // 
             this.checkIgnoreFailureReason.AutoSize = true;
             this.checkIgnoreFailureReason.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkIgnoreFailureReason.Location = new System.Drawing.Point(211, 21);
+            this.checkIgnoreFailureReason.Location = new System.Drawing.Point(316, 32);
+            this.checkIgnoreFailureReason.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.checkIgnoreFailureReason.Name = "checkIgnoreFailureReason";
-            this.checkIgnoreFailureReason.Size = new System.Drawing.Size(123, 17);
+            this.checkIgnoreFailureReason.Size = new System.Drawing.Size(182, 24);
             this.checkIgnoreFailureReason.TabIndex = 2;
             this.checkIgnoreFailureReason.Text = "Ignore \'failure reason\'";
             this.checkIgnoreFailureReason.UseVisualStyleBackColor = true;
@@ -1161,9 +1214,10 @@ namespace RatioMaster
             this.checkRequestScrap.Checked = true;
             this.checkRequestScrap.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkRequestScrap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkRequestScrap.Location = new System.Drawing.Point(111, 20);
+            this.checkRequestScrap.Location = new System.Drawing.Point(166, 31);
+            this.checkRequestScrap.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.checkRequestScrap.Name = "checkRequestScrap";
-            this.checkRequestScrap.Size = new System.Drawing.Size(94, 17);
+            this.checkRequestScrap.Size = new System.Drawing.Size(137, 24);
             this.checkRequestScrap.TabIndex = 1;
             this.checkRequestScrap.Text = "Request Scrap";
             this.checkRequestScrap.UseVisualStyleBackColor = true;
@@ -1174,35 +1228,40 @@ namespace RatioMaster
             this.checkTCPListen.Checked = true;
             this.checkTCPListen.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkTCPListen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkTCPListen.Location = new System.Drawing.Point(3, 20);
+            this.checkTCPListen.Location = new System.Drawing.Point(4, 31);
+            this.checkTCPListen.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.checkTCPListen.Name = "checkTCPListen";
-            this.checkTCPListen.Size = new System.Drawing.Size(102, 17);
+            this.checkTCPListen.Size = new System.Drawing.Size(148, 24);
             this.checkTCPListen.TabIndex = 0;
             this.checkTCPListen.Text = "Use TCP listener";
             this.checkTCPListen.UseVisualStyleBackColor = true;
             // 
             // magneticPanel1
             // 
-            this.magneticPanel1.BevelStyle = BevelStyles.Flat;
+            this.magneticPanel1.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanel1.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
+            this.magneticPanel1.CaptionForeColor = System.Drawing.Color.Black;
+            this.magneticPanel1.CaptionStartColor = System.Drawing.Color.LightBlue;
             this.magneticPanel1.Controls.Add(this.browseButton);
             this.magneticPanel1.Controls.Add(this.torrentFile);
-            this.magneticPanel1.ExpandSize = new System.Drawing.Size(473, 46);
-            this.magneticPanel1.Location = new System.Drawing.Point(3, 3);
-            this.magneticPanel1.Marker = PanelMarkerStyle.Arrow;
+            this.magneticPanel1.ExpandSize = new System.Drawing.Size(710, 71);
+            this.magneticPanel1.Location = new System.Drawing.Point(4, 5);
+            this.magneticPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.magneticPanel1.Name = "magneticPanel1";
-            this.magneticPanel1.Size = new System.Drawing.Size(473, 46);
+            this.magneticPanel1.Size = new System.Drawing.Size(710, 71);
             this.magneticPanel1.TabIndex = 6;
             this.magneticPanel1.Text = "Torrent File";
             // 
             // browseButton
             // 
-            this.browseButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.browseButton.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (224)))), ((int) (((byte) (224)))), ((int) (((byte) (224)))));
             this.browseButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.browseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.browseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.browseButton.Location = new System.Drawing.Point(399, 19);
+            this.browseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.browseButton.Location = new System.Drawing.Point(598, 29);
+            this.browseButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.browseButton.Name = "browseButton";
-            this.browseButton.Size = new System.Drawing.Size(71, 24);
+            this.browseButton.Size = new System.Drawing.Size(106, 37);
             this.browseButton.TabIndex = 1;
             this.browseButton.Text = "Browse...";
             this.browseButton.UseVisualStyleBackColor = false;
@@ -1211,15 +1270,16 @@ namespace RatioMaster
             // torrentFile
             // 
             this.torrentFile.BackColor = System.Drawing.Color.White;
-            this.torrentFile.Location = new System.Drawing.Point(6, 21);
+            this.torrentFile.Location = new System.Drawing.Point(9, 32);
+            this.torrentFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.torrentFile.Name = "torrentFile";
             this.torrentFile.ReadOnly = true;
-            this.torrentFile.Size = new System.Drawing.Size(387, 20);
+            this.torrentFile.Size = new System.Drawing.Size(578, 26);
             this.torrentFile.TabIndex = 0;
             // 
             // RM
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.magneticPanel9);
             this.Controls.Add(this.magneticPanel8);
@@ -1235,8 +1295,9 @@ namespace RatioMaster
             this.Controls.Add(this.magneticPanel1);
             this.Controls.Add(this.btnDefault);
             this.Controls.Add(this.info);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "RM";
-            this.Size = new System.Drawing.Size(957, 437);
+            this.Size = new System.Drawing.Size(1436, 672);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.info.ResumeLayout(false);
@@ -1261,7 +1322,6 @@ namespace RatioMaster
             this.magneticPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -1335,7 +1395,7 @@ namespace RatioMaster
         internal System.Windows.Forms.ToolStripStatusLabel seedLabel;
         internal System.Windows.Forms.ToolStripStatusLabel leechLabel;
         private System.ComponentModel.IContainer components;
-        private MagneticPanel magneticPanel1;
+        private RatioMaster.MagneticPanel magneticPanel1;
         private MagneticPanel magneticPanel2;
         private MagneticPanel magneticPanel3;
         private MagneticPanel magneticPanel4;
@@ -1352,7 +1412,7 @@ namespace RatioMaster
         internal System.Windows.Forms.TextBox customPeerID;
         internal System.Windows.Forms.TextBox customKey;
         internal System.Windows.Forms.Label keyLabel;
-        private MagneticPanel magneticPanel8;
+        private RatioMaster.MagneticPanel magneticPanel8;
         private MagneticPanel magneticPanel9;
         internal System.Windows.Forms.TextBox RandomDownloadTo;
         internal System.Windows.Forms.TextBox RandomDownloadFrom;

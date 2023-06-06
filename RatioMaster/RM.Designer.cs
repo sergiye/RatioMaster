@@ -51,7 +51,7 @@ namespace RatioMaster
             this.manualUpdateButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
-            this.magneticPanel9 = new RatioMaster.MagneticPanel();
+            this.magneticPanelNextSpeed = new RatioMaster.MagneticPanel();
             this.RandomDownloadTo = new System.Windows.Forms.TextBox();
             this.RandomDownloadFrom = new System.Windows.Forms.TextBox();
             this.checkRandomUpload = new System.Windows.Forms.CheckBox();
@@ -62,12 +62,8 @@ namespace RatioMaster
             this.lblRandomDownloadFrom = new System.Windows.Forms.Label();
             this.RandomUploadFrom = new System.Windows.Forms.TextBox();
             this.lblRandomDownloadTo = new System.Windows.Forms.Label();
-            this.magneticPanel8 = new RatioMaster.MagneticPanel();
             this.logWindow = new System.Windows.Forms.RichTextBox();
-            this.checkLogEnabled = new System.Windows.Forms.CheckBox();
-            this.clearLogButton = new System.Windows.Forms.Button();
-            this.btnSaveLog = new System.Windows.Forms.Button();
-            this.magneticPanel7 = new RatioMaster.MagneticPanel();
+            this.magneticPanelSimulation = new RatioMaster.MagneticPanel();
             this.customPeersNum = new System.Windows.Forms.TextBox();
             this.lblcustomPeersNum = new System.Windows.Forms.Label();
             this.lblGenStatus = new System.Windows.Forms.Label();
@@ -78,7 +74,7 @@ namespace RatioMaster
             this.customPeerID = new System.Windows.Forms.TextBox();
             this.customKey = new System.Windows.Forms.TextBox();
             this.keyLabel = new System.Windows.Forms.Label();
-            this.magneticPanel6 = new RatioMaster.MagneticPanel();
+            this.magneticPanelOptions = new RatioMaster.MagneticPanel();
             this.lblStopAfter = new System.Windows.Forms.Label();
             this.cmbStopAfter = new System.Windows.Forms.ComboBox();
             this.txtStopValue = new System.Windows.Forms.TextBox();
@@ -90,7 +86,7 @@ namespace RatioMaster
             this.cmbClient = new System.Windows.Forms.ComboBox();
             this.interval = new System.Windows.Forms.TextBox();
             this.ClientLabel = new System.Windows.Forms.Label();
-            this.magneticPanel5 = new RatioMaster.MagneticPanel();
+            this.magneticPanelSpeed = new RatioMaster.MagneticPanel();
             this.uploadRateLabel = new System.Windows.Forms.Label();
             this.uploadRate = new System.Windows.Forms.TextBox();
             this.txtRandDownMax = new System.Windows.Forms.TextBox();
@@ -105,14 +101,14 @@ namespace RatioMaster
             this.lblUpMin = new System.Windows.Forms.Label();
             this.lblDownMin = new System.Windows.Forms.Label();
             this.lblUpMax = new System.Windows.Forms.Label();
-            this.magneticPanel4 = new RatioMaster.MagneticPanel();
+            this.magneticPanelInfo = new RatioMaster.MagneticPanel();
             this.txtTorrentSize = new System.Windows.Forms.TextBox();
             this.trackerAddress = new System.Windows.Forms.TextBox();
             this.lblTorrentSize = new System.Windows.Forms.Label();
             this.TrackerLabel = new System.Windows.Forms.Label();
             this.shaHash = new System.Windows.Forms.TextBox();
             this.hashLabel = new System.Windows.Forms.Label();
-            this.magneticPanel3 = new RatioMaster.MagneticPanel();
+            this.magneticPanelProxy = new RatioMaster.MagneticPanel();
             this.labelProxyType = new System.Windows.Forms.Label();
             this.labelProxyHost = new System.Windows.Forms.Label();
             this.textProxyPass = new System.Windows.Forms.TextBox();
@@ -123,23 +119,24 @@ namespace RatioMaster
             this.labelProxyPort = new System.Windows.Forms.Label();
             this.labelProxyPass = new System.Windows.Forms.Label();
             this.textProxyUser = new System.Windows.Forms.TextBox();
-            this.magneticPanel2 = new RatioMaster.MagneticPanel();
+            this.magneticPanelOther = new RatioMaster.MagneticPanel();
             this.checkIgnoreFailureReason = new System.Windows.Forms.CheckBox();
             this.checkRequestScrap = new System.Windows.Forms.CheckBox();
             this.checkTCPListen = new System.Windows.Forms.CheckBox();
-            this.magneticPanel1 = new RatioMaster.MagneticPanel();
+            this.magneticPanelFile = new RatioMaster.MagneticPanel();
             this.browseButton = new System.Windows.Forms.Button();
             this.torrentFile = new System.Windows.Forms.TextBox();
+            this.panelControls = new System.Windows.Forms.Panel();
             this.info.SuspendLayout();
-            this.magneticPanel9.SuspendLayout();
-            this.magneticPanel8.SuspendLayout();
-            this.magneticPanel7.SuspendLayout();
-            this.magneticPanel6.SuspendLayout();
-            this.magneticPanel5.SuspendLayout();
-            this.magneticPanel4.SuspendLayout();
-            this.magneticPanel3.SuspendLayout();
-            this.magneticPanel2.SuspendLayout();
-            this.magneticPanel1.SuspendLayout();
+            this.magneticPanelNextSpeed.SuspendLayout();
+            this.magneticPanelSimulation.SuspendLayout();
+            this.magneticPanelOptions.SuspendLayout();
+            this.magneticPanelSpeed.SuspendLayout();
+            this.magneticPanelInfo.SuspendLayout();
+            this.magneticPanelProxy.SuspendLayout();
+            this.magneticPanelOther.SuspendLayout();
+            this.magneticPanelFile.SuspendLayout();
+            this.panelControls.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnDefault
@@ -148,7 +145,7 @@ namespace RatioMaster
             this.btnDefault.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDefault.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
-            this.btnDefault.Location = new System.Drawing.Point(530, 582);
+            this.btnDefault.Location = new System.Drawing.Point(526, 6);
             this.btnDefault.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnDefault.Name = "btnDefault";
             this.btnDefault.Size = new System.Drawing.Size(180, 52);
@@ -180,6 +177,7 @@ namespace RatioMaster
             this.lblRemTime.Name = "lblRemTime";
             this.lblRemTime.Size = new System.Drawing.Size(95, 25);
             this.lblRemTime.Text = "Remaning:";
+            this.lblRemTime.Visible = false;
             // 
             // RemaningWork
             // 
@@ -190,24 +188,23 @@ namespace RatioMaster
             // 
             this.SaveLog.Filter = "Text file|*.txt";
             this.SaveLog.Title = "Please select text file...";
-            this.SaveLog.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveLog_FileOk);
             // 
             // info
             // 
             this.info.BackColor = System.Drawing.SystemColors.Control;
             this.info.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.lblUpdateIn, this.timerValue, this.uploadCountLabel, this.uploadCount, this.downloadCountLabel, this.downloadCount, this.lableTorrentRatio, this.lblTorrentRatio, this.seedLabel, this.leechLabel, this.lblTotalTimeCap, this.lblTotalTime, this.lblRemTime, this.txtRemTime});
-            this.info.Location = new System.Drawing.Point(0, 642);
+            this.info.Location = new System.Drawing.Point(0, 58);
             this.info.Name = "info";
             this.info.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
-            this.info.Size = new System.Drawing.Size(1436, 30);
+            this.info.Size = new System.Drawing.Size(713, 30);
             this.info.SizingGrip = false;
             this.info.TabIndex = 12;
             // 
             // uploadCountLabel
             // 
             this.uploadCountLabel.Name = "uploadCountLabel";
-            this.uploadCountLabel.Size = new System.Drawing.Size(94, 25);
-            this.uploadCountLabel.Text = "Uploaded:";
+            this.uploadCountLabel.Size = new System.Drawing.Size(35, 25);
+            this.uploadCountLabel.Text = "Up";
             // 
             // uploadCount
             // 
@@ -218,8 +215,8 @@ namespace RatioMaster
             // downloadCountLabel
             // 
             this.downloadCountLabel.Name = "downloadCountLabel";
-            this.downloadCountLabel.Size = new System.Drawing.Size(118, 25);
-            this.downloadCountLabel.Text = "Downloaded:";
+            this.downloadCountLabel.Size = new System.Drawing.Size(59, 25);
+            this.downloadCountLabel.Text = "Down";
             // 
             // downloadCount
             // 
@@ -282,7 +279,7 @@ namespace RatioMaster
             this.manualUpdateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.manualUpdateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.manualUpdateButton.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (64)))), ((int) (((byte) (0)))), ((int) (((byte) (64)))));
-            this.manualUpdateButton.Location = new System.Drawing.Point(356, 582);
+            this.manualUpdateButton.Location = new System.Drawing.Point(352, 6);
             this.manualUpdateButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.manualUpdateButton.Name = "manualUpdateButton";
             this.manualUpdateButton.Size = new System.Drawing.Size(165, 52);
@@ -298,7 +295,7 @@ namespace RatioMaster
             this.StartButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.StartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.StartButton.ForeColor = System.Drawing.Color.Blue;
-            this.StartButton.Location = new System.Drawing.Point(8, 582);
+            this.StartButton.Location = new System.Drawing.Point(4, 6);
             this.StartButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(165, 52);
@@ -315,7 +312,7 @@ namespace RatioMaster
             this.StopButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.StopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.StopButton.ForeColor = System.Drawing.Color.Red;
-            this.StopButton.Location = new System.Drawing.Point(182, 582);
+            this.StopButton.Location = new System.Drawing.Point(178, 6);
             this.StopButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(165, 52);
@@ -324,29 +321,27 @@ namespace RatioMaster
             this.StopButton.UseVisualStyleBackColor = false;
             this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
             // 
-            // magneticPanel9
+            // magneticPanelNextSpeed
             // 
-            this.magneticPanel9.BevelStyle = RatioMaster.BevelStyles.Flat;
-            this.magneticPanel9.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
-            this.magneticPanel9.CaptionForeColor = System.Drawing.Color.Black;
-            this.magneticPanel9.CaptionStartColor = System.Drawing.Color.LightBlue;
-            this.magneticPanel9.Controls.Add(this.RandomDownloadTo);
-            this.magneticPanel9.Controls.Add(this.RandomDownloadFrom);
-            this.magneticPanel9.Controls.Add(this.checkRandomUpload);
-            this.magneticPanel9.Controls.Add(this.checkRandomDownload);
-            this.magneticPanel9.Controls.Add(this.lblRandomUploadFrom);
-            this.magneticPanel9.Controls.Add(this.RandomUploadTo);
-            this.magneticPanel9.Controls.Add(this.lblRandomUploadTo);
-            this.magneticPanel9.Controls.Add(this.lblRandomDownloadFrom);
-            this.magneticPanel9.Controls.Add(this.RandomUploadFrom);
-            this.magneticPanel9.Controls.Add(this.lblRandomDownloadTo);
-            this.magneticPanel9.ExpandSize = new System.Drawing.Size(708, 89);
-            this.magneticPanel9.Location = new System.Drawing.Point(723, 192);
-            this.magneticPanel9.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.magneticPanel9.Name = "magneticPanel9";
-            this.magneticPanel9.Size = new System.Drawing.Size(708, 89);
-            this.magneticPanel9.TabIndex = 28;
-            this.magneticPanel9.Text = "On Next Update Get Random Speeds";
+            this.magneticPanelNextSpeed.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanelNextSpeed.Controls.Add(this.RandomDownloadTo);
+            this.magneticPanelNextSpeed.Controls.Add(this.RandomDownloadFrom);
+            this.magneticPanelNextSpeed.Controls.Add(this.checkRandomUpload);
+            this.magneticPanelNextSpeed.Controls.Add(this.checkRandomDownload);
+            this.magneticPanelNextSpeed.Controls.Add(this.lblRandomUploadFrom);
+            this.magneticPanelNextSpeed.Controls.Add(this.RandomUploadTo);
+            this.magneticPanelNextSpeed.Controls.Add(this.lblRandomUploadTo);
+            this.magneticPanelNextSpeed.Controls.Add(this.lblRandomDownloadFrom);
+            this.magneticPanelNextSpeed.Controls.Add(this.RandomUploadFrom);
+            this.magneticPanelNextSpeed.Controls.Add(this.lblRandomDownloadTo);
+            this.magneticPanelNextSpeed.Dock = System.Windows.Forms.DockStyle.Top;
+            this.magneticPanelNextSpeed.ExpandSize = new System.Drawing.Size(713, 89);
+            this.magneticPanelNextSpeed.Location = new System.Drawing.Point(0, 395);
+            this.magneticPanelNextSpeed.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.magneticPanelNextSpeed.Name = "magneticPanelNextSpeed";
+            this.magneticPanelNextSpeed.Size = new System.Drawing.Size(713, 89);
+            this.magneticPanelNextSpeed.TabIndex = 28;
+            this.magneticPanelNextSpeed.Text = "On Next Update Get Random Speeds";
             // 
             // RandomDownloadTo
             // 
@@ -452,104 +447,40 @@ namespace RatioMaster
             this.lblRandomDownloadTo.TabIndex = 8;
             this.lblRandomDownloadTo.Text = "Max:";
             // 
-            // magneticPanel8
-            // 
-            this.magneticPanel8.BevelStyle = RatioMaster.BevelStyles.Flat;
-            this.magneticPanel8.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
-            this.magneticPanel8.CaptionForeColor = System.Drawing.Color.Black;
-            this.magneticPanel8.CaptionStartColor = System.Drawing.Color.LightBlue;
-            this.magneticPanel8.Controls.Add(this.logWindow);
-            this.magneticPanel8.Controls.Add(this.checkLogEnabled);
-            this.magneticPanel8.Controls.Add(this.clearLogButton);
-            this.magneticPanel8.Controls.Add(this.btnSaveLog);
-            this.magneticPanel8.ExpandSize = new System.Drawing.Size(708, 343);
-            this.magneticPanel8.Location = new System.Drawing.Point(724, 294);
-            this.magneticPanel8.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.magneticPanel8.Name = "magneticPanel8";
-            this.magneticPanel8.Size = new System.Drawing.Size(708, 343);
-            this.magneticPanel8.TabIndex = 27;
-            this.magneticPanel8.Text = "Log";
-            // 
             // logWindow
             // 
             this.logWindow.BackColor = System.Drawing.Color.Black;
+            this.logWindow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logWindow.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (224)))), ((int) (((byte) (224)))), ((int) (((byte) (224)))));
-            this.logWindow.Location = new System.Drawing.Point(4, 69);
+            this.logWindow.Location = new System.Drawing.Point(0, 791);
             this.logWindow.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.logWindow.Name = "logWindow";
             this.logWindow.ReadOnly = true;
-            this.logWindow.Size = new System.Drawing.Size(697, 267);
+            this.logWindow.Size = new System.Drawing.Size(713, 108);
             this.logWindow.TabIndex = 3;
             this.logWindow.Text = "------------------------------------- LOG -------------------------------------\n";
             // 
-            // checkLogEnabled
+            // magneticPanelSimulation
             // 
-            this.checkLogEnabled.AutoSize = true;
-            this.checkLogEnabled.Checked = true;
-            this.checkLogEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkLogEnabled.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkLogEnabled.Location = new System.Drawing.Point(6, 35);
-            this.checkLogEnabled.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.checkLogEnabled.Name = "checkLogEnabled";
-            this.checkLogEnabled.Size = new System.Drawing.Size(111, 24);
-            this.checkLogEnabled.TabIndex = 0;
-            this.checkLogEnabled.Text = "Enable Log";
-            this.checkLogEnabled.UseVisualStyleBackColor = true;
-            // 
-            // clearLogButton
-            // 
-            this.clearLogButton.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (224)))), ((int) (((byte) (224)))), ((int) (((byte) (224)))));
-            this.clearLogButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.clearLogButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.clearLogButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
-            this.clearLogButton.ForeColor = System.Drawing.Color.Blue;
-            this.clearLogButton.Location = new System.Drawing.Point(444, 29);
-            this.clearLogButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.clearLogButton.Name = "clearLogButton";
-            this.clearLogButton.Size = new System.Drawing.Size(128, 37);
-            this.clearLogButton.TabIndex = 2;
-            this.clearLogButton.Text = "Clear Log";
-            this.clearLogButton.UseVisualStyleBackColor = false;
-            this.clearLogButton.Click += new System.EventHandler(this.clearLogButton_Click);
-            // 
-            // btnSaveLog
-            // 
-            this.btnSaveLog.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (224)))), ((int) (((byte) (224)))), ((int) (((byte) (224)))));
-            this.btnSaveLog.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSaveLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
-            this.btnSaveLog.Location = new System.Drawing.Point(580, 29);
-            this.btnSaveLog.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnSaveLog.Name = "btnSaveLog";
-            this.btnSaveLog.Size = new System.Drawing.Size(123, 37);
-            this.btnSaveLog.TabIndex = 1;
-            this.btnSaveLog.Text = "Save Log";
-            this.btnSaveLog.UseVisualStyleBackColor = false;
-            this.btnSaveLog.Click += new System.EventHandler(this.btnSaveLog_Click);
-            // 
-            // magneticPanel7
-            // 
-            this.magneticPanel7.BevelStyle = RatioMaster.BevelStyles.Flat;
-            this.magneticPanel7.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
-            this.magneticPanel7.CaptionForeColor = System.Drawing.Color.Black;
-            this.magneticPanel7.CaptionStartColor = System.Drawing.Color.LightBlue;
-            this.magneticPanel7.Controls.Add(this.customPeersNum);
-            this.magneticPanel7.Controls.Add(this.lblcustomPeersNum);
-            this.magneticPanel7.Controls.Add(this.lblGenStatus);
-            this.magneticPanel7.Controls.Add(this.customPort);
-            this.magneticPanel7.Controls.Add(this.portLabel);
-            this.magneticPanel7.Controls.Add(this.chkNewValues);
-            this.magneticPanel7.Controls.Add(this.label4);
-            this.magneticPanel7.Controls.Add(this.customPeerID);
-            this.magneticPanel7.Controls.Add(this.customKey);
-            this.magneticPanel7.Controls.Add(this.keyLabel);
-            this.magneticPanel7.ExpandSize = new System.Drawing.Size(710, 137);
-            this.magneticPanel7.Location = new System.Drawing.Point(4, 435);
-            this.magneticPanel7.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.magneticPanel7.Name = "magneticPanel7";
-            this.magneticPanel7.Size = new System.Drawing.Size(710, 137);
-            this.magneticPanel7.TabIndex = 26;
-            this.magneticPanel7.Text = "Custom Client Simulation";
+            this.magneticPanelSimulation.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanelSimulation.Controls.Add(this.customPeersNum);
+            this.magneticPanelSimulation.Controls.Add(this.lblcustomPeersNum);
+            this.magneticPanelSimulation.Controls.Add(this.lblGenStatus);
+            this.magneticPanelSimulation.Controls.Add(this.customPort);
+            this.magneticPanelSimulation.Controls.Add(this.portLabel);
+            this.magneticPanelSimulation.Controls.Add(this.chkNewValues);
+            this.magneticPanelSimulation.Controls.Add(this.label4);
+            this.magneticPanelSimulation.Controls.Add(this.customPeerID);
+            this.magneticPanelSimulation.Controls.Add(this.customKey);
+            this.magneticPanelSimulation.Controls.Add(this.keyLabel);
+            this.magneticPanelSimulation.Dock = System.Windows.Forms.DockStyle.Top;
+            this.magneticPanelSimulation.ExpandSize = new System.Drawing.Size(713, 137);
+            this.magneticPanelSimulation.Location = new System.Drawing.Point(0, 654);
+            this.magneticPanelSimulation.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.magneticPanelSimulation.Name = "magneticPanelSimulation";
+            this.magneticPanelSimulation.Size = new System.Drawing.Size(713, 137);
+            this.magneticPanelSimulation.TabIndex = 26;
+            this.magneticPanelSimulation.Text = "Custom Client Simulation";
             // 
             // customPeersNum
             // 
@@ -652,30 +583,28 @@ namespace RatioMaster
             this.keyLabel.TabIndex = 25;
             this.keyLabel.Text = "Client Key:";
             // 
-            // magneticPanel6
+            // magneticPanelOptions
             // 
-            this.magneticPanel6.BevelStyle = RatioMaster.BevelStyles.Flat;
-            this.magneticPanel6.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
-            this.magneticPanel6.CaptionForeColor = System.Drawing.Color.Black;
-            this.magneticPanel6.CaptionStartColor = System.Drawing.Color.LightBlue;
-            this.magneticPanel6.Controls.Add(this.lblStopAfter);
-            this.magneticPanel6.Controls.Add(this.cmbStopAfter);
-            this.magneticPanel6.Controls.Add(this.txtStopValue);
-            this.magneticPanel6.Controls.Add(this.intervalLabel);
-            this.magneticPanel6.Controls.Add(this.lblRemWork);
-            this.magneticPanel6.Controls.Add(this.fileSize);
-            this.magneticPanel6.Controls.Add(this.cmbVersion);
-            this.magneticPanel6.Controls.Add(this.FileSizeLabel);
-            this.magneticPanel6.Controls.Add(this.cmbClient);
-            this.magneticPanel6.Controls.Add(this.interval);
-            this.magneticPanel6.Controls.Add(this.ClientLabel);
-            this.magneticPanel6.ExpandSize = new System.Drawing.Size(710, 108);
-            this.magneticPanel6.Location = new System.Drawing.Point(4, 318);
-            this.magneticPanel6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.magneticPanel6.Name = "magneticPanel6";
-            this.magneticPanel6.Size = new System.Drawing.Size(710, 108);
-            this.magneticPanel6.TabIndex = 25;
-            this.magneticPanel6.Text = "Options";
+            this.magneticPanelOptions.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanelOptions.Controls.Add(this.lblStopAfter);
+            this.magneticPanelOptions.Controls.Add(this.cmbStopAfter);
+            this.magneticPanelOptions.Controls.Add(this.txtStopValue);
+            this.magneticPanelOptions.Controls.Add(this.intervalLabel);
+            this.magneticPanelOptions.Controls.Add(this.lblRemWork);
+            this.magneticPanelOptions.Controls.Add(this.fileSize);
+            this.magneticPanelOptions.Controls.Add(this.cmbVersion);
+            this.magneticPanelOptions.Controls.Add(this.FileSizeLabel);
+            this.magneticPanelOptions.Controls.Add(this.cmbClient);
+            this.magneticPanelOptions.Controls.Add(this.interval);
+            this.magneticPanelOptions.Controls.Add(this.ClientLabel);
+            this.magneticPanelOptions.Dock = System.Windows.Forms.DockStyle.Top;
+            this.magneticPanelOptions.ExpandSize = new System.Drawing.Size(713, 108);
+            this.magneticPanelOptions.Location = new System.Drawing.Point(0, 287);
+            this.magneticPanelOptions.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.magneticPanelOptions.Name = "magneticPanelOptions";
+            this.magneticPanelOptions.Size = new System.Drawing.Size(713, 108);
+            this.magneticPanelOptions.TabIndex = 25;
+            this.magneticPanelOptions.Text = "Options";
             // 
             // lblStopAfter
             // 
@@ -709,7 +638,6 @@ namespace RatioMaster
             this.txtStopValue.Size = new System.Drawing.Size(86, 26);
             this.txtStopValue.TabIndex = 24;
             this.txtStopValue.Text = "0";
-            this.txtStopValue.TextChanged += new System.EventHandler(this.txtStopValue_TextChanged);
             // 
             // intervalLabel
             // 
@@ -741,7 +669,6 @@ namespace RatioMaster
             this.fileSize.Size = new System.Drawing.Size(70, 26);
             this.fileSize.TabIndex = 20;
             this.fileSize.Text = "0";
-            this.fileSize.TextChanged += new System.EventHandler(this.fileSize_TextChanged);
             // 
             // cmbVersion
             // 
@@ -801,33 +728,31 @@ namespace RatioMaster
             this.ClientLabel.TabIndex = 16;
             this.ClientLabel.Text = "Client:";
             // 
-            // magneticPanel5
+            // magneticPanelSpeed
             // 
-            this.magneticPanel5.BevelStyle = RatioMaster.BevelStyles.Flat;
-            this.magneticPanel5.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
-            this.magneticPanel5.CaptionForeColor = System.Drawing.Color.Black;
-            this.magneticPanel5.CaptionStartColor = System.Drawing.Color.LightBlue;
-            this.magneticPanel5.Controls.Add(this.uploadRateLabel);
-            this.magneticPanel5.Controls.Add(this.uploadRate);
-            this.magneticPanel5.Controls.Add(this.txtRandDownMax);
-            this.magneticPanel5.Controls.Add(this.downloadRateLabel);
-            this.magneticPanel5.Controls.Add(this.txtRandUpMax);
-            this.magneticPanel5.Controls.Add(this.downloadRate);
-            this.magneticPanel5.Controls.Add(this.txtRandDownMin);
-            this.magneticPanel5.Controls.Add(this.chkRandUP);
-            this.magneticPanel5.Controls.Add(this.txtRandUpMin);
-            this.magneticPanel5.Controls.Add(this.chkRandDown);
-            this.magneticPanel5.Controls.Add(this.lblDownMax);
-            this.magneticPanel5.Controls.Add(this.lblUpMin);
-            this.magneticPanel5.Controls.Add(this.lblDownMin);
-            this.magneticPanel5.Controls.Add(this.lblUpMax);
-            this.magneticPanel5.ExpandSize = new System.Drawing.Size(710, 108);
-            this.magneticPanel5.Location = new System.Drawing.Point(4, 202);
-            this.magneticPanel5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.magneticPanel5.Name = "magneticPanel5";
-            this.magneticPanel5.Size = new System.Drawing.Size(710, 108);
-            this.magneticPanel5.TabIndex = 25;
-            this.magneticPanel5.Text = "Speed Options";
+            this.magneticPanelSpeed.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanelSpeed.Controls.Add(this.uploadRateLabel);
+            this.magneticPanelSpeed.Controls.Add(this.uploadRate);
+            this.magneticPanelSpeed.Controls.Add(this.txtRandDownMax);
+            this.magneticPanelSpeed.Controls.Add(this.downloadRateLabel);
+            this.magneticPanelSpeed.Controls.Add(this.txtRandUpMax);
+            this.magneticPanelSpeed.Controls.Add(this.downloadRate);
+            this.magneticPanelSpeed.Controls.Add(this.txtRandDownMin);
+            this.magneticPanelSpeed.Controls.Add(this.chkRandUP);
+            this.magneticPanelSpeed.Controls.Add(this.txtRandUpMin);
+            this.magneticPanelSpeed.Controls.Add(this.chkRandDown);
+            this.magneticPanelSpeed.Controls.Add(this.lblDownMax);
+            this.magneticPanelSpeed.Controls.Add(this.lblUpMin);
+            this.magneticPanelSpeed.Controls.Add(this.lblDownMin);
+            this.magneticPanelSpeed.Controls.Add(this.lblUpMax);
+            this.magneticPanelSpeed.Dock = System.Windows.Forms.DockStyle.Top;
+            this.magneticPanelSpeed.ExpandSize = new System.Drawing.Size(713, 108);
+            this.magneticPanelSpeed.Location = new System.Drawing.Point(0, 179);
+            this.magneticPanelSpeed.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.magneticPanelSpeed.Name = "magneticPanelSpeed";
+            this.magneticPanelSpeed.Size = new System.Drawing.Size(713, 108);
+            this.magneticPanelSpeed.TabIndex = 25;
+            this.magneticPanelSpeed.Text = "Speed Options";
             // 
             // uploadRateLabel
             // 
@@ -979,25 +904,23 @@ namespace RatioMaster
             this.lblUpMax.TabIndex = 5;
             this.lblUpMax.Text = "Max:";
             // 
-            // magneticPanel4
+            // magneticPanelInfo
             // 
-            this.magneticPanel4.BevelStyle = RatioMaster.BevelStyles.Flat;
-            this.magneticPanel4.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
-            this.magneticPanel4.CaptionForeColor = System.Drawing.Color.Black;
-            this.magneticPanel4.CaptionStartColor = System.Drawing.Color.LightBlue;
-            this.magneticPanel4.Controls.Add(this.txtTorrentSize);
-            this.magneticPanel4.Controls.Add(this.trackerAddress);
-            this.magneticPanel4.Controls.Add(this.lblTorrentSize);
-            this.magneticPanel4.Controls.Add(this.TrackerLabel);
-            this.magneticPanel4.Controls.Add(this.shaHash);
-            this.magneticPanel4.Controls.Add(this.hashLabel);
-            this.magneticPanel4.ExpandSize = new System.Drawing.Size(710, 108);
-            this.magneticPanel4.Location = new System.Drawing.Point(4, 85);
-            this.magneticPanel4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.magneticPanel4.Name = "magneticPanel4";
-            this.magneticPanel4.Size = new System.Drawing.Size(710, 108);
-            this.magneticPanel4.TabIndex = 25;
-            this.magneticPanel4.Text = "Torrent Info";
+            this.magneticPanelInfo.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanelInfo.Controls.Add(this.txtTorrentSize);
+            this.magneticPanelInfo.Controls.Add(this.trackerAddress);
+            this.magneticPanelInfo.Controls.Add(this.lblTorrentSize);
+            this.magneticPanelInfo.Controls.Add(this.TrackerLabel);
+            this.magneticPanelInfo.Controls.Add(this.shaHash);
+            this.magneticPanelInfo.Controls.Add(this.hashLabel);
+            this.magneticPanelInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.magneticPanelInfo.ExpandSize = new System.Drawing.Size(713, 108);
+            this.magneticPanelInfo.Location = new System.Drawing.Point(0, 71);
+            this.magneticPanelInfo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.magneticPanelInfo.Name = "magneticPanelInfo";
+            this.magneticPanelInfo.Size = new System.Drawing.Size(713, 108);
+            this.magneticPanelInfo.TabIndex = 25;
+            this.magneticPanelInfo.Text = "Torrent Info";
             // 
             // txtTorrentSize
             // 
@@ -1056,29 +979,27 @@ namespace RatioMaster
             this.hashLabel.TabIndex = 2;
             this.hashLabel.Text = "HASH:\r\n";
             // 
-            // magneticPanel3
+            // magneticPanelProxy
             // 
-            this.magneticPanel3.BevelStyle = RatioMaster.BevelStyles.Flat;
-            this.magneticPanel3.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
-            this.magneticPanel3.CaptionForeColor = System.Drawing.Color.Black;
-            this.magneticPanel3.CaptionStartColor = System.Drawing.Color.LightBlue;
-            this.magneticPanel3.Controls.Add(this.labelProxyType);
-            this.magneticPanel3.Controls.Add(this.labelProxyHost);
-            this.magneticPanel3.Controls.Add(this.textProxyPass);
-            this.magneticPanel3.Controls.Add(this.comboProxyType);
-            this.magneticPanel3.Controls.Add(this.textProxyHost);
-            this.magneticPanel3.Controls.Add(this.labelProxyUser);
-            this.magneticPanel3.Controls.Add(this.textProxyPort);
-            this.magneticPanel3.Controls.Add(this.labelProxyPort);
-            this.magneticPanel3.Controls.Add(this.labelProxyPass);
-            this.magneticPanel3.Controls.Add(this.textProxyUser);
-            this.magneticPanel3.ExpandSize = new System.Drawing.Size(708, 108);
-            this.magneticPanel3.Location = new System.Drawing.Point(723, 75);
-            this.magneticPanel3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.magneticPanel3.Name = "magneticPanel3";
-            this.magneticPanel3.Size = new System.Drawing.Size(708, 108);
-            this.magneticPanel3.TabIndex = 6;
-            this.magneticPanel3.Text = "Proxy Server Settings";
+            this.magneticPanelProxy.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanelProxy.Controls.Add(this.labelProxyType);
+            this.magneticPanelProxy.Controls.Add(this.labelProxyHost);
+            this.magneticPanelProxy.Controls.Add(this.textProxyPass);
+            this.magneticPanelProxy.Controls.Add(this.comboProxyType);
+            this.magneticPanelProxy.Controls.Add(this.textProxyHost);
+            this.magneticPanelProxy.Controls.Add(this.labelProxyUser);
+            this.magneticPanelProxy.Controls.Add(this.textProxyPort);
+            this.magneticPanelProxy.Controls.Add(this.labelProxyPort);
+            this.magneticPanelProxy.Controls.Add(this.labelProxyPass);
+            this.magneticPanelProxy.Controls.Add(this.textProxyUser);
+            this.magneticPanelProxy.Dock = System.Windows.Forms.DockStyle.Top;
+            this.magneticPanelProxy.ExpandSize = new System.Drawing.Size(713, 108);
+            this.magneticPanelProxy.Location = new System.Drawing.Point(0, 546);
+            this.magneticPanelProxy.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.magneticPanelProxy.Name = "magneticPanelProxy";
+            this.magneticPanelProxy.Size = new System.Drawing.Size(713, 108);
+            this.magneticPanelProxy.TabIndex = 6;
+            this.magneticPanelProxy.Text = "Proxy Server Settings";
             // 
             // labelProxyType
             // 
@@ -1179,22 +1100,20 @@ namespace RatioMaster
             this.textProxyUser.Size = new System.Drawing.Size(134, 26);
             this.textProxyUser.TabIndex = 3;
             // 
-            // magneticPanel2
+            // magneticPanelOther
             // 
-            this.magneticPanel2.BevelStyle = RatioMaster.BevelStyles.Flat;
-            this.magneticPanel2.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
-            this.magneticPanel2.CaptionForeColor = System.Drawing.Color.Black;
-            this.magneticPanel2.CaptionStartColor = System.Drawing.Color.LightBlue;
-            this.magneticPanel2.Controls.Add(this.checkIgnoreFailureReason);
-            this.magneticPanel2.Controls.Add(this.checkRequestScrap);
-            this.magneticPanel2.Controls.Add(this.checkTCPListen);
-            this.magneticPanel2.ExpandSize = new System.Drawing.Size(708, 62);
-            this.magneticPanel2.Location = new System.Drawing.Point(723, 5);
-            this.magneticPanel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.magneticPanel2.Name = "magneticPanel2";
-            this.magneticPanel2.Size = new System.Drawing.Size(708, 62);
-            this.magneticPanel2.TabIndex = 6;
-            this.magneticPanel2.Text = "Other Settings";
+            this.magneticPanelOther.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanelOther.Controls.Add(this.checkIgnoreFailureReason);
+            this.magneticPanelOther.Controls.Add(this.checkRequestScrap);
+            this.magneticPanelOther.Controls.Add(this.checkTCPListen);
+            this.magneticPanelOther.Dock = System.Windows.Forms.DockStyle.Top;
+            this.magneticPanelOther.ExpandSize = new System.Drawing.Size(713, 62);
+            this.magneticPanelOther.Location = new System.Drawing.Point(0, 484);
+            this.magneticPanelOther.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.magneticPanelOther.Name = "magneticPanelOther";
+            this.magneticPanelOther.Size = new System.Drawing.Size(713, 62);
+            this.magneticPanelOther.TabIndex = 6;
+            this.magneticPanelOther.Text = "Other Settings";
             // 
             // checkIgnoreFailureReason
             // 
@@ -1236,21 +1155,19 @@ namespace RatioMaster
             this.checkTCPListen.Text = "Use TCP listener";
             this.checkTCPListen.UseVisualStyleBackColor = true;
             // 
-            // magneticPanel1
+            // magneticPanelFile
             // 
-            this.magneticPanel1.BevelStyle = RatioMaster.BevelStyles.Flat;
-            this.magneticPanel1.CaptionEndColor = System.Drawing.Color.DeepSkyBlue;
-            this.magneticPanel1.CaptionForeColor = System.Drawing.Color.Black;
-            this.magneticPanel1.CaptionStartColor = System.Drawing.Color.LightBlue;
-            this.magneticPanel1.Controls.Add(this.browseButton);
-            this.magneticPanel1.Controls.Add(this.torrentFile);
-            this.magneticPanel1.ExpandSize = new System.Drawing.Size(710, 71);
-            this.magneticPanel1.Location = new System.Drawing.Point(4, 5);
-            this.magneticPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.magneticPanel1.Name = "magneticPanel1";
-            this.magneticPanel1.Size = new System.Drawing.Size(710, 71);
-            this.magneticPanel1.TabIndex = 6;
-            this.magneticPanel1.Text = "Torrent File";
+            this.magneticPanelFile.BevelStyle = RatioMaster.BevelStyles.Flat;
+            this.magneticPanelFile.Controls.Add(this.browseButton);
+            this.magneticPanelFile.Controls.Add(this.torrentFile);
+            this.magneticPanelFile.Dock = System.Windows.Forms.DockStyle.Top;
+            this.magneticPanelFile.ExpandSize = new System.Drawing.Size(713, 71);
+            this.magneticPanelFile.Location = new System.Drawing.Point(0, 0);
+            this.magneticPanelFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.magneticPanelFile.Name = "magneticPanelFile";
+            this.magneticPanelFile.Size = new System.Drawing.Size(713, 71);
+            this.magneticPanelFile.TabIndex = 6;
+            this.magneticPanelFile.Text = "Torrent File";
             // 
             // browseButton
             // 
@@ -1277,52 +1194,62 @@ namespace RatioMaster
             this.torrentFile.Size = new System.Drawing.Size(578, 26);
             this.torrentFile.TabIndex = 0;
             // 
+            // panelControls
+            // 
+            this.panelControls.Controls.Add(this.StartButton);
+            this.panelControls.Controls.Add(this.btnDefault);
+            this.panelControls.Controls.Add(this.manualUpdateButton);
+            this.panelControls.Controls.Add(this.StopButton);
+            this.panelControls.Controls.Add(this.info);
+            this.panelControls.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelControls.Location = new System.Drawing.Point(0, 899);
+            this.panelControls.Name = "panelControls";
+            this.panelControls.Size = new System.Drawing.Size(713, 88);
+            this.panelControls.TabIndex = 29;
+            // 
             // RM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.magneticPanel9);
-            this.Controls.Add(this.magneticPanel8);
-            this.Controls.Add(this.magneticPanel7);
-            this.Controls.Add(this.magneticPanel6);
-            this.Controls.Add(this.magneticPanel5);
-            this.Controls.Add(this.magneticPanel4);
-            this.Controls.Add(this.StartButton);
-            this.Controls.Add(this.StopButton);
-            this.Controls.Add(this.magneticPanel3);
-            this.Controls.Add(this.manualUpdateButton);
-            this.Controls.Add(this.magneticPanel2);
-            this.Controls.Add(this.magneticPanel1);
-            this.Controls.Add(this.btnDefault);
-            this.Controls.Add(this.info);
+            this.Controls.Add(this.logWindow);
+            this.Controls.Add(this.panelControls);
+            this.Controls.Add(this.magneticPanelSimulation);
+            this.Controls.Add(this.magneticPanelProxy);
+            this.Controls.Add(this.magneticPanelOther);
+            this.Controls.Add(this.magneticPanelNextSpeed);
+            this.Controls.Add(this.magneticPanelOptions);
+            this.Controls.Add(this.magneticPanelSpeed);
+            this.Controls.Add(this.magneticPanelInfo);
+            this.Controls.Add(this.magneticPanelFile);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "RM";
-            this.Size = new System.Drawing.Size(1436, 672);
+            this.Size = new System.Drawing.Size(713, 987);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.info.ResumeLayout(false);
             this.info.PerformLayout();
-            this.magneticPanel9.ResumeLayout(false);
-            this.magneticPanel9.PerformLayout();
-            this.magneticPanel8.ResumeLayout(false);
-            this.magneticPanel8.PerformLayout();
-            this.magneticPanel7.ResumeLayout(false);
-            this.magneticPanel7.PerformLayout();
-            this.magneticPanel6.ResumeLayout(false);
-            this.magneticPanel6.PerformLayout();
-            this.magneticPanel5.ResumeLayout(false);
-            this.magneticPanel5.PerformLayout();
-            this.magneticPanel4.ResumeLayout(false);
-            this.magneticPanel4.PerformLayout();
-            this.magneticPanel3.ResumeLayout(false);
-            this.magneticPanel3.PerformLayout();
-            this.magneticPanel2.ResumeLayout(false);
-            this.magneticPanel2.PerformLayout();
-            this.magneticPanel1.ResumeLayout(false);
-            this.magneticPanel1.PerformLayout();
+            this.magneticPanelNextSpeed.ResumeLayout(false);
+            this.magneticPanelNextSpeed.PerformLayout();
+            this.magneticPanelSimulation.ResumeLayout(false);
+            this.magneticPanelSimulation.PerformLayout();
+            this.magneticPanelOptions.ResumeLayout(false);
+            this.magneticPanelOptions.PerformLayout();
+            this.magneticPanelSpeed.ResumeLayout(false);
+            this.magneticPanelSpeed.PerformLayout();
+            this.magneticPanelInfo.ResumeLayout(false);
+            this.magneticPanelInfo.PerformLayout();
+            this.magneticPanelProxy.ResumeLayout(false);
+            this.magneticPanelProxy.PerformLayout();
+            this.magneticPanelOther.ResumeLayout(false);
+            this.magneticPanelOther.PerformLayout();
+            this.magneticPanelFile.ResumeLayout(false);
+            this.magneticPanelFile.PerformLayout();
+            this.panelControls.ResumeLayout(false);
+            this.panelControls.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
         }
+
+        private System.Windows.Forms.Panel panelControls;
 
         #endregion
 
@@ -1388,20 +1315,17 @@ namespace RatioMaster
         internal System.Windows.Forms.Button manualUpdateButton;
         internal System.Windows.Forms.Button StartButton;
         internal System.Windows.Forms.Button StopButton;
-        internal System.Windows.Forms.Button btnSaveLog;
         internal System.Windows.Forms.RichTextBox logWindow;
-        internal System.Windows.Forms.Button clearLogButton;
-        internal System.Windows.Forms.CheckBox checkLogEnabled;
         internal System.Windows.Forms.ToolStripStatusLabel seedLabel;
         internal System.Windows.Forms.ToolStripStatusLabel leechLabel;
         private System.ComponentModel.IContainer components;
-        private RatioMaster.MagneticPanel magneticPanel1;
-        private MagneticPanel magneticPanel2;
-        private MagneticPanel magneticPanel3;
-        private MagneticPanel magneticPanel4;
-        private MagneticPanel magneticPanel5;
-        private MagneticPanel magneticPanel6;
-        private MagneticPanel magneticPanel7;
+        private RatioMaster.MagneticPanel magneticPanelFile;
+        private RatioMaster.MagneticPanel magneticPanelOther;
+        private RatioMaster.MagneticPanel magneticPanelProxy;
+        private RatioMaster.MagneticPanel magneticPanelInfo;
+        private RatioMaster.MagneticPanel magneticPanelSpeed;
+        private RatioMaster.MagneticPanel magneticPanelOptions;
+        private RatioMaster.MagneticPanel magneticPanelSimulation;
         internal System.Windows.Forms.TextBox customPeersNum;
         internal System.Windows.Forms.Label lblcustomPeersNum;
         internal System.Windows.Forms.Label lblGenStatus;
@@ -1412,8 +1336,7 @@ namespace RatioMaster
         internal System.Windows.Forms.TextBox customPeerID;
         internal System.Windows.Forms.TextBox customKey;
         internal System.Windows.Forms.Label keyLabel;
-        private RatioMaster.MagneticPanel magneticPanel8;
-        private MagneticPanel magneticPanel9;
+        private RatioMaster.MagneticPanel magneticPanelNextSpeed;
         internal System.Windows.Forms.TextBox RandomDownloadTo;
         internal System.Windows.Forms.TextBox RandomDownloadFrom;
         internal System.Windows.Forms.CheckBox checkRandomUpload;

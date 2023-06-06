@@ -47,7 +47,7 @@ namespace RatioMaster {
     public string Generate(string inputString, bool upperCase) {
       // TODO: Use StringBuilder
       var result = string.Empty;
-      for (var i = 0; i < inputString.Length; i = i + 1) {
+      for (var i = 0; i < inputString.Length; i += 1) {
         if (char.IsLetterOrDigit(inputString[i]) && inputString[i] < 127) {
           result += inputString[i];
         }

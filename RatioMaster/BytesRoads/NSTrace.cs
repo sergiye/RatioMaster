@@ -129,7 +129,7 @@ namespace RatioMaster.BytesRoads {
         Trace.Indent();
 
       foreach (TraceListener tl in Listeners)
-        tl.IndentLevel = tl.IndentLevel + 1;
+        tl.IndentLevel += 1;
     }
 
     /// <summary>
@@ -141,7 +141,7 @@ namespace RatioMaster.BytesRoads {
         Trace.Unindent();
 
       foreach (TraceListener tl in Listeners)
-        tl.IndentLevel = tl.IndentLevel - 1;
+        tl.IndentLevel -= 1;
     }
 
     #endregion

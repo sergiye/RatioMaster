@@ -15,7 +15,6 @@ using RatioMaster.BytesRoads;
 
 namespace RatioMaster {
   internal partial class RM : UserControl {
-    // Variables
 
     #region Variables
 
@@ -82,7 +81,7 @@ namespace RatioMaster {
     internal void ExitRatioMaster() {
       IsExit = true;
       if (updateProcessStarted) {
-        @StopButton_Click(null, null);
+        StopButton_Click(null, null);
       }
 
       // this.Close();
@@ -122,13 +121,12 @@ namespace RatioMaster {
     internal void AddLog(string logLine) {
       if (logWindow.InvokeRequired) {
         SetTextCallback d = AddLogLine;
-        Invoke(d, new object[] {logLine});
+        Invoke(d, logLine);
       }
       else {
-        if (checkLogEnabled.Checked && IsExit != true) {
+        if (IsExit != true) {
           try {
             logWindow.AppendText(logLine);
-
             // logWindow.SelectionStart = logWindow.Text.Length;
             logWindow.ScrollToCaret();
           }
@@ -141,32 +139,26 @@ namespace RatioMaster {
     internal void AddLogLine(string logLine) {
       if (logWindow.InvokeRequired && IsExit != true) {
         SetTextCallback d = AddLogLine;
-        Invoke(d, new object[] {logLine});
+        Invoke(d, logLine);
       }
       else {
-        if (checkLogEnabled.Checked) {
-          try {
-            var dtNow = DateTime.Now;
-            string dateString;
+        try {
+          var dtNow = DateTime.Now;
+          string dateString;
 
-            if (!MainForm._24h_format_enabled)
-              dateString = "[" + String.Format("{0:hh:mm:ss}", dtNow) + "]";
-            else
-              dateString = "[" + String.Format("{0:HH:mm:ss}", dtNow) + "]";
+          if (!MainForm._24h_format_enabled)
+            dateString = "[" + String.Format("{0:hh:mm:ss}", dtNow) + "]";
+          else
+            dateString = "[" + String.Format("{0:HH:mm:ss}", dtNow) + "]";
 
-            logWindow.AppendText(dateString + " " + logLine + "\r\n");
+          logWindow.AppendText(dateString + " " + logLine + "\r\n");
 
-            // logWindow.SelectionStart = logWindow.Text.Length;
-            logWindow.ScrollToCaret();
-          }
-          catch (Exception) {
-          }
+          // logWindow.SelectionStart = logWindow.Text.Length;
+          logWindow.ScrollToCaret();
+        }
+        catch (Exception) {
         }
       }
-    }
-
-    internal void ClearLog() {
-      logWindow.Clear();
     }
 
     internal void GetPCinfo() {
@@ -185,13 +177,6 @@ namespace RatioMaster {
       }
       catch (Exception) {
       }
-    }
-
-    internal void SaveLog_FileOk(object sender, CancelEventArgs e) {
-      var file = SaveLog.FileName;
-      var sw = new StreamWriter(file);
-      sw.Write(logWindow.Text);
-      sw.Close();
     }
 
     #endregion
@@ -270,18 +255,6 @@ namespace RatioMaster {
 
         CloseTcpListener();
       }
-    }
-
-    private Socket CreateRegularSocket() {
-      Socket socket1 = null;
-      try {
-        socket1 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-      }
-      catch (Exception exception1) {
-        AddLogLine("createSocket error: " + exception1.Message);
-      }
-
-      return socket1;
     }
 
     private byte[] CreateHandshakeResponse() {
@@ -595,10 +568,6 @@ namespace RatioMaster {
 
     #region Buttons
 
-    internal void closeButton_Click(object sender, EventArgs e) {
-      ExitRatioMaster();
-    }
-
     internal void StartButton_Click(object sender, EventArgs e) {
       if (!StartButton.Enabled) return;
       Seeders = -1;
@@ -610,8 +579,7 @@ namespace RatioMaster {
 
       // Check rem work
       if ((string) cmbStopAfter.SelectedItem == "After time:") {
-        int res;
-        var bCheck = int.TryParse(txtStopValue.Text, out res);
+        var bCheck = int.TryParse(txtStopValue.Text, out var res);
         if (bCheck == false) {
           MessageBox.Show(
             "Please select valid number for Remaning Work\n\r- 0 - default - never stop\n\r- positive number (greater than 1000)",
@@ -659,8 +627,9 @@ namespace RatioMaster {
       currentProxy = GetCurrentProxy();
       AddClientInfo();
       OpenTcpListener();
-      var myThread = new Thread(StartProcess);
-      myThread.Name = "startProcess() Thread";
+      var myThread = new Thread(StartProcess) {
+        Name = "startProcess() Thread"
+      };
       myThread.Start();
       serverUpdateTimer.Start();
       remWork = 0;
@@ -671,7 +640,7 @@ namespace RatioMaster {
     private void StopTimerAndCounters() {
       if (StartButton.InvokeRequired) {
         StopTimerAndCountersCallback callback1 = StopTimerAndCounters;
-        Invoke(callback1, new object[0]);
+        Invoke(callback1, Array.Empty<object>());
       }
       else {
         Seeders = -1;
@@ -710,8 +679,9 @@ namespace RatioMaster {
     internal void StopButton_Click(object sender, EventArgs e) {
       if (!StopButton.Enabled) return;
       StopTimerAndCounters();
-      var thread1 = new Thread(StopProcess);
-      thread1.Name = "stopProcess() Thread";
+      var thread1 = new Thread(StopProcess) {
+        Name = "stopProcess() Thread"
+      };
       thread1.Start();
     }
 
@@ -726,10 +696,6 @@ namespace RatioMaster {
     internal void browseButton_Click(object sender, EventArgs e) {
       openFileDialog1.InitialDirectory = DefaultDirectory;
       openFileDialog1.ShowDialog();
-    }
-
-    internal void clearLogButton_Click(object sender, EventArgs e) {
-      ClearLog();
     }
 
     internal void btnDefault_Click(object sender, EventArgs e) {
@@ -763,9 +729,6 @@ namespace RatioMaster {
       fileSize.Text = "0";
       interval.Text = torrent.interval.ToString();
 
-      // Log
-      checkLogEnabled.Checked = true;
-
       // Random speeds
       chkRandUP.Checked = true;
       chkRandDown.Checked = true;
@@ -784,10 +747,6 @@ namespace RatioMaster {
 
       // Other
       txtStopValue.Text = "0";
-    }
-
-    internal void btnSaveLog_Click(object sender, EventArgs e) {
-      SaveLog.ShowDialog();
     }
 
     #endregion
@@ -897,22 +856,19 @@ namespace RatioMaster {
     internal void UpdateInterval(string param) {
       if (interval.InvokeRequired) {
         SetIntervalCallback del = UpdateInterval;
-        Invoke(del, new object[] {param});
+        Invoke(del, param);
       }
       else {
-        if (updateProcessStarted) {
-          int temp;
-          var bParse = int.TryParse(param, out temp);
-          if (bParse) {
-            if (temp > 3600) temp = 3600;
-            if (temp < 60) temp = 60;
-            currentTorrent.interval = temp;
-            AddLogLine("Updating Interval: " + temp);
-            interval.ReadOnly = false;
-            interval.Text = temp.ToString();
-            interval.ReadOnly = true;
-          }
-        }
+        if (!updateProcessStarted) return;
+        var bParse = int.TryParse(param, out var temp);
+        if (!bParse) return;
+        if (temp > 3600) temp = 3600;
+        if (temp < 60) temp = 60;
+        currentTorrent.interval = temp;
+        AddLogLine("Updating Interval: " + temp);
+        interval.ReadOnly = false;
+        interval.Text = temp.ToString();
+        interval.ReadOnly = true;
       }
     }
 
@@ -946,8 +902,7 @@ namespace RatioMaster {
       var key = torrentInfo.key;
       var port = torrentInfo.port;
       var peerId = torrentInfo.peerID;
-      string urlString;
-      urlString = torrentInfo.tracker;
+      var urlString = torrentInfo.tracker;
       if (urlString.Contains("?")) {
         urlString += "&";
       }
@@ -1025,8 +980,7 @@ namespace RatioMaster {
     }
 
     internal string GetScrapeUrlString(TorrentInfo torrentInfo) {
-      string urlString;
-      urlString = torrentInfo.tracker;
+      var urlString = torrentInfo.tracker;
       var index = urlString.LastIndexOf("/");
       if (urlString.Substring(index + 1, 8).ToLower() != "announce") {
         return "";
@@ -1035,10 +989,10 @@ namespace RatioMaster {
       urlString = urlString.Substring(0, index + 1) + "scrape" + urlString.Substring(index + 9);
       var hash = HashUrlEncode(torrentInfo.hash, currentClient.HashUpperCase);
       if (urlString.Contains("?")) {
-        urlString = urlString + "&";
+        urlString += "&";
       }
       else {
-        urlString = urlString + "?";
+        urlString += "?";
       }
 
       return urlString + "info_hash=" + hash;
@@ -1122,14 +1076,14 @@ namespace RatioMaster {
       catch (Exception e) {
         AddLogLine(e.Message);
         SetCountersCallback d = UpdateCounters;
-        Invoke(d, new object[] {torrentInfo});
+        Invoke(d, torrentInfo);
       }
     }
 
     private static string SetPrecision(string data, int prec) {
       var pow = (float) Math.Pow(10, prec);
       var wdata = float.Parse(data);
-      wdata = wdata * pow;
+      wdata *= pow;
       var curr = (int) wdata;
       wdata = curr / pow;
       return wdata.ToString();
@@ -1155,8 +1109,8 @@ namespace RatioMaster {
       // }
       // else
       // {
-      seedLabel.Text = "Seeders: " + seedStr;
-      leechLabel.Text = "Leechers: " + leechStr;
+      seedLabel.Text = "Seeds: " + seedStr;
+      leechLabel.Text = "Peers: " + leechStr;
       scrapStatsUpdated = true;
 
       // AddLogLine("Scrap Stats Updated" + "\n" + "\n");
@@ -1264,7 +1218,7 @@ namespace RatioMaster {
     internal void UpdateTextBox(TextBox textbox, string text) {
       if (textbox.InvokeRequired) {
         UpdateTextBoxCallback callback1 = UpdateTextBox;
-        Invoke(callback1, new object[] {textbox, text});
+        Invoke(callback1, textbox, text);
       }
       else {
         textbox.Text = text;
@@ -1322,13 +1276,12 @@ namespace RatioMaster {
       var ret = new StringBuilder();
       var stringGen = new RandomStringGenerator();
       try {
-        for (var i = 0; i < decoded.Length; i = i + 2) {
-          char tempChar;
-
-          // the only case in which something should not be escaped, is when it is alphanum,
-          // or it's in marks
-          // in all other cases, encode it.
-          tempChar = (char) Convert.ToUInt16(decoded.Substring(i, 2), 16);
+        for (var i = 0; i < decoded.Length; i += 2) {
+          var tempChar =
+            // the only case in which something should not be escaped, is when it is alphanum,
+            // or it's in marks
+            // in all other cases, encode it.
+            (char) Convert.ToUInt16(decoded.Substring(i, 2), 16);
           ret.Append(tempChar);
         }
       }
@@ -1578,7 +1531,6 @@ namespace RatioMaster {
         DefaultDirectory = (string) reg.GetValue("Directory", DefaultDirectory);
         checkTCPListen.Checked = ItoB((int) reg.GetValue("TCPlistener", BtoI(checkTCPListen.Checked)));
         checkRequestScrap.Checked = ItoB((int) reg.GetValue("ScrapeInfo", BtoI(checkRequestScrap.Checked)));
-        checkLogEnabled.Checked = ItoB((int) reg.GetValue("EnableLog", BtoI(checkLogEnabled.Checked)));
 
         // Radnom value
         chkRandUP.Checked = ItoB((int) reg.GetValue("GetRandUp", BtoI(chkRandUP.Checked)));
@@ -1642,12 +1594,6 @@ namespace RatioMaster {
 
     #region Custom values
 
-    internal void chkNewValues_CheckedChanged(object sender, EventArgs e) {
-      if (chkNewValues.Checked) {
-        SetCustomValues();
-      }
-    }
-
     internal void GetRandCustVal() {
       var clientname = GetClientName();
       currentClient = TorrentClientFactory.GetClient(clientname);
@@ -1686,21 +1632,19 @@ namespace RatioMaster {
 
     internal bool Getdata(string client, string pversion, string searchString, long startoffset, long maxoffset) {
       try {
-        ProcessMemoryReader pReader;
         var absoluteEndOffset = maxoffset;
         var absoluteStartOffset = startoffset;
         var clientSearchString = searchString;
         uint bufferSize = 0x10000;
         var currentClientProcessName = client.ToLower();
-        long currentOffset;
         var enc = Encoding.ASCII;
         var process1 = FindProcessByName(currentClientProcessName);
         if (process1 == null) {
           return false;
         }
 
-        currentOffset = absoluteStartOffset;
-        pReader = new ProcessMemoryReader();
+        var currentOffset = absoluteStartOffset;
+        var pReader = new ProcessMemoryReader();
         pReader.ReadProcess = process1;
         var flag1 = false;
 
@@ -1709,14 +1653,12 @@ namespace RatioMaster {
 
         // AddLogLine("Debug: pReader.OpenProcess();");
         while (currentOffset < absoluteEndOffset) {
-          long num2;
-
           // AddLogLine("Debug: " + currentOffset.ToString());
           int num1;
           var buffer1 = pReader.ReadProcessMemory((IntPtr) currentOffset, bufferSize, out num1);
 
           // pReader.saveArrayToFile(buffer1, @"D:\Projects\NRPG Ratio\NRPG RatioMaster MULTIPLE\RatioMaster source\bin\Release\tests\test" + currentOffset.ToString() + ".txt");
-          num2 = GetStringOffsetInsideArray(buffer1, enc, clientSearchString);
+          long num2 = GetStringOffsetInsideArray(buffer1, enc, clientSearchString);
           if (num2 >= 0) {
             flag1 = true;
             var text1 = enc.GetString(buffer1);
@@ -1841,14 +1783,15 @@ namespace RatioMaster {
       return "RatioMaster";
     }
 
-    private void fileSize_TextChanged(object sender, EventArgs e) {
-      // fileSize.Text = fileSize.Text.Replace('.', ',');
-      // fileSize.Select(fileSize.Text.Length, 0);
-    }
-
-    private void txtStopValue_TextChanged(object sender, EventArgs e) {
-      // txtStopValue.Text = txtStopValue.Text.Replace('.', ',');
-      // txtStopValue.Select(txtStopValue.Text.Length, 0);
+    public void ApplyDefaultPanelsView() {
+      magneticPanelFile.IsCollapsed = false;
+      magneticPanelInfo.IsCollapsed = true;
+      magneticPanelSpeed.IsCollapsed = true;
+      magneticPanelNextSpeed.IsCollapsed = true;
+      magneticPanelOptions.IsCollapsed = true;
+      magneticPanelOther.IsCollapsed = true;
+      magneticPanelProxy.IsCollapsed = true;
+      magneticPanelSimulation.IsCollapsed = true;
     }
   }
 }

@@ -604,10 +604,8 @@ namespace RatioMaster.BytesRoads {
       AsyncCallback callback,
       object state
     ) {
-      Receive_SO stateObj;
-
       CheckDisposed();
-      stateObj = new Receive_SO(callback, state);
+      var stateObj = new Receive_SO(callback, state);
       if ((stateObj.Read = FetchBufferData(buffer, offset, size)) > 0) {
         stateObj.SetCompleted();
       }

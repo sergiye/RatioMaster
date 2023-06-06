@@ -72,7 +72,7 @@ namespace RatioMaster {
         else {
           var text3 = string.Empty;
           text3 = reader1.ReadLine();
-          var num2 = Convert.ToInt32(text3.Split(new[] {' '})[0], 0x10);
+          var num2 = Convert.ToInt32(text3.Split(' ')[0], 0x10);
           while (num2 > 0) {
             var buffer1 = new byte[num2];
             responseStream.Position = responseStream.Position + text3.Length + text1.Length;
@@ -81,7 +81,7 @@ namespace RatioMaster {
             reader1.ReadLine();
             text3 = reader1.ReadLine();
             try {
-              num2 = Convert.ToInt32(text3.Split(new[] {' '})[0], 0x10);
+              num2 = Convert.ToInt32(text3.Split(' ')[0], 0x10);
               continue;
             }
             catch (Exception) {

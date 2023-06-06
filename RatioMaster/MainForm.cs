@@ -20,7 +20,19 @@ namespace RatioMaster {
 
     internal MainForm() {
       InitializeComponent();
-      Text = "RatioMaster";
+      Text = $"RatioMaster {(Environment.Is64BitProcess ? "x64" : "x32")} ver.{Updater.CurrentVersion}";
+    }
+
+    private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
+      MessageBox.Show(Text, "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    private void goToProgramSiteToolStripMenuItem_Click(object sender, EventArgs e) {
+      Process.Start("https://github.com/sergiye/RatioMaster");
+    }
+
+    private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e) {
+      Updater.CheckForUpdates(false);
     }
 
     private void newToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -43,10 +55,6 @@ namespace RatioMaster {
       lblIp.Text = Functions.GetIp();
       tab_TabIndexChanged(null, null);
       // tab.Size = new Size(Width - 8, Height - 80);
-    }
-
-    private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-      MessageBox.Show(Text, "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
     private void WinRestore() {
@@ -146,6 +154,8 @@ namespace RatioMaster {
       // current = rm1;
       var page1 = new TabPage("RM " + allit);
       page1.Name = "RM" + items;
+      rm1.Dock = DockStyle.Fill;
+      rm1.ApplyDefaultPanelsView();
       page1.Controls.Add(rm1);
 
       // page1.Enter += new EventHandler(this.TabPage_Enter);
@@ -195,10 +205,6 @@ namespace RatioMaster {
 
     #endregion
 
-    private void goToProgramSiteToolStripMenuItem_Click(object sender, EventArgs e) {
-      Process.Start("https://github.com/sergiye/RatioMaster");
-    }
-
     private void LoadSettings() {
       var reg = Registry.CurrentUser.OpenSubKey("Software\\RatioMaster", true);
       if (reg == null) {
@@ -237,7 +243,6 @@ namespace RatioMaster {
         reg.SetValue("Directory", rMdata.DefaultDirectory, RegistryValueKind.String);
         reg.SetValue("TCPlistener", BtoI(rMdata.checkTCPListen.Checked), RegistryValueKind.DWord);
         reg.SetValue("ScrapeInfo", BtoI(rMdata.checkRequestScrap.Checked), RegistryValueKind.DWord);
-        reg.SetValue("EnableLog", BtoI(rMdata.checkLogEnabled.Checked), RegistryValueKind.DWord);
 
         // Radnom value
         reg.SetValue("GetRandUp", BtoI(rMdata.chkRandUP.Checked), RegistryValueKind.DWord);
@@ -484,12 +489,6 @@ namespace RatioMaster {
     private void updateToolStripMenuItem_Click(object sender, EventArgs e) {
       foreach (TabPage tabb in tab.TabPages) {
         ((RM) tabb.Controls[0]).manualUpdateButton_Click(null, null);
-      }
-    }
-
-    private void clearAllLogsToolStripMenuItem_Click(object sender, EventArgs e) {
-      foreach (TabPage tabb in tab.TabPages) {
-        ((RM) tabb.Controls[0]).clearLogButton_Click(null, null);
       }
     }
 

@@ -12,7 +12,7 @@ namespace RatioMaster {
       left = 10000;
       totalsize = 10000;
       filename = string.Empty;
-      uploadRate = 60 * 1024;
+      uploadRate = 1024 * 1024;
       downloadRate = 30 * 1024;
       interval = 1800;
       random = new Random();

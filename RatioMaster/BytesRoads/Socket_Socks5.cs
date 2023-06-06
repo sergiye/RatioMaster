@@ -276,8 +276,7 @@ namespace RatioMaster.BytesRoads {
       int size,
       AsyncCallback cb,
       object state) {
-      ReadWhole_SO stateObj;
-      stateObj = new ReadWhole_SO(buffer, offset, size, cb, state);
+      var stateObj = new ReadWhole_SO(buffer, offset, size, cb, state);
 
       NStream.BeginRead(buffer, offset, size,
         ReadWhole_Read_End,

@@ -212,8 +212,8 @@ namespace RatioMaster {
 
     public MagneticPanel() {
       marker = PanelMarkerStyle.Arrow;
-      captionStartColor = Color.LightBlue;
-      captionEndColor = Color.DeepSkyBlue;
+      captionStartColor = Color.LightGray;
+      captionEndColor = Color.LightGray;
       captionForeColor = Color.Black;
     }
 

@@ -1,7 +1,7 @@
 # RatioMaster
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/sergiye/RatioMaster?style=plastic)
-![GitHub all releases](https://img.shields.io/github/downloads/sergiye/RatioMaster/total?style=plastic)
-![GitHub last commit](https://img.shields.io/github/last-commit/sergiye/RatioMaster?style=plastic)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/sergiye/RatioMaster?style=for-the-badge)
+![GitHub all releases](https://img.shields.io/github/downloads/sergiye/RatioMaster/total?style=for-the-badge&color=ff4f42)
+![GitHub last commit](https://img.shields.io/github/last-commit/sergiye/RatioMaster?style=for-the-badge&color=00AD00)
 
 ## About
 
@@ -25,13 +25,3 @@ RatioMaster has hardcoded emulations for the most commonly used BitTorrent clien
 GPL-3.0 License
 
 Copyright © 2023 Sergiy Egoshyn
-
-## Donate
-
-<a href=https://www.buymeacoffee.com/sergiye>
-<img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" />
-</a>
-
-**If you like the program, you can support the author and transfer money to**
-- Card number: 5169 3600 1644 3834
-- IBAN number: UA113052990000026208909644481

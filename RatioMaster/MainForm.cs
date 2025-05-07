@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 using Microsoft.Win32;
+using sergiye.Common;
 
 namespace RatioMaster {
   public partial class MainForm : Form {
@@ -20,15 +21,16 @@ namespace RatioMaster {
 
     internal MainForm() {
       InitializeComponent();
-      Text = $"RatioMaster {(Environment.Is64BitProcess ? "x64" : "x32")} ver.{Updater.CurrentVersion}";
+      Icon = System.Drawing.Icon.ExtractAssociatedIcon(typeof(MainForm).Assembly.Location);
+      Text = Updater.ApplicationTitle;
     }
 
     private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-      MessageBox.Show(Text, "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      MessageBox.Show($"{Updater.ApplicationTitle} {(Environment.Is64BitProcess ? "x64" : "x32")} ver.{Updater.CurrentVersion}", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
     private void goToProgramSiteToolStripMenuItem_Click(object sender, EventArgs e) {
-      Process.Start("https://github.com/sergiye/RatioMaster");
+      Process.Start($"https://github.com/{Updater.ApplicationCompany}/{Updater.ApplicationName}");
     }
 
     private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e) {

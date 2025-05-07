@@ -11,7 +11,11 @@ This means that it does NOT rely on your bittorrent client (uTorrent, Azureus, B
 
 RatioMaster has hardcoded emulations for the most commonly used BitTorrent clients: uTorrent, BitComet, Azureus, ABC, BitLord, BTuga, BitTornado, Burst, BitTyrant, BitSpirit.
 
-# Download
+## What will it look like?
+
+[<img src="https://github.com/sergiye/RatioMaster/raw/master/preview.png" alt="Themes" width="300"/>](https://github.com/sergiye/RatioMaster/raw/master/preview.png)
+
+## Download
 
 **The recommended way to get the program is BUILD from source**
 - Install git, Visual Studio

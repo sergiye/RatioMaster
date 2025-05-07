@@ -1,114 +1,156 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
+using System.Threading.Tasks;
+#if !NOWINFORMS
 using System.Windows.Forms;
-using System.Web.Script.Serialization;
+#endif
 
-namespace RatioMaster {
-
-  public static class SerializerHelper {
-
-    public static string ToJson(this object value) {
-      var serializer = new JavaScriptSerializer();
-      return serializer.Serialize(value);
-    }
-
-    public static T FromJson<T>(this string json) {
-      var serializer = new JavaScriptSerializer();
-      return serializer.Deserialize<T>(json);
-    }
-  }
-  
+namespace sergiye.Common {
   public class GitHubRelease {
-    public Uri assets_url { get; set; }
-    public Uri html_url { get; set; }
-    public string tag_name { get; set; }
-    public string name { get; set; }
-    public bool prerelease { get; set; }
-    public DateTime created_at { get; set; }
-    public DateTime published_at { get; set; }
-    public Asset[] assets { get; set; }
+    public string Tag_name { get; set; }
+    public string Name { get; set; }
+    public bool Prerelease { get; set; }
+    public Asset[] Assets { get; set; }
+    //public Uri assets_url { get; set; }
+    //public Uri html_url { get; set; }
+    //public DateTime created_at { get; set; }
+    //public DateTime published_at { get; set; }
   }
 
   public class Asset {
-    public Uri url { get; set; }
-    public string name { get; set; }
-    public object label { get; set; }
-    public string content_type { get; set; }
-    public string state { get; set; }
-    public long size { get; set; }
-    public long download_count { get; set; }
-    public DateTime created_at { get; set; }
-    public DateTime updated_at { get; set; }
-    public string browser_download_url { get; set; }
+    public string Name { get; set; }
+    public string Browser_download_url { get; set; }
+    //public string State { get; set; }
+    //public Uri Url { get; set; }
+    //public object Label { get; set; }
+    //public string Content_type { get; set; }
+    //public long Size { get; set; }
+    //public long Download_count { get; set; }
+    //public DateTime Created_at { get; set; }
+    //public DateTime Updated_at { get; set; }
   }
 
   internal static class Updater {
-
-    private const string GITHUB_LANDING_PAGE = "sergiye/RatioMaster";
-    private static readonly string selfFileName;
-
+    internal static readonly string ApplicationName;
+    internal static readonly string ApplicationTitle;
+    internal static readonly string ApplicationCompany;
+    internal static readonly string selfFileName;
     internal static readonly string CurrentVersion;
     internal static readonly string CurrentFileLocation;
 
     static Updater() {
-      var asm = Assembly.GetExecutingAssembly();
+      var asm = Assembly.GetExecutingAssembly(); //typeof(Updater).Assembly
+      ApplicationName = asm.GetName().Name;
+      ApplicationTitle = GetAttribute<AssemblyTitleAttribute>(asm)?.Title;
+      ApplicationCompany = GetAttribute<AssemblyCompanyAttribute>(asm)?.Company;
       CurrentVersion = asm.GetName().Version.ToString(3); //Application.ProductVersion;
       CurrentFileLocation = asm.Location;
       selfFileName = Path.GetFileName(CurrentFileLocation);
+      ServicePointManager.Expect100Continue = false;
+      ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+      ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
     }
 
-    private static string GetJsonData(string uri, int timeout = 10, string method = "GET") {
-      var request = (HttpWebRequest)WebRequest.Create(uri);
-      request.Method = method;
-      request.Timeout = timeout * 1000;
-      request.UserAgent = "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.500.27 Safari/537.36";
-      //request.Accept = "text/xml,text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-      request.ContentType = "application/json; charset=utf-8";
-      using (var webResp = request.GetResponse()) {
-        using (var stream = webResp.GetResponseStream()) {
-          if (stream == null) return null;
-          var answer = new StreamReader(stream, Encoding.UTF8);
-          var result = answer.ReadToEnd();
-          return result;
-        }
-      }
+    private static T GetAttribute<T>(ICustomAttributeProvider assembly, bool inherit = false) where T : Attribute {
+      foreach (var o in assembly.GetCustomAttributes(typeof(T), inherit))
+        if (o is T attribute)
+          return attribute;
+      return null;
     }
 
-    internal static void CheckForUpdates(bool silent) {
-      string newVersion;
-      string newVersionUrl = null;
-      bool update;
+    private static string GetAppReleasesUrl() {
+      return $"https://api.github.com/repos/{ApplicationCompany}/{ApplicationName}/releases";
+    }
+    
+    /// <summary>
+    /// Check for a new version
+    /// </summary>
+    /// <returns>True if the check was completed, False if there were errors</returns>
+    internal static bool CheckForUpdates(bool silent) {
       try {
-        //using (var wc = new WebClient())
-        //  newVersion = wc.DownloadString($"https://raw.githubusercontent.com/{GithubLandingPage}/master/version.txt").TrimEnd();
-        //newVersionUrl = $"https://github.com/{GithubLandingPage}/releases/download/{newVersion}/{selfFileName}";
-
-        var jsonString = GetJsonData($"https://api.github.com/repos/{GITHUB_LANDING_PAGE}/releases").TrimEnd();
-        var releases = jsonString.FromJson<GitHubRelease[]>();
-        if (releases == null || releases.Length == 0)
-          throw new Exception("Error getting list of releases.");
-
-        newVersion = releases[0].tag_name;
-        newVersionUrl = releases[0].assets[0].browser_download_url;
-
-        if (string.Compare(CurrentVersion, newVersion, StringComparison.Ordinal) >= 0) {
-          if (!silent)
-            MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nNo need to update.", "Update", MessageBoxButtons.OK,
-              MessageBoxIcon.Information);
-          return;
+        string jsonString;
+        using (var wc = new WebClient()) {
+          wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.500.27 Safari/537.36");
+          jsonString = wc.DownloadString(GetAppReleasesUrl()); // .TrimEnd();
         }
-        update = MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nDownload this update?",
-          "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
-      } catch (Exception ex) {
-        if (!silent)
-          MessageBox.Show($"Error checking for a new version.\n{ex.Message}", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        update = false;
+        return CheckForUpdatesInternal(silent, jsonString);
       }
-      if (!update) return;
+      catch (Exception ex) {
+        if (!silent)
+#if NOWINFORMS
+          Console.WriteLine($"Error checking for a new version.\n{ex.Message}");
+#else
+          MessageBox.Show($"Error checking for a new version.\n{ex.Message}", ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+#endif
+        return false;
+      }
+    }
+
+    /// <summary>
+    /// Check for a new version
+    /// </summary>
+    /// <returns>True if the check was completed, False if there were errors</returns>
+    internal static async Task<bool> CheckForUpdatesAsync(bool silent) {
+      try {
+        string jsonString;
+        using (var wc = new WebClient()) {
+          wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.500.27 Safari/537.36");
+          jsonString = await wc.DownloadStringTaskAsync(GetAppReleasesUrl()).ConfigureAwait(false);
+        }
+        return CheckForUpdatesInternal(silent, jsonString);
+      }
+      catch (Exception ex) {
+        if (!silent)
+#if NOWINFORMS
+          Console.WriteLine($"Error checking for a new version.\n{ex.Message}");
+#else
+          MessageBox.Show($"Error checking for a new version.\n{ex.Message}", ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+#endif
+        return false;
+      }
+    }
+
+    private static bool CheckForUpdatesInternal(bool silent, string jsonString) {
+      var releases = jsonString.FromJson<GitHubRelease[]>();
+      if (releases == null || releases.Length == 0)
+        throw new Exception("Error getting list of releases.");
+
+      var lastRelease = releases.FirstOrDefault(r => !r.Prerelease) ?? releases[0];
+      var newVersion = lastRelease.Tag_name;
+      var asset = lastRelease.Assets.FirstOrDefault(a => a.Name == selfFileName);
+      var newVersionUrl = asset?.Browser_download_url;
+      if (string.IsNullOrEmpty(newVersionUrl)) {
+        if (!silent)
+#if NOWINFORMS
+          Console.WriteLine($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nNo assets found to update.");
+#else
+          MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nNo assets found to update.", ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+#endif
+        return true;
+      }
+
+      if (string.Compare(CurrentVersion, newVersion, StringComparison.Ordinal) >= 0) {
+        if (!silent)
+#if NOWINFORMS
+          Console.WriteLine($"Your version: {CurrentVersion}\nLast release: {newVersion}\nNo need to update.");
+#else
+          MessageBox.Show($"Your version: {CurrentVersion}\nLast release: {newVersion}\nNo need to update.", ApplicationName, MessageBoxButtons.OK,
+            MessageBoxIcon.Information);
+#endif
+        return true;
+      }
+#if NOWINFORMS
+      Console.WriteLine($"New version found: {newVersion}, app will be updated after close.");
+#else
+      if (MessageBox.Show($"Your version: {CurrentVersion}\nLast release: {newVersion}\nDownload this update?",
+        ApplicationName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+        return true;
+      }
+#endif
 
       try {
         var tempPath = Path.GetTempPath();
@@ -116,26 +158,41 @@ namespace RatioMaster {
 
         using (var wc = new WebClient())
           wc.DownloadFile(newVersionUrl, updateFilePath);
-
-        var cmdFilePath = Path.GetTempPath() + $"{selfFileName}_updater.cmd";
-        using (var batFile = new StreamWriter(File.Create(cmdFilePath))) {
-          batFile.WriteLine("@ECHO OFF");
-          batFile.WriteLine("TIMEOUT /t 3 /nobreak > NUL");
-          batFile.WriteLine("TASKKILL /IM \"{0}\" > NUL", selfFileName);
-          batFile.WriteLine("MOVE \"{0}\" \"{1}\"", updateFilePath, CurrentFileLocation);
-          batFile.WriteLine("DEL \"%~f0\" & START \"\" /B \"{0}\"", CurrentFileLocation);
-        }
-        var startInfo = new ProcessStartInfo(cmdFilePath) {
-          CreateNoWindow = true,
-          UseShellExecute = false,
-          WorkingDirectory = tempPath
-        };
-        Process.Start(startInfo);
-        Application.Exit(); // Environment.Exit(0);
-      } catch (Exception ex) {
-        if (!silent)
-          MessageBox.Show($"Error downloading new version\n{ex.Message}", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        RestartApp(3, updateFilePath);
+        return true;
       }
+      catch (Exception ex) {
+        if (!silent)
+#if NOWINFORMS
+          Console.WriteLine($"Error downloading new version\n{ex.Message}");
+#else
+          MessageBox.Show($"Error downloading new version\n{ex.Message}", ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+#endif
+        return false;
+      }
+    }
+
+    internal static void RestartApp(int timeout = 0, string replaceWithFile = null) {
+      var cmdFilePath = Path.GetTempPath() + $"{selfFileName}_updater.cmd";
+      using (var batFile = new StreamWriter(File.Create(cmdFilePath))) {
+        batFile.WriteLine("@ECHO OFF");
+        batFile.WriteLine($"TIMEOUT /t {timeout} /nobreak > NUL");
+        batFile.WriteLine("TASKKILL /IM \"{0}\" > NUL", selfFileName);
+        if (!string.IsNullOrEmpty(replaceWithFile))
+          batFile.WriteLine("MOVE \"{0}\" \"{1}\"", replaceWithFile, CurrentFileLocation);
+        batFile.WriteLine("DEL \"%~f0\" & START \"\" /B \"{0}\"", CurrentFileLocation);
+      }
+      var startInfo = new ProcessStartInfo(cmdFilePath) {
+        CreateNoWindow = true,
+        UseShellExecute = false,
+        WorkingDirectory = Path.GetTempPath()
+      };
+      Process.Start(startInfo);
+#if NOWINFORMS
+      Environment.Exit(0);
+#else
+      Application.Exit();
+#endif
     }
   }
 }

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("RatioMaster")]
 [assembly: AssemblyDescription("The most powerful cheat/spoof torrent client simulator.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Sergiy Egoshyn")]
+[assembly: AssemblyCompany("sergiye")]
 [assembly: AssemblyProduct("RatioMaster")]
 [assembly: AssemblyCopyright("Copyright © 2023 Sergiy Egoshyn")]
 [assembly: AssemblyTrademark("")]
@@ -14,4 +14,4 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("dcebcab4-6c7e-47ee-9881-f800ba5c395c")]
 
-[assembly: AssemblyVersion("0.5.*")]
+[assembly: AssemblyVersion("1.0.*")]

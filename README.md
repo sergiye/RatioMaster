@@ -1,7 +1,7 @@
 # RatioMaster
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/sergiye/RatioMaster?style=for-the-badge)
-![GitHub all releases](https://img.shields.io/github/downloads/sergiye/RatioMaster/total?style=for-the-badge&color=ff4f42)
-![GitHub last commit](https://img.shields.io/github/last-commit/sergiye/RatioMaster?style=for-the-badge&color=00AD00)
+[![Release](https://img.shields.io/github/v/release/sergiye/RatioMaster?style=for-the-badge)](https://github.com/sergiye/RatioMaster/releases/latest)
+![Downloads](https://img.shields.io/github/downloads/sergiye/RatioMaster/total?style=for-the-badge&color=ff4f42)
+![Last commit](https://img.shields.io/github/last-commit/sergiye/RatioMaster?style=for-the-badge&color=00AD00)
 
 ## About
 
@@ -17,15 +17,18 @@ RatioMaster has hardcoded emulations for the most commonly used BitTorrent clien
 
 ## Download
 
-**The recommended way to get the program is BUILD from source**
-- Install git, Visual Studio
-- `git clone https://github.com/sergiye/RatioMaster.git`
-- build
+The published version can be obtained from [releases](https://github.com/sergiye/RatioMaster/releases).
 
-**or download build from <a href="https://github.com/sergiye/RatioMaster/releases">releases</a>.**
+## How can I help improve it?
+The RatioMaster team welcomes feedback and contributions!<br/>
+You can check if it works properly on your PC. If you notice any inaccuracies, please send us a pull request. If you have any suggestions or improvements, don't hesitate to create an issue.
 
-## License
+Also, don't forget to star the repository to help other people find it.
 
-GPL-3.0 License
+[![Star History Chart](https://api.star-history.com/svg?repos=sergiye/RatioMaster&type=Date)](https://star-history.com/#sergiye/RatioMaster&Date)
 
-Copyright © 2023 Sergiy Egoshyn
+[![Stargazers repo roster for @sergiye/RatioMaster](https://reporoster.com/stars/sergiye/RatioMaster)](https://github.com/sergiye/RatioMaster/stargazers)
+
+## Donate!
+Every [cup of coffee](https://patreon.com/SergiyE) you donate will help this app become better and let me know that this project is in demand.
+

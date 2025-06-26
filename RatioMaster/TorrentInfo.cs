@@ -14,7 +14,7 @@ namespace RatioMaster {
       filename = string.Empty;
       uploadRate = 10 * 1024 * 1024; //10 MB/s by default
       downloadRate = 30 * 1024;
-      interval = 1800;
+      interval = 300;
       random = new Random();
       key = random.Next(1000).ToString();
       port = random.Next(1025, 65535).ToString();

@@ -119,30 +119,25 @@ namespace RatioMaster
       this.hashLabel = new System.Windows.Forms.Label();
       this.browseButton = new System.Windows.Forms.Button();
       this.torrentFile = new System.Windows.Forms.TextBox();
-      this.groupBox1 = new System.Windows.Forms.GroupBox();
-      this.groupBox2 = new System.Windows.Forms.GroupBox();
-      this.groupBox3 = new System.Windows.Forms.GroupBox();
-      this.groupBox4 = new System.Windows.Forms.GroupBox();
-      this.groupBox5 = new System.Windows.Forms.GroupBox();
-      this.groupBox6 = new System.Windows.Forms.GroupBox();
-      this.groupBox7 = new System.Windows.Forms.GroupBox();
-      this.groupBox8 = new System.Windows.Forms.GroupBox();
-      this.tabControl = new System.Windows.Forms.TabControl();
-      this.tabPageMain = new System.Windows.Forms.TabPage();
-      this.tabPageAdvanced = new System.Windows.Forms.TabPage();
+      this.gbxTorrent = new System.Windows.Forms.GroupBox();
+      this.lblFile = new System.Windows.Forms.Label();
+      this.gbxOptions = new System.Windows.Forms.GroupBox();
+      this.gbxNextOptions = new System.Windows.Forms.GroupBox();
+      this.gbxProxy = new System.Windows.Forms.GroupBox();
+      this.gbxCustomClient = new System.Windows.Forms.GroupBox();
+      this.panMain = new System.Windows.Forms.Panel();
+      this.panAdvanced = new System.Windows.Forms.Panel();
+      this.panel1 = new System.Windows.Forms.Panel();
       this.info.SuspendLayout();
       this.panelControls.SuspendLayout();
-      this.groupBox1.SuspendLayout();
-      this.groupBox2.SuspendLayout();
-      this.groupBox3.SuspendLayout();
-      this.groupBox4.SuspendLayout();
-      this.groupBox5.SuspendLayout();
-      this.groupBox6.SuspendLayout();
-      this.groupBox7.SuspendLayout();
-      this.groupBox8.SuspendLayout();
-      this.tabControl.SuspendLayout();
-      this.tabPageMain.SuspendLayout();
-      this.tabPageAdvanced.SuspendLayout();
+      this.gbxTorrent.SuspendLayout();
+      this.gbxOptions.SuspendLayout();
+      this.gbxNextOptions.SuspendLayout();
+      this.gbxProxy.SuspendLayout();
+      this.gbxCustomClient.SuspendLayout();
+      this.panMain.SuspendLayout();
+      this.panAdvanced.SuspendLayout();
+      this.panel1.SuspendLayout();
       this.SuspendLayout();
       // 
       // btnDefault
@@ -154,7 +149,7 @@ namespace RatioMaster
       this.btnDefault.Location = new System.Drawing.Point(351, 4);
       this.btnDefault.Name = "btnDefault";
       this.btnDefault.Size = new System.Drawing.Size(120, 34);
-      this.btnDefault.TabIndex = 11;
+      this.btnDefault.TabIndex = 3;
       this.btnDefault.Text = "Set default values";
       this.btnDefault.UseVisualStyleBackColor = false;
       this.btnDefault.Click += new System.EventHandler(this.btnDefault_Click);
@@ -187,7 +182,7 @@ namespace RatioMaster
       // RemaningWork
       // 
       this.RemaningWork.Interval = 1000;
-      this.RemaningWork.Tick += new System.EventHandler(this.RemaningWork_Tick);
+      this.RemaningWork.Tick += new System.EventHandler(this.RemainingWork_Tick);
       // 
       // SaveLog
       // 
@@ -196,7 +191,6 @@ namespace RatioMaster
       // 
       // info
       // 
-      this.info.BackColor = System.Drawing.SystemColors.Control;
       this.info.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblUpdateIn,
             this.timerValue,
@@ -212,11 +206,11 @@ namespace RatioMaster
             this.lblTotalTime,
             this.lblRemTime,
             this.txtRemTime});
-      this.info.Location = new System.Drawing.Point(0, 35);
+      this.info.Location = new System.Drawing.Point(0, 402);
       this.info.Name = "info";
-      this.info.Size = new System.Drawing.Size(489, 22);
+      this.info.Size = new System.Drawing.Size(963, 22);
       this.info.SizingGrip = false;
-      this.info.TabIndex = 12;
+      this.info.TabIndex = 1;
       // 
       // uploadCountLabel
       // 
@@ -300,7 +294,7 @@ namespace RatioMaster
       this.manualUpdateButton.Location = new System.Drawing.Point(235, 4);
       this.manualUpdateButton.Name = "manualUpdateButton";
       this.manualUpdateButton.Size = new System.Drawing.Size(110, 34);
-      this.manualUpdateButton.TabIndex = 10;
+      this.manualUpdateButton.TabIndex = 2;
       this.manualUpdateButton.Text = "Manual Update";
       this.manualUpdateButton.UseVisualStyleBackColor = false;
       this.manualUpdateButton.Click += new System.EventHandler(this.manualUpdateButton_Click);
@@ -315,7 +309,7 @@ namespace RatioMaster
       this.StartButton.Location = new System.Drawing.Point(3, 4);
       this.StartButton.Name = "StartButton";
       this.StartButton.Size = new System.Drawing.Size(110, 34);
-      this.StartButton.TabIndex = 8;
+      this.StartButton.TabIndex = 0;
       this.StartButton.Text = "START";
       this.StartButton.UseVisualStyleBackColor = false;
       this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
@@ -331,7 +325,7 @@ namespace RatioMaster
       this.StopButton.Location = new System.Drawing.Point(119, 4);
       this.StopButton.Name = "StopButton";
       this.StopButton.Size = new System.Drawing.Size(110, 34);
-      this.StopButton.TabIndex = 9;
+      this.StopButton.TabIndex = 1;
       this.StopButton.Text = "STOP";
       this.StopButton.UseVisualStyleBackColor = false;
       this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
@@ -341,11 +335,11 @@ namespace RatioMaster
       this.logWindow.BackColor = System.Drawing.Color.Black;
       this.logWindow.Dock = System.Windows.Forms.DockStyle.Fill;
       this.logWindow.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-      this.logWindow.Location = new System.Drawing.Point(0, 289);
+      this.logWindow.Location = new System.Drawing.Point(0, 235);
       this.logWindow.Name = "logWindow";
       this.logWindow.ReadOnly = true;
-      this.logWindow.Size = new System.Drawing.Size(489, 228);
-      this.logWindow.TabIndex = 3;
+      this.logWindow.Size = new System.Drawing.Size(963, 124);
+      this.logWindow.TabIndex = 2;
       this.logWindow.Text = "------------------------------------- LOG -------------------------------------\n";
       // 
       // panelControls
@@ -354,56 +348,55 @@ namespace RatioMaster
       this.panelControls.Controls.Add(this.btnDefault);
       this.panelControls.Controls.Add(this.manualUpdateButton);
       this.panelControls.Controls.Add(this.StopButton);
-      this.panelControls.Controls.Add(this.info);
       this.panelControls.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.panelControls.Location = new System.Drawing.Point(0, 517);
+      this.panelControls.Location = new System.Drawing.Point(0, 359);
       this.panelControls.Margin = new System.Windows.Forms.Padding(2);
       this.panelControls.Name = "panelControls";
-      this.panelControls.Size = new System.Drawing.Size(489, 57);
-      this.panelControls.TabIndex = 29;
+      this.panelControls.Size = new System.Drawing.Size(963, 43);
+      this.panelControls.TabIndex = 0;
       // 
       // customPeersNum
       // 
-      this.customPeersNum.Location = new System.Drawing.Point(422, 22);
+      this.customPeersNum.Location = new System.Drawing.Point(423, 46);
       this.customPeersNum.Name = "customPeersNum";
       this.customPeersNum.Size = new System.Drawing.Size(51, 20);
-      this.customPeersNum.TabIndex = 34;
+      this.customPeersNum.TabIndex = 8;
       // 
       // lblcustomPeersNum
       // 
       this.lblcustomPeersNum.AutoSize = true;
-      this.lblcustomPeersNum.Location = new System.Drawing.Point(328, 25);
+      this.lblcustomPeersNum.Location = new System.Drawing.Point(329, 49);
       this.lblcustomPeersNum.Name = "lblcustomPeersNum";
       this.lblcustomPeersNum.Size = new System.Drawing.Size(88, 13);
-      this.lblcustomPeersNum.TabIndex = 33;
+      this.lblcustomPeersNum.TabIndex = 7;
       this.lblcustomPeersNum.Text = "Number of peers:";
       // 
       // lblGenStatus
       // 
       this.lblGenStatus.AutoSize = true;
-      this.lblGenStatus.Location = new System.Drawing.Point(142, 71);
+      this.lblGenStatus.Location = new System.Drawing.Point(143, 98);
       this.lblGenStatus.Name = "lblGenStatus";
       this.lblGenStatus.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
       this.lblGenStatus.Size = new System.Drawing.Size(93, 13);
-      this.lblGenStatus.TabIndex = 30;
+      this.lblGenStatus.TabIndex = 12;
       this.lblGenStatus.Text = "Generation status:";
       this.lblGenStatus.TextAlign = System.Drawing.ContentAlignment.BottomRight;
       // 
       // customPort
       // 
       this.customPort.BackColor = System.Drawing.Color.White;
-      this.customPort.Location = new System.Drawing.Point(273, 22);
+      this.customPort.Location = new System.Drawing.Point(274, 46);
       this.customPort.Name = "customPort";
       this.customPort.Size = new System.Drawing.Size(49, 20);
-      this.customPort.TabIndex = 32;
+      this.customPort.TabIndex = 6;
       // 
       // portLabel
       // 
       this.portLabel.AutoSize = true;
-      this.portLabel.Location = new System.Drawing.Point(238, 25);
+      this.portLabel.Location = new System.Drawing.Point(239, 49);
       this.portLabel.Name = "portLabel";
       this.portLabel.Size = new System.Drawing.Size(29, 13);
-      this.portLabel.TabIndex = 31;
+      this.portLabel.TabIndex = 5;
       this.portLabel.Text = "Port:";
       // 
       // chkNewValues
@@ -412,45 +405,45 @@ namespace RatioMaster
       this.chkNewValues.Checked = true;
       this.chkNewValues.CheckState = System.Windows.Forms.CheckState.Checked;
       this.chkNewValues.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.chkNewValues.Location = new System.Drawing.Point(9, 69);
+      this.chkNewValues.Location = new System.Drawing.Point(10, 96);
       this.chkNewValues.Name = "chkNewValues";
       this.chkNewValues.Size = new System.Drawing.Size(131, 17);
-      this.chkNewValues.TabIndex = 29;
+      this.chkNewValues.TabIndex = 11;
       this.chkNewValues.Text = "Always get new values";
       this.chkNewValues.UseVisualStyleBackColor = true;
       // 
       // label4
       // 
       this.label4.AutoSize = true;
-      this.label4.Location = new System.Drawing.Point(6, 49);
+      this.label4.Location = new System.Drawing.Point(7, 73);
       this.label4.Name = "label4";
       this.label4.Size = new System.Drawing.Size(46, 13);
-      this.label4.TabIndex = 27;
+      this.label4.TabIndex = 9;
       this.label4.Text = "Peer ID:";
       // 
       // customPeerID
       // 
       this.customPeerID.BackColor = System.Drawing.Color.White;
-      this.customPeerID.Location = new System.Drawing.Point(69, 46);
+      this.customPeerID.Location = new System.Drawing.Point(70, 70);
       this.customPeerID.Name = "customPeerID";
       this.customPeerID.Size = new System.Drawing.Size(404, 20);
-      this.customPeerID.TabIndex = 28;
+      this.customPeerID.TabIndex = 10;
       // 
       // customKey
       // 
       this.customKey.BackColor = System.Drawing.Color.White;
-      this.customKey.Location = new System.Drawing.Point(69, 22);
+      this.customKey.Location = new System.Drawing.Point(70, 46);
       this.customKey.Name = "customKey";
       this.customKey.Size = new System.Drawing.Size(163, 20);
-      this.customKey.TabIndex = 26;
+      this.customKey.TabIndex = 4;
       // 
       // keyLabel
       // 
       this.keyLabel.AutoSize = true;
-      this.keyLabel.Location = new System.Drawing.Point(6, 25);
+      this.keyLabel.Location = new System.Drawing.Point(7, 49);
       this.keyLabel.Name = "keyLabel";
       this.keyLabel.Size = new System.Drawing.Size(57, 13);
-      this.keyLabel.TabIndex = 25;
+      this.keyLabel.TabIndex = 3;
       this.keyLabel.Text = "Client Key:";
       // 
       // labelProxyType
@@ -483,7 +476,6 @@ namespace RatioMaster
       // 
       this.comboProxyType.BackColor = System.Drawing.Color.White;
       this.comboProxyType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.comboProxyType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.comboProxyType.FormattingEnabled = true;
       this.comboProxyType.Items.AddRange(new object[] {
             "None",
@@ -551,10 +543,10 @@ namespace RatioMaster
       // 
       this.checkIgnoreFailureReason.AutoSize = true;
       this.checkIgnoreFailureReason.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.checkIgnoreFailureReason.Location = new System.Drawing.Point(214, 20);
+      this.checkIgnoreFailureReason.Location = new System.Drawing.Point(217, 118);
       this.checkIgnoreFailureReason.Name = "checkIgnoreFailureReason";
       this.checkIgnoreFailureReason.Size = new System.Drawing.Size(123, 17);
-      this.checkIgnoreFailureReason.TabIndex = 2;
+      this.checkIgnoreFailureReason.TabIndex = 24;
       this.checkIgnoreFailureReason.Text = "Ignore \'failure reason\'";
       this.checkIgnoreFailureReason.UseVisualStyleBackColor = true;
       // 
@@ -564,10 +556,10 @@ namespace RatioMaster
       this.checkRequestScrap.Checked = true;
       this.checkRequestScrap.CheckState = System.Windows.Forms.CheckState.Checked;
       this.checkRequestScrap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.checkRequestScrap.Location = new System.Drawing.Point(114, 19);
+      this.checkRequestScrap.Location = new System.Drawing.Point(117, 117);
       this.checkRequestScrap.Name = "checkRequestScrap";
       this.checkRequestScrap.Size = new System.Drawing.Size(94, 17);
-      this.checkRequestScrap.TabIndex = 1;
+      this.checkRequestScrap.TabIndex = 23;
       this.checkRequestScrap.Text = "Request Scrap";
       this.checkRequestScrap.UseVisualStyleBackColor = true;
       // 
@@ -577,17 +569,17 @@ namespace RatioMaster
       this.checkTCPListen.Checked = true;
       this.checkTCPListen.CheckState = System.Windows.Forms.CheckState.Checked;
       this.checkTCPListen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.checkTCPListen.Location = new System.Drawing.Point(6, 19);
+      this.checkTCPListen.Location = new System.Drawing.Point(9, 117);
       this.checkTCPListen.Name = "checkTCPListen";
       this.checkTCPListen.Size = new System.Drawing.Size(102, 17);
-      this.checkTCPListen.TabIndex = 0;
+      this.checkTCPListen.TabIndex = 22;
       this.checkTCPListen.Text = "Use TCP listener";
       this.checkTCPListen.UseVisualStyleBackColor = true;
       // 
       // RandomDownloadTo
       // 
       this.RandomDownloadTo.BackColor = System.Drawing.Color.White;
-      this.RandomDownloadTo.Location = new System.Drawing.Point(419, 27);
+      this.RandomDownloadTo.Location = new System.Drawing.Point(419, 18);
       this.RandomDownloadTo.Name = "RandomDownloadTo";
       this.RandomDownloadTo.Size = new System.Drawing.Size(37, 20);
       this.RandomDownloadTo.TabIndex = 9;
@@ -596,7 +588,7 @@ namespace RatioMaster
       // RandomDownloadFrom
       // 
       this.RandomDownloadFrom.BackColor = System.Drawing.Color.White;
-      this.RandomDownloadFrom.Location = new System.Drawing.Point(340, 27);
+      this.RandomDownloadFrom.Location = new System.Drawing.Point(340, 18);
       this.RandomDownloadFrom.Name = "RandomDownloadFrom";
       this.RandomDownloadFrom.Size = new System.Drawing.Size(37, 20);
       this.RandomDownloadFrom.TabIndex = 7;
@@ -606,7 +598,7 @@ namespace RatioMaster
       // 
       this.checkRandomUpload.AutoSize = true;
       this.checkRandomUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.checkRandomUpload.Location = new System.Drawing.Point(9, 28);
+      this.checkRandomUpload.Location = new System.Drawing.Point(9, 19);
       this.checkRandomUpload.Name = "checkRandomUpload";
       this.checkRandomUpload.Size = new System.Drawing.Size(57, 17);
       this.checkRandomUpload.TabIndex = 0;
@@ -617,7 +609,7 @@ namespace RatioMaster
       // 
       this.checkRandomDownload.AutoSize = true;
       this.checkRandomDownload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.checkRandomDownload.Location = new System.Drawing.Point(227, 28);
+      this.checkRandomDownload.Location = new System.Drawing.Point(227, 19);
       this.checkRandomDownload.Name = "checkRandomDownload";
       this.checkRandomDownload.Size = new System.Drawing.Size(74, 17);
       this.checkRandomDownload.TabIndex = 5;
@@ -627,7 +619,7 @@ namespace RatioMaster
       // lblRandomUploadFrom
       // 
       this.lblRandomUploadFrom.AutoSize = true;
-      this.lblRandomUploadFrom.Location = new System.Drawing.Point(72, 30);
+      this.lblRandomUploadFrom.Location = new System.Drawing.Point(72, 21);
       this.lblRandomUploadFrom.Name = "lblRandomUploadFrom";
       this.lblRandomUploadFrom.Size = new System.Drawing.Size(27, 13);
       this.lblRandomUploadFrom.TabIndex = 1;
@@ -636,7 +628,7 @@ namespace RatioMaster
       // RandomUploadTo
       // 
       this.RandomUploadTo.BackColor = System.Drawing.Color.White;
-      this.RandomUploadTo.Location = new System.Drawing.Point(184, 27);
+      this.RandomUploadTo.Location = new System.Drawing.Point(184, 18);
       this.RandomUploadTo.Name = "RandomUploadTo";
       this.RandomUploadTo.Size = new System.Drawing.Size(37, 20);
       this.RandomUploadTo.TabIndex = 4;
@@ -645,7 +637,7 @@ namespace RatioMaster
       // lblRandomUploadTo
       // 
       this.lblRandomUploadTo.AutoSize = true;
-      this.lblRandomUploadTo.Location = new System.Drawing.Point(148, 30);
+      this.lblRandomUploadTo.Location = new System.Drawing.Point(148, 21);
       this.lblRandomUploadTo.Name = "lblRandomUploadTo";
       this.lblRandomUploadTo.Size = new System.Drawing.Size(30, 13);
       this.lblRandomUploadTo.TabIndex = 3;
@@ -654,7 +646,7 @@ namespace RatioMaster
       // lblRandomDownloadFrom
       // 
       this.lblRandomDownloadFrom.AutoSize = true;
-      this.lblRandomDownloadFrom.Location = new System.Drawing.Point(307, 30);
+      this.lblRandomDownloadFrom.Location = new System.Drawing.Point(307, 21);
       this.lblRandomDownloadFrom.Name = "lblRandomDownloadFrom";
       this.lblRandomDownloadFrom.Size = new System.Drawing.Size(27, 13);
       this.lblRandomDownloadFrom.TabIndex = 6;
@@ -663,7 +655,7 @@ namespace RatioMaster
       // RandomUploadFrom
       // 
       this.RandomUploadFrom.BackColor = System.Drawing.Color.White;
-      this.RandomUploadFrom.Location = new System.Drawing.Point(105, 27);
+      this.RandomUploadFrom.Location = new System.Drawing.Point(105, 18);
       this.RandomUploadFrom.Name = "RandomUploadFrom";
       this.RandomUploadFrom.Size = new System.Drawing.Size(37, 20);
       this.RandomUploadFrom.TabIndex = 2;
@@ -672,7 +664,7 @@ namespace RatioMaster
       // lblRandomDownloadTo
       // 
       this.lblRandomDownloadTo.AutoSize = true;
-      this.lblRandomDownloadTo.Location = new System.Drawing.Point(383, 30);
+      this.lblRandomDownloadTo.Location = new System.Drawing.Point(383, 21);
       this.lblRandomDownloadTo.Name = "lblRandomDownloadTo";
       this.lblRandomDownloadTo.Size = new System.Drawing.Size(30, 13);
       this.lblRandomDownloadTo.TabIndex = 8;
@@ -681,16 +673,15 @@ namespace RatioMaster
       // lblStopAfter
       // 
       this.lblStopAfter.AutoSize = true;
-      this.lblStopAfter.Location = new System.Drawing.Point(399, 49);
+      this.lblStopAfter.Location = new System.Drawing.Point(399, 94);
       this.lblStopAfter.Name = "lblStopAfter";
       this.lblStopAfter.Size = new System.Drawing.Size(25, 13);
-      this.lblStopAfter.TabIndex = 26;
+      this.lblStopAfter.TabIndex = 21;
       this.lblStopAfter.Text = "???";
       // 
       // cmbStopAfter
       // 
       this.cmbStopAfter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.cmbStopAfter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.cmbStopAfter.FormattingEnabled = true;
       this.cmbStopAfter.Items.AddRange(new object[] {
             "Never",
@@ -700,25 +691,25 @@ namespace RatioMaster
             "When uploaded >",
             "When downloaded >",
             "When leechers/seeders <"});
-      this.cmbStopAfter.Location = new System.Drawing.Point(177, 46);
+      this.cmbStopAfter.Location = new System.Drawing.Point(177, 91);
       this.cmbStopAfter.Name = "cmbStopAfter";
       this.cmbStopAfter.Size = new System.Drawing.Size(151, 21);
-      this.cmbStopAfter.TabIndex = 25;
+      this.cmbStopAfter.TabIndex = 19;
       this.cmbStopAfter.SelectedIndexChanged += new System.EventHandler(this.cmbStopAfter_SelectedIndexChanged);
       // 
       // txtStopValue
       // 
       this.txtStopValue.BackColor = System.Drawing.Color.White;
-      this.txtStopValue.Location = new System.Drawing.Point(334, 46);
+      this.txtStopValue.Location = new System.Drawing.Point(334, 91);
       this.txtStopValue.Name = "txtStopValue";
       this.txtStopValue.Size = new System.Drawing.Size(59, 20);
-      this.txtStopValue.TabIndex = 24;
+      this.txtStopValue.TabIndex = 20;
       this.txtStopValue.Text = "0";
       // 
       // intervalLabel
       // 
       this.intervalLabel.AutoSize = true;
-      this.intervalLabel.Location = new System.Drawing.Point(6, 25);
+      this.intervalLabel.Location = new System.Drawing.Point(6, 70);
       this.intervalLabel.Name = "intervalLabel";
       this.intervalLabel.Size = new System.Drawing.Size(97, 13);
       this.intervalLabel.TabIndex = 14;
@@ -727,48 +718,46 @@ namespace RatioMaster
       // lblRemWork
       // 
       this.lblRemWork.AutoSize = true;
-      this.lblRemWork.Location = new System.Drawing.Point(132, 49);
+      this.lblRemWork.Location = new System.Drawing.Point(132, 94);
       this.lblRemWork.Name = "lblRemWork";
       this.lblRemWork.Size = new System.Drawing.Size(39, 13);
-      this.lblRemWork.TabIndex = 23;
+      this.lblRemWork.TabIndex = 18;
       this.lblRemWork.Text = "STOP:";
       // 
       // fileSize
       // 
       this.fileSize.BackColor = System.Drawing.Color.White;
-      this.fileSize.Location = new System.Drawing.Point(78, 46);
+      this.fileSize.Location = new System.Drawing.Point(78, 91);
       this.fileSize.MaxLength = 5;
       this.fileSize.Name = "fileSize";
       this.fileSize.Size = new System.Drawing.Size(48, 20);
-      this.fileSize.TabIndex = 20;
+      this.fileSize.TabIndex = 17;
       this.fileSize.Text = "0";
       // 
       // cmbVersion
       // 
       this.cmbVersion.BackColor = System.Drawing.Color.White;
       this.cmbVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.cmbVersion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.cmbVersion.FormattingEnabled = true;
-      this.cmbVersion.Location = new System.Drawing.Point(345, 21);
+      this.cmbVersion.Location = new System.Drawing.Point(242, 19);
       this.cmbVersion.Name = "cmbVersion";
       this.cmbVersion.Size = new System.Drawing.Size(128, 21);
-      this.cmbVersion.TabIndex = 18;
+      this.cmbVersion.TabIndex = 2;
       this.cmbVersion.SelectedValueChanged += new System.EventHandler(this.cmbVersion_SelectedValueChanged);
       // 
       // FileSizeLabel
       // 
       this.FileSizeLabel.AutoSize = true;
-      this.FileSizeLabel.Location = new System.Drawing.Point(6, 49);
+      this.FileSizeLabel.Location = new System.Drawing.Point(6, 94);
       this.FileSizeLabel.Name = "FileSizeLabel";
       this.FileSizeLabel.Size = new System.Drawing.Size(66, 13);
-      this.FileSizeLabel.TabIndex = 19;
+      this.FileSizeLabel.TabIndex = 16;
       this.FileSizeLabel.Text = "Finished (%):";
       // 
       // cmbClient
       // 
       this.cmbClient.BackColor = System.Drawing.Color.White;
       this.cmbClient.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.cmbClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.cmbClient.FormattingEnabled = true;
       this.cmbClient.IntegralHeight = false;
       this.cmbClient.Items.AddRange(new object[] {
@@ -788,28 +777,28 @@ namespace RatioMaster
             "Deluge",
             "KTorrent",
             "Gnome BT"});
-      this.cmbClient.Location = new System.Drawing.Point(200, 21);
+      this.cmbClient.Location = new System.Drawing.Point(69, 19);
       this.cmbClient.Name = "cmbClient";
-      this.cmbClient.Size = new System.Drawing.Size(139, 21);
-      this.cmbClient.TabIndex = 17;
+      this.cmbClient.Size = new System.Drawing.Size(164, 21);
+      this.cmbClient.TabIndex = 1;
       this.cmbClient.SelectedIndexChanged += new System.EventHandler(this.cmbClient_SelectedIndexChanged);
       // 
       // interval
       // 
       this.interval.BackColor = System.Drawing.Color.White;
-      this.interval.Location = new System.Drawing.Point(109, 22);
+      this.interval.Location = new System.Drawing.Point(136, 65);
       this.interval.Name = "interval";
-      this.interval.Size = new System.Drawing.Size(43, 20);
+      this.interval.Size = new System.Drawing.Size(55, 20);
       this.interval.TabIndex = 15;
-      this.interval.Text = "1800";
+      this.interval.Text = "300";
       // 
       // ClientLabel
       // 
       this.ClientLabel.AutoSize = true;
-      this.ClientLabel.Location = new System.Drawing.Point(158, 25);
+      this.ClientLabel.Location = new System.Drawing.Point(6, 24);
       this.ClientLabel.Name = "ClientLabel";
       this.ClientLabel.Size = new System.Drawing.Size(36, 13);
-      this.ClientLabel.TabIndex = 16;
+      this.ClientLabel.TabIndex = 0;
       this.ClientLabel.Text = "Client:";
       // 
       // uploadRateLabel
@@ -950,53 +939,53 @@ namespace RatioMaster
       // 
       // txtTorrentSize
       // 
-      this.txtTorrentSize.Location = new System.Drawing.Point(399, 43);
+      this.txtTorrentSize.Location = new System.Drawing.Point(402, 68);
       this.txtTorrentSize.Name = "txtTorrentSize";
       this.txtTorrentSize.ReadOnly = true;
       this.txtTorrentSize.Size = new System.Drawing.Size(71, 20);
-      this.txtTorrentSize.TabIndex = 5;
+      this.txtTorrentSize.TabIndex = 8;
       // 
       // trackerAddress
       // 
       this.trackerAddress.BackColor = System.Drawing.Color.White;
-      this.trackerAddress.Location = new System.Drawing.Point(56, 19);
+      this.trackerAddress.Location = new System.Drawing.Point(59, 44);
       this.trackerAddress.Name = "trackerAddress";
       this.trackerAddress.Size = new System.Drawing.Size(414, 20);
-      this.trackerAddress.TabIndex = 1;
+      this.trackerAddress.TabIndex = 4;
       // 
       // lblTorrentSize
       // 
       this.lblTorrentSize.AutoSize = true;
-      this.lblTorrentSize.Location = new System.Drawing.Point(363, 46);
+      this.lblTorrentSize.Location = new System.Drawing.Point(366, 71);
       this.lblTorrentSize.Name = "lblTorrentSize";
       this.lblTorrentSize.Size = new System.Drawing.Size(30, 13);
-      this.lblTorrentSize.TabIndex = 4;
+      this.lblTorrentSize.TabIndex = 7;
       this.lblTorrentSize.Text = "Size:";
       // 
       // TrackerLabel
       // 
       this.TrackerLabel.AutoSize = true;
-      this.TrackerLabel.Location = new System.Drawing.Point(3, 22);
+      this.TrackerLabel.Location = new System.Drawing.Point(6, 47);
       this.TrackerLabel.Name = "TrackerLabel";
       this.TrackerLabel.Size = new System.Drawing.Size(47, 13);
-      this.TrackerLabel.TabIndex = 0;
+      this.TrackerLabel.TabIndex = 3;
       this.TrackerLabel.Text = "Tracker:";
       // 
       // shaHash
       // 
-      this.shaHash.Location = new System.Drawing.Point(56, 43);
+      this.shaHash.Location = new System.Drawing.Point(59, 68);
       this.shaHash.Name = "shaHash";
       this.shaHash.ReadOnly = true;
       this.shaHash.Size = new System.Drawing.Size(301, 20);
-      this.shaHash.TabIndex = 3;
+      this.shaHash.TabIndex = 6;
       // 
       // hashLabel
       // 
       this.hashLabel.AutoSize = true;
-      this.hashLabel.Location = new System.Drawing.Point(3, 46);
+      this.hashLabel.Location = new System.Drawing.Point(6, 71);
       this.hashLabel.Name = "hashLabel";
       this.hashLabel.Size = new System.Drawing.Size(40, 13);
-      this.hashLabel.TabIndex = 2;
+      this.hashLabel.TabIndex = 5;
       this.hashLabel.Text = "HASH:\r\n";
       // 
       // browseButton
@@ -1005,10 +994,10 @@ namespace RatioMaster
       this.browseButton.Cursor = System.Windows.Forms.Cursors.Hand;
       this.browseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.browseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.browseButton.Location = new System.Drawing.Point(399, 17);
+      this.browseButton.Location = new System.Drawing.Point(404, 16);
       this.browseButton.Name = "browseButton";
       this.browseButton.Size = new System.Drawing.Size(71, 24);
-      this.browseButton.TabIndex = 1;
+      this.browseButton.TabIndex = 2;
       this.browseButton.Text = "Browse...";
       this.browseButton.UseVisualStyleBackColor = false;
       this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
@@ -1016,232 +1005,200 @@ namespace RatioMaster
       // torrentFile
       // 
       this.torrentFile.BackColor = System.Drawing.Color.White;
-      this.torrentFile.Location = new System.Drawing.Point(6, 19);
+      this.torrentFile.Location = new System.Drawing.Point(59, 19);
       this.torrentFile.Name = "torrentFile";
       this.torrentFile.ReadOnly = true;
-      this.torrentFile.Size = new System.Drawing.Size(387, 20);
-      this.torrentFile.TabIndex = 0;
+      this.torrentFile.Size = new System.Drawing.Size(339, 20);
+      this.torrentFile.TabIndex = 1;
       // 
-      // groupBox1
+      // gbxTorrent
       // 
-      this.groupBox1.Controls.Add(this.browseButton);
-      this.groupBox1.Controls.Add(this.torrentFile);
-      this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-      this.groupBox1.Location = new System.Drawing.Point(3, 3);
-      this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(475, 46);
-      this.groupBox1.TabIndex = 0;
-      this.groupBox1.TabStop = false;
-      this.groupBox1.Text = "Torrent File";
+      this.gbxTorrent.Controls.Add(this.lblFile);
+      this.gbxTorrent.Controls.Add(this.txtTorrentSize);
+      this.gbxTorrent.Controls.Add(this.browseButton);
+      this.gbxTorrent.Controls.Add(this.TrackerLabel);
+      this.gbxTorrent.Controls.Add(this.trackerAddress);
+      this.gbxTorrent.Controls.Add(this.torrentFile);
+      this.gbxTorrent.Controls.Add(this.hashLabel);
+      this.gbxTorrent.Controls.Add(this.shaHash);
+      this.gbxTorrent.Controls.Add(this.lblTorrentSize);
+      this.gbxTorrent.Dock = System.Windows.Forms.DockStyle.Top;
+      this.gbxTorrent.Location = new System.Drawing.Point(0, 0);
+      this.gbxTorrent.Name = "gbxTorrent";
+      this.gbxTorrent.Size = new System.Drawing.Size(481, 94);
+      this.gbxTorrent.TabIndex = 0;
+      this.gbxTorrent.TabStop = false;
+      this.gbxTorrent.Text = "Torrent";
       // 
-      // groupBox2
+      // lblFile
       // 
-      this.groupBox2.Controls.Add(this.txtTorrentSize);
-      this.groupBox2.Controls.Add(this.TrackerLabel);
-      this.groupBox2.Controls.Add(this.trackerAddress);
-      this.groupBox2.Controls.Add(this.hashLabel);
-      this.groupBox2.Controls.Add(this.lblTorrentSize);
-      this.groupBox2.Controls.Add(this.shaHash);
-      this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-      this.groupBox2.Location = new System.Drawing.Point(3, 49);
-      this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(475, 70);
-      this.groupBox2.TabIndex = 1;
-      this.groupBox2.TabStop = false;
-      this.groupBox2.Text = "Torrent Info";
+      this.lblFile.AutoSize = true;
+      this.lblFile.Location = new System.Drawing.Point(6, 26);
+      this.lblFile.Name = "lblFile";
+      this.lblFile.Size = new System.Drawing.Size(26, 13);
+      this.lblFile.TabIndex = 0;
+      this.lblFile.Text = "File:";
       // 
-      // groupBox3
+      // gbxOptions
       // 
-      this.groupBox3.Controls.Add(this.uploadRateLabel);
-      this.groupBox3.Controls.Add(this.uploadRate);
-      this.groupBox3.Controls.Add(this.lblUpMax);
-      this.groupBox3.Controls.Add(this.txtRandDownMax);
-      this.groupBox3.Controls.Add(this.lblDownMin);
-      this.groupBox3.Controls.Add(this.downloadRateLabel);
-      this.groupBox3.Controls.Add(this.lblUpMin);
-      this.groupBox3.Controls.Add(this.txtRandUpMax);
-      this.groupBox3.Controls.Add(this.lblDownMax);
-      this.groupBox3.Controls.Add(this.downloadRate);
-      this.groupBox3.Controls.Add(this.chkRandDown);
-      this.groupBox3.Controls.Add(this.txtRandDownMin);
-      this.groupBox3.Controls.Add(this.txtRandUpMin);
-      this.groupBox3.Controls.Add(this.chkRandUP);
-      this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-      this.groupBox3.Location = new System.Drawing.Point(3, 119);
-      this.groupBox3.Name = "groupBox3";
-      this.groupBox3.Size = new System.Drawing.Size(475, 70);
-      this.groupBox3.TabIndex = 2;
-      this.groupBox3.TabStop = false;
-      this.groupBox3.Text = "Speed Options";
+      this.gbxOptions.Controls.Add(this.checkIgnoreFailureReason);
+      this.gbxOptions.Controls.Add(this.checkTCPListen);
+      this.gbxOptions.Controls.Add(this.checkRequestScrap);
+      this.gbxOptions.Controls.Add(this.lblStopAfter);
+      this.gbxOptions.Controls.Add(this.uploadRateLabel);
+      this.gbxOptions.Controls.Add(this.intervalLabel);
+      this.gbxOptions.Controls.Add(this.cmbStopAfter);
+      this.gbxOptions.Controls.Add(this.uploadRate);
+      this.gbxOptions.Controls.Add(this.lblUpMax);
+      this.gbxOptions.Controls.Add(this.txtStopValue);
+      this.gbxOptions.Controls.Add(this.txtRandDownMax);
+      this.gbxOptions.Controls.Add(this.interval);
+      this.gbxOptions.Controls.Add(this.lblDownMin);
+      this.gbxOptions.Controls.Add(this.downloadRateLabel);
+      this.gbxOptions.Controls.Add(this.lblRemWork);
+      this.gbxOptions.Controls.Add(this.lblUpMin);
+      this.gbxOptions.Controls.Add(this.FileSizeLabel);
+      this.gbxOptions.Controls.Add(this.txtRandUpMax);
+      this.gbxOptions.Controls.Add(this.fileSize);
+      this.gbxOptions.Controls.Add(this.lblDownMax);
+      this.gbxOptions.Controls.Add(this.downloadRate);
+      this.gbxOptions.Controls.Add(this.chkRandDown);
+      this.gbxOptions.Controls.Add(this.txtRandDownMin);
+      this.gbxOptions.Controls.Add(this.txtRandUpMin);
+      this.gbxOptions.Controls.Add(this.chkRandUP);
+      this.gbxOptions.Dock = System.Windows.Forms.DockStyle.Top;
+      this.gbxOptions.Location = new System.Drawing.Point(0, 94);
+      this.gbxOptions.Name = "gbxOptions";
+      this.gbxOptions.Size = new System.Drawing.Size(481, 140);
+      this.gbxOptions.TabIndex = 0;
+      this.gbxOptions.TabStop = false;
+      this.gbxOptions.Text = "Options";
       // 
-      // groupBox4
+      // gbxNextOptions
       // 
-      this.groupBox4.Controls.Add(this.lblStopAfter);
-      this.groupBox4.Controls.Add(this.intervalLabel);
-      this.groupBox4.Controls.Add(this.cmbStopAfter);
-      this.groupBox4.Controls.Add(this.ClientLabel);
-      this.groupBox4.Controls.Add(this.txtStopValue);
-      this.groupBox4.Controls.Add(this.interval);
-      this.groupBox4.Controls.Add(this.cmbClient);
-      this.groupBox4.Controls.Add(this.lblRemWork);
-      this.groupBox4.Controls.Add(this.FileSizeLabel);
-      this.groupBox4.Controls.Add(this.fileSize);
-      this.groupBox4.Controls.Add(this.cmbVersion);
-      this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-      this.groupBox4.Location = new System.Drawing.Point(3, 189);
-      this.groupBox4.Name = "groupBox4";
-      this.groupBox4.Size = new System.Drawing.Size(475, 70);
-      this.groupBox4.TabIndex = 3;
-      this.groupBox4.TabStop = false;
-      this.groupBox4.Text = "Options";
+      this.gbxNextOptions.Controls.Add(this.RandomDownloadTo);
+      this.gbxNextOptions.Controls.Add(this.checkRandomUpload);
+      this.gbxNextOptions.Controls.Add(this.RandomDownloadFrom);
+      this.gbxNextOptions.Controls.Add(this.lblRandomDownloadTo);
+      this.gbxNextOptions.Controls.Add(this.RandomUploadFrom);
+      this.gbxNextOptions.Controls.Add(this.checkRandomDownload);
+      this.gbxNextOptions.Controls.Add(this.lblRandomDownloadFrom);
+      this.gbxNextOptions.Controls.Add(this.lblRandomUploadFrom);
+      this.gbxNextOptions.Controls.Add(this.lblRandomUploadTo);
+      this.gbxNextOptions.Controls.Add(this.RandomUploadTo);
+      this.gbxNextOptions.Dock = System.Windows.Forms.DockStyle.Top;
+      this.gbxNextOptions.Location = new System.Drawing.Point(0, 0);
+      this.gbxNextOptions.Name = "gbxNextOptions";
+      this.gbxNextOptions.Size = new System.Drawing.Size(480, 44);
+      this.gbxNextOptions.TabIndex = 0;
+      this.gbxNextOptions.TabStop = false;
+      this.gbxNextOptions.Text = "On Next Update Get Random Speeds";
       // 
-      // groupBox5
+      // gbxProxy
       // 
-      this.groupBox5.Controls.Add(this.RandomDownloadTo);
-      this.groupBox5.Controls.Add(this.checkRandomUpload);
-      this.groupBox5.Controls.Add(this.RandomDownloadFrom);
-      this.groupBox5.Controls.Add(this.lblRandomDownloadTo);
-      this.groupBox5.Controls.Add(this.RandomUploadFrom);
-      this.groupBox5.Controls.Add(this.checkRandomDownload);
-      this.groupBox5.Controls.Add(this.lblRandomDownloadFrom);
-      this.groupBox5.Controls.Add(this.lblRandomUploadFrom);
-      this.groupBox5.Controls.Add(this.lblRandomUploadTo);
-      this.groupBox5.Controls.Add(this.RandomUploadTo);
-      this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
-      this.groupBox5.Location = new System.Drawing.Point(3, 3);
-      this.groupBox5.Name = "groupBox5";
-      this.groupBox5.Size = new System.Drawing.Size(475, 58);
-      this.groupBox5.TabIndex = 4;
-      this.groupBox5.TabStop = false;
-      this.groupBox5.Text = "On Next Update Get Random Speeds";
+      this.gbxProxy.Controls.Add(this.labelProxyType);
+      this.gbxProxy.Controls.Add(this.labelProxyHost);
+      this.gbxProxy.Controls.Add(this.textProxyUser);
+      this.gbxProxy.Controls.Add(this.textProxyPass);
+      this.gbxProxy.Controls.Add(this.labelProxyPass);
+      this.gbxProxy.Controls.Add(this.comboProxyType);
+      this.gbxProxy.Controls.Add(this.labelProxyPort);
+      this.gbxProxy.Controls.Add(this.textProxyHost);
+      this.gbxProxy.Controls.Add(this.textProxyPort);
+      this.gbxProxy.Controls.Add(this.labelProxyUser);
+      this.gbxProxy.Dock = System.Windows.Forms.DockStyle.Top;
+      this.gbxProxy.Location = new System.Drawing.Point(0, 161);
+      this.gbxProxy.Name = "gbxProxy";
+      this.gbxProxy.Size = new System.Drawing.Size(480, 73);
+      this.gbxProxy.TabIndex = 0;
+      this.gbxProxy.TabStop = false;
+      this.gbxProxy.Text = "Proxy Server Settings";
       // 
-      // groupBox6
+      // gbxCustomClient
       // 
-      this.groupBox6.Controls.Add(this.checkIgnoreFailureReason);
-      this.groupBox6.Controls.Add(this.checkTCPListen);
-      this.groupBox6.Controls.Add(this.checkRequestScrap);
-      this.groupBox6.Dock = System.Windows.Forms.DockStyle.Top;
-      this.groupBox6.Location = new System.Drawing.Point(3, 61);
-      this.groupBox6.Name = "groupBox6";
-      this.groupBox6.Size = new System.Drawing.Size(475, 40);
-      this.groupBox6.TabIndex = 5;
-      this.groupBox6.TabStop = false;
-      this.groupBox6.Text = "Other Settings";
+      this.gbxCustomClient.Controls.Add(this.customPeersNum);
+      this.gbxCustomClient.Controls.Add(this.ClientLabel);
+      this.gbxCustomClient.Controls.Add(this.keyLabel);
+      this.gbxCustomClient.Controls.Add(this.lblcustomPeersNum);
+      this.gbxCustomClient.Controls.Add(this.customKey);
+      this.gbxCustomClient.Controls.Add(this.lblGenStatus);
+      this.gbxCustomClient.Controls.Add(this.customPeerID);
+      this.gbxCustomClient.Controls.Add(this.customPort);
+      this.gbxCustomClient.Controls.Add(this.label4);
+      this.gbxCustomClient.Controls.Add(this.portLabel);
+      this.gbxCustomClient.Controls.Add(this.chkNewValues);
+      this.gbxCustomClient.Controls.Add(this.cmbVersion);
+      this.gbxCustomClient.Controls.Add(this.cmbClient);
+      this.gbxCustomClient.Dock = System.Windows.Forms.DockStyle.Top;
+      this.gbxCustomClient.Location = new System.Drawing.Point(0, 44);
+      this.gbxCustomClient.Name = "gbxCustomClient";
+      this.gbxCustomClient.Size = new System.Drawing.Size(480, 117);
+      this.gbxCustomClient.TabIndex = 1;
+      this.gbxCustomClient.TabStop = false;
+      this.gbxCustomClient.Text = "Custom Client Simulation";
       // 
-      // groupBox7
+      // panMain
       // 
-      this.groupBox7.Controls.Add(this.labelProxyType);
-      this.groupBox7.Controls.Add(this.labelProxyHost);
-      this.groupBox7.Controls.Add(this.textProxyUser);
-      this.groupBox7.Controls.Add(this.textProxyPass);
-      this.groupBox7.Controls.Add(this.labelProxyPass);
-      this.groupBox7.Controls.Add(this.comboProxyType);
-      this.groupBox7.Controls.Add(this.labelProxyPort);
-      this.groupBox7.Controls.Add(this.textProxyHost);
-      this.groupBox7.Controls.Add(this.textProxyPort);
-      this.groupBox7.Controls.Add(this.labelProxyUser);
-      this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
-      this.groupBox7.Location = new System.Drawing.Point(3, 101);
-      this.groupBox7.Name = "groupBox7";
-      this.groupBox7.Size = new System.Drawing.Size(475, 70);
-      this.groupBox7.TabIndex = 6;
-      this.groupBox7.TabStop = false;
-      this.groupBox7.Text = "Proxy Server Settings";
+      this.panMain.Controls.Add(this.gbxOptions);
+      this.panMain.Controls.Add(this.gbxTorrent);
+      this.panMain.Dock = System.Windows.Forms.DockStyle.Left;
+      this.panMain.Location = new System.Drawing.Point(0, 0);
+      this.panMain.Name = "panMain";
+      this.panMain.Size = new System.Drawing.Size(481, 235);
+      this.panMain.TabIndex = 32;
       // 
-      // groupBox8
+      // panAdvanced
       // 
-      this.groupBox8.Controls.Add(this.customPeersNum);
-      this.groupBox8.Controls.Add(this.keyLabel);
-      this.groupBox8.Controls.Add(this.lblcustomPeersNum);
-      this.groupBox8.Controls.Add(this.customKey);
-      this.groupBox8.Controls.Add(this.lblGenStatus);
-      this.groupBox8.Controls.Add(this.customPeerID);
-      this.groupBox8.Controls.Add(this.customPort);
-      this.groupBox8.Controls.Add(this.label4);
-      this.groupBox8.Controls.Add(this.portLabel);
-      this.groupBox8.Controls.Add(this.chkNewValues);
-      this.groupBox8.Dock = System.Windows.Forms.DockStyle.Top;
-      this.groupBox8.Location = new System.Drawing.Point(3, 171);
-      this.groupBox8.Name = "groupBox8";
-      this.groupBox8.Size = new System.Drawing.Size(475, 89);
-      this.groupBox8.TabIndex = 7;
-      this.groupBox8.TabStop = false;
-      this.groupBox8.Text = "Custom Client Simulation";
+      this.panAdvanced.Controls.Add(this.gbxProxy);
+      this.panAdvanced.Controls.Add(this.gbxCustomClient);
+      this.panAdvanced.Controls.Add(this.gbxNextOptions);
+      this.panAdvanced.Dock = System.Windows.Forms.DockStyle.Left;
+      this.panAdvanced.Location = new System.Drawing.Point(481, 0);
+      this.panAdvanced.Name = "panAdvanced";
+      this.panAdvanced.Size = new System.Drawing.Size(480, 235);
+      this.panAdvanced.TabIndex = 33;
       // 
-      // tabControl
+      // panel1
       // 
-      this.tabControl.Controls.Add(this.tabPageMain);
-      this.tabControl.Controls.Add(this.tabPageAdvanced);
-      this.tabControl.Dock = System.Windows.Forms.DockStyle.Top;
-      this.tabControl.Location = new System.Drawing.Point(0, 0);
-      this.tabControl.Name = "tabControl";
-      this.tabControl.SelectedIndex = 0;
-      this.tabControl.Size = new System.Drawing.Size(489, 289);
-      this.tabControl.TabIndex = 31;
-      // 
-      // tabPageMain
-      // 
-      this.tabPageMain.Controls.Add(this.groupBox4);
-      this.tabPageMain.Controls.Add(this.groupBox3);
-      this.tabPageMain.Controls.Add(this.groupBox2);
-      this.tabPageMain.Controls.Add(this.groupBox1);
-      this.tabPageMain.Location = new System.Drawing.Point(4, 22);
-      this.tabPageMain.Name = "tabPageMain";
-      this.tabPageMain.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageMain.Size = new System.Drawing.Size(481, 263);
-      this.tabPageMain.TabIndex = 0;
-      this.tabPageMain.Text = "Main";
-      this.tabPageMain.UseVisualStyleBackColor = true;
-      // 
-      // tabPageAdvanced
-      // 
-      this.tabPageAdvanced.Controls.Add(this.groupBox8);
-      this.tabPageAdvanced.Controls.Add(this.groupBox7);
-      this.tabPageAdvanced.Controls.Add(this.groupBox6);
-      this.tabPageAdvanced.Controls.Add(this.groupBox5);
-      this.tabPageAdvanced.Location = new System.Drawing.Point(4, 22);
-      this.tabPageAdvanced.Name = "tabPageAdvanced";
-      this.tabPageAdvanced.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageAdvanced.Size = new System.Drawing.Size(481, 263);
-      this.tabPageAdvanced.TabIndex = 1;
-      this.tabPageAdvanced.Text = "Advanced";
-      this.tabPageAdvanced.UseVisualStyleBackColor = true;
+      this.panel1.Controls.Add(this.panAdvanced);
+      this.panel1.Controls.Add(this.panMain);
+      this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+      this.panel1.Location = new System.Drawing.Point(0, 0);
+      this.panel1.Name = "panel1";
+      this.panel1.Size = new System.Drawing.Size(963, 235);
+      this.panel1.TabIndex = 34;
       // 
       // RM
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.BackColor = System.Drawing.Color.White;
       this.Controls.Add(this.logWindow);
-      this.Controls.Add(this.tabControl);
       this.Controls.Add(this.panelControls);
+      this.Controls.Add(this.info);
+      this.Controls.Add(this.panel1);
       this.Name = "RM";
-      this.Size = new System.Drawing.Size(489, 574);
+      this.Size = new System.Drawing.Size(963, 424);
       this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
       this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
       this.info.ResumeLayout(false);
       this.info.PerformLayout();
       this.panelControls.ResumeLayout(false);
-      this.panelControls.PerformLayout();
-      this.groupBox1.ResumeLayout(false);
-      this.groupBox1.PerformLayout();
-      this.groupBox2.ResumeLayout(false);
-      this.groupBox2.PerformLayout();
-      this.groupBox3.ResumeLayout(false);
-      this.groupBox3.PerformLayout();
-      this.groupBox4.ResumeLayout(false);
-      this.groupBox4.PerformLayout();
-      this.groupBox5.ResumeLayout(false);
-      this.groupBox5.PerformLayout();
-      this.groupBox6.ResumeLayout(false);
-      this.groupBox6.PerformLayout();
-      this.groupBox7.ResumeLayout(false);
-      this.groupBox7.PerformLayout();
-      this.groupBox8.ResumeLayout(false);
-      this.groupBox8.PerformLayout();
-      this.tabControl.ResumeLayout(false);
-      this.tabPageMain.ResumeLayout(false);
-      this.tabPageAdvanced.ResumeLayout(false);
+      this.gbxTorrent.ResumeLayout(false);
+      this.gbxTorrent.PerformLayout();
+      this.gbxOptions.ResumeLayout(false);
+      this.gbxOptions.PerformLayout();
+      this.gbxNextOptions.ResumeLayout(false);
+      this.gbxNextOptions.PerformLayout();
+      this.gbxProxy.ResumeLayout(false);
+      this.gbxProxy.PerformLayout();
+      this.gbxCustomClient.ResumeLayout(false);
+      this.gbxCustomClient.PerformLayout();
+      this.panMain.ResumeLayout(false);
+      this.panAdvanced.ResumeLayout(false);
+      this.panel1.ResumeLayout(false);
       this.ResumeLayout(false);
+      this.PerformLayout();
 
         }
 
@@ -1340,16 +1297,14 @@ namespace RatioMaster
         private System.Windows.Forms.ToolStripStatusLabel lblTotalTimeCap;
         private System.Windows.Forms.ToolStripStatusLabel lblTotalTime;
         internal System.Windows.Forms.CheckBox checkIgnoreFailureReason;
-    private System.Windows.Forms.GroupBox groupBox1;
-    private System.Windows.Forms.GroupBox groupBox2;
-    private System.Windows.Forms.GroupBox groupBox3;
-    private System.Windows.Forms.GroupBox groupBox4;
-    private System.Windows.Forms.GroupBox groupBox5;
-    private System.Windows.Forms.GroupBox groupBox6;
-    private System.Windows.Forms.GroupBox groupBox7;
-    private System.Windows.Forms.GroupBox groupBox8;
-    private System.Windows.Forms.TabControl tabControl;
-    private System.Windows.Forms.TabPage tabPageMain;
-    private System.Windows.Forms.TabPage tabPageAdvanced;
+    private System.Windows.Forms.GroupBox gbxTorrent;
+    private System.Windows.Forms.GroupBox gbxOptions;
+    private System.Windows.Forms.GroupBox gbxNextOptions;
+    private System.Windows.Forms.GroupBox gbxProxy;
+    private System.Windows.Forms.GroupBox gbxCustomClient;
+    private System.Windows.Forms.Panel panMain;
+    internal System.Windows.Forms.Label lblFile;
+    private System.Windows.Forms.Panel panAdvanced;
+    private System.Windows.Forms.Panel panel1;
   }
 }

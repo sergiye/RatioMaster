@@ -50,7 +50,6 @@
       this.checkShowTrayBaloon = new System.Windows.Forms.ToolStripMenuItem();
       this.saveSettingsFromCurrentTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.closeToTrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.enable24hformat = new System.Windows.Forms.ToolStripMenuItem();
       this.themeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.goToProgramPageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,7 +89,7 @@
       this.menu.Location = new System.Drawing.Point(0, 0);
       this.menu.Name = "menu";
       this.menu.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-      this.menu.Size = new System.Drawing.Size(504, 24);
+      this.menu.Size = new System.Drawing.Size(484, 24);
       this.menu.TabIndex = 0;
       this.menu.Text = "Menu";
       // 
@@ -253,7 +252,6 @@
             this.checkShowTrayBaloon,
             this.saveSettingsFromCurrentTabToolStripMenuItem,
             this.closeToTrayToolStripMenuItem,
-            this.enable24hformat,
             this.themeMenuItem});
       this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
       this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 22);
@@ -288,14 +286,6 @@
       this.closeToTrayToolStripMenuItem.Name = "closeToTrayToolStripMenuItem";
       this.closeToTrayToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
       this.closeToTrayToolStripMenuItem.Text = "Close to tray";
-      // 
-      // enable24hformat
-      // 
-      this.enable24hformat.CheckOnClick = true;
-      this.enable24hformat.Name = "enable24hformat";
-      this.enable24hformat.Size = new System.Drawing.Size(232, 22);
-      this.enable24hformat.Text = "Enable 24h format";
-      this.enable24hformat.Click += new System.EventHandler(this.enable24hformat_Click);
       // 
       // themeMenuItem
       // 
@@ -413,7 +403,7 @@
       this.tab.Location = new System.Drawing.Point(0, 24);
       this.tab.Name = "tab";
       this.tab.SelectedIndex = 0;
-      this.tab.Size = new System.Drawing.Size(504, 405);
+      this.tab.Size = new System.Drawing.Size(484, 325);
       this.tab.TabIndex = 1;
       this.tab.SelectedIndexChanged += new System.EventHandler(this.tab_TabIndexChanged);
       this.tab.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.renameCurrentToolStripMenuItem_Click);
@@ -426,9 +416,9 @@
             this.lblTabs,
             this.toolStripStatusLabel4,
             this.lblIp});
-      this.Status.Location = new System.Drawing.Point(0, 429);
+      this.Status.Location = new System.Drawing.Point(0, 349);
       this.Status.Name = "Status";
-      this.Status.Size = new System.Drawing.Size(504, 22);
+      this.Status.Size = new System.Drawing.Size(484, 22);
       this.Status.SizingGrip = false;
       this.Status.TabIndex = 2;
       this.Status.Text = "Status";
@@ -480,15 +470,15 @@
       this.AllowDrop = true;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(504, 451);
+      this.ClientSize = new System.Drawing.Size(484, 371);
       this.Controls.Add(this.tab);
       this.Controls.Add(this.menu);
       this.Controls.Add(this.Status);
       this.IsMdiContainer = true;
       this.MainMenuStrip = this.menu;
       this.MaximizeBox = false;
-      this.MaximumSize = new System.Drawing.Size(520, 2000);
-      this.MinimumSize = new System.Drawing.Size(520, 490);
+      this.MaximumSize = new System.Drawing.Size(980, 2000);
+      this.MinimumSize = new System.Drawing.Size(500, 410);
       this.Name = "MainForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -558,7 +548,6 @@
         private System.Windows.Forms.ToolStripMenuItem setDownloadSpeedToToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveSettingsFromCurrentTabToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToTrayToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem enable24hformat;
-    private System.Windows.Forms.ToolStripMenuItem themeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem themeMenuItem;
   }
 }

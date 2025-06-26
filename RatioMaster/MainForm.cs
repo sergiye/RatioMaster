@@ -8,7 +8,6 @@ using sergiye.Common;
 
 namespace RatioMaster {
   public partial class MainForm : Form {
-    public static bool _24h_format_enabled;
 
     private readonly RMCollection<RM> data = new RMCollection<RM>();
     private string themeId;
@@ -136,8 +135,8 @@ namespace RatioMaster {
 
     private void Exit() {
       SaveSettings((RM) tab.SelectedTab.Controls[0]);
-      foreach (TabPage tabb in tab.TabPages) {
-        ((RM) tabb.Controls[0]).StopButton_Click(null, null);
+      foreach (TabPage page in tab.TabPages) {
+        ((RM) page.Controls[0]).StopButton_Click(null, null);
       }
 
       Application.Exit();
@@ -159,12 +158,12 @@ namespace RatioMaster {
     private void trayIcon_MouseMove(object sender, MouseEventArgs e) {
       if (checkShowTrayBaloon.Checked && trayIconBalloonIsUp == false) {
         trayIcon.BalloonTipText = "";
-        foreach (TabPage tabb in tab.TabPages) {
+        foreach (TabPage page in tab.TabPages) {
           try {
-            trayIcon.BalloonTipText += tabb.Text + " - " + ((RM) tabb.Controls[0]).currentTorrentFile.Name + "\n";
+            trayIcon.BalloonTipText += page.Text + " - " + ((RM) page.Controls[0]).currentTorrentFile.Name + "\n";
           }
           catch {
-            trayIcon.BalloonTipText += tabb.Text + " - Not opened!" + "\n";
+            trayIcon.BalloonTipText += page.Text + " - Not opened!" + "\n";
           }
         }
 
@@ -235,10 +234,10 @@ namespace RatioMaster {
 
     private void RenameTabs() {
       var curr = 0;
-      foreach (TabPage thetab in tab.TabPages) {
-        if (thetab.Text.Contains("RM ")) {
+      foreach (TabPage page in tab.TabPages) {
+        if (page.Text.Contains("RM ")) {
           curr++;
-          thetab.Text = "RM " + curr;
+          page.Text = "RM " + curr;
         }
       }
     }
@@ -273,7 +272,7 @@ namespace RatioMaster {
       }
     }
 
-    private void SaveSettings(RM rMdata) {
+    private void SaveSettings(RM rmData) {
       try {
         var reg = Registry.CurrentUser.OpenSubKey("Software\\RatioMaster", true);
         if (reg == null) {
@@ -281,64 +280,64 @@ namespace RatioMaster {
           reg = Registry.CurrentUser.CreateSubKey("Software\\RatioMaster");
         }
 
-        reg.SetValue("NewValues", BtoI(rMdata.chkNewValues.Checked), RegistryValueKind.DWord);
+        reg.SetValue("NewValues", BtoI(rmData.chkNewValues.Checked), RegistryValueKind.DWord);
         reg.SetValue("BallonTip", BtoI(checkShowTrayBaloon.Checked), RegistryValueKind.DWord);
         reg.SetValue("MinimizeToTray", BtoI(chkMinimize.Checked), RegistryValueKind.DWord);
         reg.SetValue("CloseToTray", BtoI(closeToTrayToolStripMenuItem.Checked), RegistryValueKind.DWord);
         reg.SetValue("Theme", themeId, RegistryValueKind.String);
 
-        reg.SetValue("Client", rMdata.cmbClient.SelectedItem, RegistryValueKind.String);
-        reg.SetValue("ClientVersion", rMdata.cmbVersion.SelectedItem, RegistryValueKind.String);
-        reg.SetValue("UploadRate", rMdata.uploadRate.Text, RegistryValueKind.String);
-        reg.SetValue("DownloadRate", rMdata.downloadRate.Text, RegistryValueKind.String);
-        reg.SetValue("Interval", rMdata.interval.Text, RegistryValueKind.String);
-        reg.SetValue("fileSize", rMdata.fileSize.Text, RegistryValueKind.String);
-        reg.SetValue("Directory", rMdata.DefaultDirectory, RegistryValueKind.String);
-        reg.SetValue("TCPlistener", BtoI(rMdata.checkTCPListen.Checked), RegistryValueKind.DWord);
-        reg.SetValue("ScrapeInfo", BtoI(rMdata.checkRequestScrap.Checked), RegistryValueKind.DWord);
+        reg.SetValue("Client", rmData.cmbClient.SelectedItem, RegistryValueKind.String);
+        reg.SetValue("ClientVersion", rmData.cmbVersion.SelectedItem, RegistryValueKind.String);
+        reg.SetValue("UploadRate", rmData.uploadRate.Text, RegistryValueKind.String);
+        reg.SetValue("DownloadRate", rmData.downloadRate.Text, RegistryValueKind.String);
+        reg.SetValue("Interval", rmData.interval.Text, RegistryValueKind.String);
+        reg.SetValue("fileSize", rmData.fileSize.Text, RegistryValueKind.String);
+        reg.SetValue("Directory", rmData.DefaultDirectory, RegistryValueKind.String);
+        reg.SetValue("TCPlistener", BtoI(rmData.checkTCPListen.Checked), RegistryValueKind.DWord);
+        reg.SetValue("ScrapeInfo", BtoI(rmData.checkRequestScrap.Checked), RegistryValueKind.DWord);
 
-        // Radnom value
-        reg.SetValue("GetRandUp", BtoI(rMdata.chkRandUP.Checked), RegistryValueKind.DWord);
-        reg.SetValue("GetRandDown", BtoI(rMdata.chkRandDown.Checked), RegistryValueKind.DWord);
-        reg.SetValue("MinRandUp", rMdata.txtRandUpMin.Text, RegistryValueKind.String);
-        reg.SetValue("MaxRandUp", rMdata.txtRandUpMax.Text, RegistryValueKind.String);
-        reg.SetValue("MinRandDown", rMdata.txtRandDownMin.Text, RegistryValueKind.String);
-        reg.SetValue("MaxRandDown", rMdata.txtRandDownMax.Text, RegistryValueKind.String);
+        // Random value
+        reg.SetValue("GetRandUp", BtoI(rmData.chkRandUP.Checked), RegistryValueKind.DWord);
+        reg.SetValue("GetRandDown", BtoI(rmData.chkRandDown.Checked), RegistryValueKind.DWord);
+        reg.SetValue("MinRandUp", rmData.txtRandUpMin.Text, RegistryValueKind.String);
+        reg.SetValue("MaxRandUp", rmData.txtRandUpMax.Text, RegistryValueKind.String);
+        reg.SetValue("MinRandDown", rmData.txtRandDownMin.Text, RegistryValueKind.String);
+        reg.SetValue("MaxRandDown", rmData.txtRandDownMax.Text, RegistryValueKind.String);
 
         // Custom values
-        reg.SetValue("CustomKey", rMdata.customKey.Text, RegistryValueKind.String);
-        reg.SetValue("CustomPeerID", rMdata.customPeerID.Text, RegistryValueKind.String);
-        reg.SetValue("CustomPeers", rMdata.customPeersNum.Text, RegistryValueKind.String);
-        reg.SetValue("CustomPort", rMdata.customPort.Text, RegistryValueKind.String);
+        reg.SetValue("CustomKey", rmData.customKey.Text, RegistryValueKind.String);
+        reg.SetValue("CustomPeerID", rmData.customPeerID.Text, RegistryValueKind.String);
+        reg.SetValue("CustomPeers", rmData.customPeersNum.Text, RegistryValueKind.String);
+        reg.SetValue("CustomPort", rmData.customPort.Text, RegistryValueKind.String);
 
         // Stop after...
-        reg.SetValue("StopWhen", rMdata.cmbStopAfter.SelectedItem, RegistryValueKind.String);
-        reg.SetValue("StopAfter", rMdata.txtStopValue.Text, RegistryValueKind.String);
+        reg.SetValue("StopWhen", rmData.cmbStopAfter.SelectedItem, RegistryValueKind.String);
+        reg.SetValue("StopAfter", rmData.txtStopValue.Text, RegistryValueKind.String);
 
         // Proxy
-        reg.SetValue("ProxyType", rMdata.comboProxyType.SelectedItem, RegistryValueKind.String);
-        reg.SetValue("ProxyAdress", rMdata.textProxyHost.Text, RegistryValueKind.String);
-        reg.SetValue("ProxyUser", rMdata.textProxyUser.Text, RegistryValueKind.String);
-        reg.SetValue("ProxyPass", rMdata.textProxyPass.Text, RegistryValueKind.String);
-        reg.SetValue("ProxyPort", rMdata.textProxyPort.Text, RegistryValueKind.String);
+        reg.SetValue("ProxyType", rmData.comboProxyType.SelectedItem, RegistryValueKind.String);
+        reg.SetValue("ProxyAdress", rmData.textProxyHost.Text, RegistryValueKind.String);
+        reg.SetValue("ProxyUser", rmData.textProxyUser.Text, RegistryValueKind.String);
+        reg.SetValue("ProxyPass", rmData.textProxyPass.Text, RegistryValueKind.String);
+        reg.SetValue("ProxyPort", rmData.textProxyPort.Text, RegistryValueKind.String);
 
-        // Radnom value on next
-        reg.SetValue("GetRandUpNext", BtoI(rMdata.checkRandomUpload.Checked), RegistryValueKind.DWord);
-        reg.SetValue("GetRandDownNext", BtoI(rMdata.checkRandomDownload.Checked), RegistryValueKind.DWord);
-        reg.SetValue("MinRandUpNext", rMdata.RandomUploadFrom.Text, RegistryValueKind.String);
-        reg.SetValue("MaxRandUpNext", rMdata.RandomUploadTo.Text, RegistryValueKind.String);
-        reg.SetValue("MinRandDownNext", rMdata.RandomDownloadFrom.Text, RegistryValueKind.String);
-        reg.SetValue("MaxRandDownNext", rMdata.RandomDownloadTo.Text, RegistryValueKind.String);
-        reg.SetValue("IgnoreFailureReason", BtoI(rMdata.checkIgnoreFailureReason.Checked), RegistryValueKind.DWord);
+        // Random value on next
+        reg.SetValue("GetRandUpNext", BtoI(rmData.checkRandomUpload.Checked), RegistryValueKind.DWord);
+        reg.SetValue("GetRandDownNext", BtoI(rmData.checkRandomDownload.Checked), RegistryValueKind.DWord);
+        reg.SetValue("MinRandUpNext", rmData.RandomUploadFrom.Text, RegistryValueKind.String);
+        reg.SetValue("MaxRandUpNext", rmData.RandomUploadTo.Text, RegistryValueKind.String);
+        reg.SetValue("MinRandDownNext", rmData.RandomDownloadFrom.Text, RegistryValueKind.String);
+        reg.SetValue("MaxRandDownNext", rmData.RandomDownloadTo.Text, RegistryValueKind.String);
+        reg.SetValue("IgnoreFailureReason", BtoI(rmData.checkIgnoreFailureReason.Checked), RegistryValueKind.DWord);
       }
       catch (Exception e) {
         // Log += "Error in SetSettings(): " + e.Message + "\n";
       }
     }
 
-    internal static Int64 ParseValidInt64(string str, Int64 defVal) {
+    internal static long ParseValidInt64(string str, long defVal) {
       try {
-        return Int64.Parse(str);
+        return long.Parse(str);
       }
       catch (Exception) {
         return defVal;
@@ -389,8 +388,8 @@ namespace RatioMaster {
 
     #region Sessions
 
-    private bool startthem;
-    private bool stopthem;
+    private bool startThem;
+    private bool stopThem;
 
     private static void AppendItem(XmlDocument aXmlDoc, XmlElement aXmlElement, string value, string name) {
       var itemElement = aXmlDoc.CreateElement(name);
@@ -435,22 +434,22 @@ namespace RatioMaster {
     }
 
     private void saveCurrentSessionToolStripMenuItem_Click(object sender, EventArgs e) {
-      stopthem = true;
+      stopThem = true;
       saveSession.ShowDialog();
     }
 
     private void loadSessionToolStripMenuItem_Click(object sender, EventArgs e) {
-      startthem = false;
+      startThem = false;
       loadSession.ShowDialog();
     }
 
     private void loadSessionAndStartToolStripMenuItem_Click(object sender, EventArgs e) {
-      startthem = true;
+      startThem = true;
       loadSession.ShowDialog();
     }
 
     private void saveCurrentSessionToolStripMenuItem1_Click(object sender, EventArgs e) {
-      stopthem = false;
+      stopThem = false;
       saveSession.ShowDialog();
     }
 
@@ -458,11 +457,11 @@ namespace RatioMaster {
       var doc = new XmlDocument();
       var main = doc.CreateElement("main");
       doc.AppendChild(main);
-      foreach (TabPage tabb in tab.TabPages) {
-        if (stopthem) ((RM) tabb.Controls[0]).StopButton_Click(null, null);
+      foreach (TabPage page in tab.TabPages) {
+        if (stopThem) ((RM) page.Controls[0]).StopButton_Click(null, null);
         var child = doc.CreateElement("RatioMaster");
         main.AppendChild(child);
-        NewMainItem(doc, child, (RM) tabb.Controls[0], tabb.Text);
+        NewMainItem(doc, child, (RM) page.Controls[0], page.Text);
       }
 
       doc.Save(path);
@@ -509,7 +508,7 @@ namespace RatioMaster {
         ((RM) tab.SelectedTab.Controls[0]).RandomDownloadTo.Text = node["NextUpdateDownloadTo"].InnerText;
         ((RM) tab.SelectedTab.Controls[0]).checkIgnoreFailureReason.Checked =
           bool.Parse(node["IgnoreFailureReason"].InnerText);
-        if (startthem) ((RM) tab.SelectedTab.Controls[0]).StartButton_Click(null, null);
+        if (startThem) ((RM) tab.SelectedTab.Controls[0]).StartButton_Click(null, null);
       }
 
       RenameTabs();
@@ -528,20 +527,20 @@ namespace RatioMaster {
     #region All RatioMasters menu
 
     private void startToolStripMenuItem1_Click(object sender, EventArgs e) {
-      foreach (TabPage tabb in tab.TabPages) {
-        ((RM) tabb.Controls[0]).StartButton_Click(null, null);
+      foreach (TabPage page in tab.TabPages) {
+        ((RM) page.Controls[0]).StartButton_Click(null, null);
       }
     }
 
     private void stopToolStripMenuItem1_Click(object sender, EventArgs e) {
-      foreach (TabPage tabb in tab.TabPages) {
-        ((RM) tabb.Controls[0]).StopButton_Click(null, null);
+      foreach (TabPage page in tab.TabPages) {
+        ((RM) page.Controls[0]).StopButton_Click(null, null);
       }
     }
 
     private void updateToolStripMenuItem_Click(object sender, EventArgs e) {
-      foreach (TabPage tabb in tab.TabPages) {
-        ((RM) tabb.Controls[0]).manualUpdateButton_Click(null, null);
+      foreach (TabPage page in tab.TabPages) {
+        ((RM) page.Controls[0]).manualUpdateButton_Click(null, null);
       }
     }
 
@@ -557,8 +556,8 @@ namespace RatioMaster {
           return;
         }
 
-        foreach (TabPage tabb in tab.TabPages) {
-          ((RM) tabb.Controls[0]).UpdateTextBox(((RM) tabb.Controls[0]).uploadRate, value.ToString());
+        foreach (TabPage page in tab.TabPages) {
+          ((RM) page.Controls[0]).UpdateTextBox(((RM) page.Controls[0]).uploadRate, value.ToString());
         }
       }
     }
@@ -575,8 +574,8 @@ namespace RatioMaster {
           return;
         }
 
-        foreach (TabPage tabb in tab.TabPages) {
-          ((RM) tabb.Controls[0]).UpdateTextBox(((RM) tabb.Controls[0]).downloadRate, value.ToString());
+        foreach (TabPage page in tab.TabPages) {
+          ((RM) page.Controls[0]).UpdateTextBox(((RM) page.Controls[0]).downloadRate, value.ToString());
         }
       }
     }
@@ -608,7 +607,7 @@ namespace RatioMaster {
        */
     }
 
-    private static string GetFileExtenstion(string file) {
+    private static string GetFileExtension(string file) {
       var info = new FileInfo(file);
       return info.Extension;
     }
@@ -621,24 +620,20 @@ namespace RatioMaster {
 
     private void MainForm_DragDrop(object sender, DragEventArgs e) {
       foreach (var fileName in (string[]) e.Data.GetData(DataFormats.FileDrop)) {
-        // MessageBox.Show(fileName + "\n" + GetFileExtenstion(fileName), "Debug");
-        if (GetFileExtenstion(fileName) == ".torrent") {
+        // MessageBox.Show(fileName + "\n" + GetFileExtension(fileName), "Debug");
+        if (GetFileExtension(fileName) == ".torrent") {
           if (MessageBox.Show(
-                "You have successfuly loaded this torrent file:\n" + fileName +
+                "You have successfully loaded this torrent file:\n" + fileName +
                 "\nDo you want to load this torrent file in a new tab?", Updater.ApplicationName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
               DialogResult.Yes) Add(fileName);
           else EditCurrent(fileName);
         }
-        else if (GetFileExtenstion(fileName) == ".session") {
+        else if (GetFileExtension(fileName) == ".session") {
           MessageBox.Show("You have successfuly loaded this session file:\n" + fileName, Updater.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-          startthem = false;
+          startThem = false;
           LoadSession(fileName);
         }
       }
-    }
-
-    private void enable24hformat_Click(object sender, EventArgs e) {
-      _24h_format_enabled = enable24hformat.Checked;
     }
   }
 }

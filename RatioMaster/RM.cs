@@ -18,7 +18,7 @@ namespace RatioMaster {
 
     #region Variables
 
-    private bool getnew = true;
+    private bool getNew = true;
     private readonly Random rand = new Random((int) DateTime.Now.Ticks);
     private int remWork;
     internal string DefaultDirectory = "";
@@ -52,7 +52,7 @@ namespace RatioMaster {
     internal RM() {
       InitializeComponent();
       deployDefaultValues();
-      GetPCinfo();
+      GetPCInfo();
       ReadSettings();
     }
 
@@ -99,6 +99,7 @@ namespace RatioMaster {
       downloadRate.Text = num2.ToString();
       interval.Text = torrent.interval.ToString();
       comboProxyType.SelectedItem = "None";
+      cmbStopAfter.SelectedIndex = 0;
     }
 
     #endregion
@@ -143,16 +144,7 @@ namespace RatioMaster {
       }
       else {
         try {
-          var dtNow = DateTime.Now;
-          string dateString;
-
-          if (!MainForm._24h_format_enabled)
-            dateString = "[" + String.Format("{0:hh:mm:ss}", dtNow) + "]";
-          else
-            dateString = "[" + String.Format("{0:HH:mm:ss}", dtNow) + "]";
-
-          logWindow.AppendText(dateString + " " + logLine + "\r\n");
-
+          logWindow.AppendText($"[{DateTime.Now.ToString("T")}] {logLine}\r\n");
           // logWindow.SelectionStart = logWindow.Text.Length;
           logWindow.ScrollToCaret();
         }
@@ -161,7 +153,7 @@ namespace RatioMaster {
       }
     }
 
-    internal void GetPCinfo() {
+    internal void GetPCInfo() {
       try {
         AddLogLine("CurrentDirectory: " + Environment.CurrentDirectory);
         AddLogLine("HasShutdownStarted: " + Environment.HasShutdownStarted);
@@ -192,7 +184,7 @@ namespace RatioMaster {
             AddLogLine("Started TCP listener on port " + currentTorrent.port);
           }
           catch {
-            AddLogLine("TCP listener is alredy started from other torrent or from your torrent client");
+            AddLogLine("TCP listener is already started from other torrent or from your torrent client");
             return;
           }
 
@@ -444,8 +436,8 @@ namespace RatioMaster {
     }
 
     private void cmbVersion_SelectedValueChanged(object sender, EventArgs e) {
-      if (getnew == false) {
-        getnew = true;
+      if (getNew == false) {
+        getNew = true;
         return;
       }
 
@@ -487,10 +479,10 @@ namespace RatioMaster {
       torrent.tracker = trackerAddress.Text;
       torrent.trackerUri = trackerUri;
       torrent.hash = shaHash.Text;
-      torrent.uploadRate = (Int64) (uploadRate.Text.ParseValidFloat(50) * 1024);
+      torrent.uploadRate = (long) (uploadRate.Text.ParseValidFloat(50) * 1024);
 
       // uploadRate.Text = (torrent.uploadRate / (float)1024).ToString();
-      torrent.downloadRate = (Int64) (downloadRate.Text.ParseValidFloat(10) * 1024);
+      torrent.downloadRate = (long) (downloadRate.Text.ParseValidFloat(10) * 1024);
 
       // downloadRate.Text = (torrent.downloadRate / (float)1024).ToString();
       torrent.interval = interval.Text.ParseValidInt(torrent.interval);
@@ -580,17 +572,16 @@ namespace RatioMaster {
 
       // Check rem work
       if ((string) cmbStopAfter.SelectedItem == "After time:") {
-        var bCheck = int.TryParse(txtStopValue.Text, out var res);
-        if (bCheck == false) {
+        if (!int.TryParse(txtStopValue.Text, out var res)) {
           MessageBox.Show(
-            "Please select valid number for Remaning Work\n\r- 0 - default - never stop\n\r- positive number (greater than 1000)",
+            "Please select valid number for Remaining Work\n\r- 0 - default - never stop\n\r- positive number (greater than 1000)",
             "RatioMaster " + version + " - ERROR");
           return;
         }
         else {
           if (res < 1000 && res != 0) {
             MessageBox.Show(
-              "Please select valid number for Remaning Work\n\r- 0 - default - never stop\n\r- positive number (greater than 1000)",
+              "Please select valid number for Remaining Work\n\r- 0 - default - never stop\n\r- positive number (greater than 1000)",
               "RatioMaster " + version + " - ERROR");
             return;
           }
@@ -700,7 +691,7 @@ namespace RatioMaster {
     }
 
     internal void btnDefault_Click(object sender, EventArgs e) {
-      getnew = false;
+      getNew = false;
       cmbClient.SelectedItem = DefaultClient;
       cmbVersion.SelectedItem = DefaultClientVersion;
 
@@ -723,10 +714,8 @@ namespace RatioMaster {
 
       // Options
       var torrent = new TorrentInfo(0, 0);
-      var defup = (int) (torrent.uploadRate / 1024);
-      var defd = (int) (torrent.downloadRate / 1024);
-      uploadRate.Text = defup.ToString();
-      downloadRate.Text = defd.ToString();
+      uploadRate.Text = (torrent.uploadRate / 1024).ToString();
+      downloadRate.Text = (torrent.downloadRate / 1024).ToString();
       fileSize.Text = "0";
       interval.Text = torrent.interval.ToString();
 
@@ -1065,7 +1054,7 @@ namespace RatioMaster {
 
         downloadCount.Text = FormatFileSize((ulong) torrentInfo.downloaded);
 
-        // modify Ratio Lable
+        // modify Ratio Label
         if (torrentInfo.downloaded / 1024 < 100) {
           lblTorrentRatio.Text = "NaN";
         }
@@ -1083,11 +1072,11 @@ namespace RatioMaster {
 
     private static string SetPrecision(string data, int prec) {
       var pow = (float) Math.Pow(10, prec);
-      var wdata = float.Parse(data);
-      wdata *= pow;
-      var curr = (int) wdata;
-      wdata = curr / pow;
-      return wdata.ToString();
+      var wData = float.Parse(data);
+      wData *= pow;
+      var curr = (int) wData;
+      wData = curr / pow;
+      return wData.ToString();
     }
 
     private int Seeders = -1;
@@ -1162,7 +1151,7 @@ namespace RatioMaster {
           timerValue.Text = ConvertToTime(num1);
         }
         else {
-          RandomiseSpeeds();
+          RandomizeSpeeds();
           OpenTcpListener();
           var thread1 = new Thread(ContinueProcess);
           temporaryIntervalCounter = 0;
@@ -1173,7 +1162,7 @@ namespace RatioMaster {
       }
     }
 
-    internal void RandomiseSpeeds() {
+    internal void RandomizeSpeeds() {
       try {
         if (checkRandomUpload.Checked) {
           uploadRate.Text = (RandomSp(RandomUploadFrom.Text, RandomUploadTo.Text, true) / 1024).ToString();
@@ -1188,26 +1177,21 @@ namespace RatioMaster {
         }
       }
       catch (Exception exception1) {
-        AddLogLine("Failed to randomise upload/download speeds: " + exception1.Message);
+        AddLogLine("Failed to randomize upload/download speeds: " + exception1.Message);
       }
     }
 
     internal int RandomSp(string min, string max, bool ret) {
-      if (ret == false) return rand.Next(10);
-      var minn = int.Parse(min);
-      var maxx = int.Parse(max);
-      var rett = rand.Next(GetMin(minn, maxx), GetMax(minn, maxx)) * 1024;
-      return rett;
+      if (!ret || !int.TryParse(min, out var minInt) || !int.TryParse(max, out var maxInt)) return rand.Next(10);
+      return rand.Next(GetMin(minInt, maxInt), GetMax(minInt, maxInt)) * 1024;
     }
 
     internal static int GetMin(int p1, int p2) {
-      if (p1 < p2) return p1;
-      else return p2;
+      return p1 < p2 ? p1 : p2;
     }
 
     internal static int GetMax(int p1, int p2) {
-      if (p1 > p2) return p1;
-      else return p2;
+      return p1 > p2 ? p1 : p2;
     }
 
     #endregion
@@ -1279,7 +1263,7 @@ namespace RatioMaster {
       try {
         for (var i = 0; i < decoded.Length; i += 2) {
           var tempChar =
-            // the only case in which something should not be escaped, is when it is alphanum,
+            // the only case in which something should not be escaped, is when it is alphanumeric,
             // or it's in marks
             // in all other cases, encode it.
             (char) Convert.ToUInt16(decoded.Substring(i, 2), 16);
@@ -1430,7 +1414,7 @@ namespace RatioMaster {
       // else return null;
     }
 
-    internal void RemaningWork_Tick(object sender, EventArgs e) {
+    internal void RemainingWork_Tick(object sender, EventArgs e) {
       if (txtStopValue.Text == "0") {
         return;
       }
@@ -1519,9 +1503,9 @@ namespace RatioMaster {
         }
 
         chkNewValues.Checked = ItoB((int) reg.GetValue("NewValues", true));
-        getnew = false;
+        getNew = false;
         cmbClient.SelectedItem = reg.GetValue("Client", DefaultClient);
-        getnew = false;
+        getNew = false;
         cmbVersion.SelectedItem = reg.GetValue("ClientVersion", DefaultClientVersion);
         uploadRate.Text = (string) reg.GetValue("UploadRate", uploadRate.Text);
         downloadRate.Text = (string) reg.GetValue("DownloadRate", downloadRate.Text);
@@ -1533,7 +1517,7 @@ namespace RatioMaster {
         checkTCPListen.Checked = ItoB((int) reg.GetValue("TCPlistener", BtoI(checkTCPListen.Checked)));
         checkRequestScrap.Checked = ItoB((int) reg.GetValue("ScrapeInfo", BtoI(checkRequestScrap.Checked)));
 
-        // Radnom value
+        // Random value
         chkRandUP.Checked = ItoB((int) reg.GetValue("GetRandUp", BtoI(chkRandUP.Checked)));
         chkRandDown.Checked = ItoB((int) reg.GetValue("GetRandDown", BtoI(chkRandDown.Checked)));
         txtRandUpMin.Text = (string) reg.GetValue("MinRandUp", txtRandUpMin.Text);
@@ -1554,7 +1538,7 @@ namespace RatioMaster {
         customPort.Text = (string) reg.GetValue("CustomPort", customPort.Text);
         customPeersNum.Text = (string) reg.GetValue("CustomPeers", customPeersNum.Text);
 
-        // Radnom value on next
+        // Random value on next
         checkRandomUpload.Checked = ItoB((int) reg.GetValue("GetRandUpNext", BtoI(checkRandomUpload.Checked)));
         checkRandomDownload.Checked = ItoB((int) reg.GetValue("GetRandDownNext", BtoI(checkRandomDownload.Checked)));
         RandomUploadFrom.Text = (string) reg.GetValue("MinRandUpNext", RandomUploadFrom.Text);
@@ -1596,34 +1580,29 @@ namespace RatioMaster {
     #region Custom values
 
     internal void GetRandCustVal() {
-      var clientname = GetClientName();
-      currentClient = TorrentClientFactory.GetClient(clientname);
+      var clientName = GetClientName();
+      currentClient = TorrentClientFactory.GetClient(clientName);
       customKey.Text = currentClient.Key;
       customPeerID.Text = currentClient.PeerID;
       currentTorrent.port = rand.Next(1025, 65535).ToString();
       customPort.Text = currentTorrent.port;
       currentTorrent.numberOfPeers = currentClient.DefNumWant.ToString();
       customPeersNum.Text = currentTorrent.numberOfPeers;
-      lblGenStatus.Text = "Generation status: " + "generated new values for " + clientname;
+      lblGenStatus.Text = "Generation status: " + "generated new values for " + clientName;
     }
 
     internal void SetCustomValues() {
-      var clientname = GetClientName();
-      currentClient = TorrentClientFactory.GetClient(clientname);
-      AddLogLine("Client changed: " + clientname);
+      var clientName = GetClientName();
+      currentClient = TorrentClientFactory.GetClient(clientName);
+      AddLogLine("Client changed: " + clientName);
       if (!currentClient.Parse) GetRandCustVal();
       else {
-        var searchstring = currentClient.SearchString;
-        var maxoffset = currentClient.MaxOffset;
-        var startoffset = currentClient.StartOffset;
-        var process = currentClient.ProcessName;
-        var pversion = cmbVersion.SelectedItem.ToString();
-        if (Getdata(process, pversion, searchstring, startoffset, maxoffset)) {
+        if (GetData(currentClient.ProcessName, cmbVersion.SelectedItem.ToString(), currentClient.SearchString, currentClient.StartOffset, currentClient.MaxOffset)) {
           customKey.Text = currentClient.Key;
           customPeerID.Text = currentClient.PeerID;
           customPort.Text = currentTorrent.port;
           customPeersNum.Text = currentTorrent.numberOfPeers;
-          lblGenStatus.Text = "Generation status: " + clientname + " found! Parsed all values!";
+          lblGenStatus.Text = "Generation status: " + clientName + " found! Parsed all values!";
         }
         else {
           GetRandCustVal();
@@ -1631,7 +1610,7 @@ namespace RatioMaster {
       }
     }
 
-    internal bool Getdata(string client, string pversion, string searchString, long startoffset, long maxoffset) {
+    internal bool GetData(string client, string pVersion, string searchString, long startOffset, long maxOffset) {
       try {
         uint bufferSize = 0x10000;
         var currentClientProcessName = client.ToLower();
@@ -1641,7 +1620,7 @@ namespace RatioMaster {
           return false;
         }
 
-        var currentOffset = startoffset;
+        var currentOffset = startOffset;
         var pReader = new ProcessMemoryReader();
         pReader.ReadProcess = process1;
         var flag1 = false;
@@ -1650,7 +1629,7 @@ namespace RatioMaster {
         pReader.OpenProcess();
 
         // AddLogLine("Debug: pReader.OpenProcess();");
-        while (currentOffset < maxoffset) {
+        while (currentOffset < maxOffset) {
           // AddLogLine("Debug: " + currentOffset.ToString());
           int num1;
           var buffer1 = pReader.ReadProcessMemory((IntPtr) currentOffset, bufferSize, out num1);

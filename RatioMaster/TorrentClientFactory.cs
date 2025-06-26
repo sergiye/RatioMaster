@@ -356,6 +356,24 @@
           break;
         }
 
+        case "uTorrent 1.8.2": {
+          client.Name = "uTorrent 1.8.2";
+          client.HttpProtocol = "HTTP/1.1";
+          client.HashUpperCase = false;
+          client.Key = GenerateIdString("hex", 8, false, true);
+          client.Headers = "Host: {host}\r\nUser-Agent: uTorrent/1820(15357)\r\nAccept-Encoding: gzip\r\n";
+          client.PeerID = "-UT1820-%06D" + GenerateIdString("random", 10, true);
+          client.Query =
+            "info_hash={infohash}&peer_id={peerid}&port={port}&uploaded={uploaded}&downloaded={downloaded}&left={left}&corrupt=0&key={key}{event}&numwant={numwant}&compact=1&no_peer_id=1";
+          client.DefNumWant = 200;
+          client.Parse = true;
+          client.SearchString = "&peer_id=%.20U";
+          client.ProcessName = "uTorrent";
+          client.StartOffset = 0;
+          client.MaxOffset = 60000000;
+          break;
+        }
+
         case "uTorrent 1.8.1-beta(11903)": {
           client.Name = "uTorrent 1.8.1-beta(11903)";
           client.HttpProtocol = "HTTP/1.1";

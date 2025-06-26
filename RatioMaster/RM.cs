@@ -332,6 +332,7 @@ namespace RatioMaster {
           cmbVersion.Items.Add("3.2.0");
           cmbVersion.Items.Add("2.0.1 (build 19078)");
           cmbVersion.Items.Add("1.8.5 (build 17414)");
+          cmbVersion.Items.Add("1.8.2");
           cmbVersion.Items.Add("1.8.1-beta(11903)");
           cmbVersion.Items.Add("1.8.0");
           cmbVersion.Items.Add("1.7.7");
@@ -1632,9 +1633,6 @@ namespace RatioMaster {
 
     internal bool Getdata(string client, string pversion, string searchString, long startoffset, long maxoffset) {
       try {
-        var absoluteEndOffset = maxoffset;
-        var absoluteStartOffset = startoffset;
-        var clientSearchString = searchString;
         uint bufferSize = 0x10000;
         var currentClientProcessName = client.ToLower();
         var enc = Encoding.ASCII;
@@ -1643,7 +1641,7 @@ namespace RatioMaster {
           return false;
         }
 
-        var currentOffset = absoluteStartOffset;
+        var currentOffset = startoffset;
         var pReader = new ProcessMemoryReader();
         pReader.ReadProcess = process1;
         var flag1 = false;
@@ -1652,13 +1650,13 @@ namespace RatioMaster {
         pReader.OpenProcess();
 
         // AddLogLine("Debug: pReader.OpenProcess();");
-        while (currentOffset < absoluteEndOffset) {
+        while (currentOffset < maxoffset) {
           // AddLogLine("Debug: " + currentOffset.ToString());
           int num1;
           var buffer1 = pReader.ReadProcessMemory((IntPtr) currentOffset, bufferSize, out num1);
 
           // pReader.saveArrayToFile(buffer1, @"D:\Projects\NRPG Ratio\NRPG RatioMaster MULTIPLE\RatioMaster source\bin\Release\tests\test" + currentOffset.ToString() + ".txt");
-          long num2 = GetStringOffsetInsideArray(buffer1, enc, clientSearchString);
+          long num2 = GetStringOffsetInsideArray(buffer1, enc, searchString);
           if (num2 >= 0) {
             flag1 = true;
             var text1 = enc.GetString(buffer1);

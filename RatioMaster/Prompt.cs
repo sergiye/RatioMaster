@@ -7,24 +7,24 @@ namespace RatioMaster {
 
     internal bool OK = false;
 
-    public Prompt(string text, string labletext, string defvalue) {
+    public Prompt(string text, string labelText, string defValue) {
       InitializeComponent();
       Text = text;
-      label1.Text = labletext;
-      textBox1.Text = defvalue;
+      label1.Text = labelText;
+      textBox1.Text = defValue;
     }
 
-    private void button2_Click(object sender, EventArgs e) {
+    private void btnCancel_Click(object sender, EventArgs e) {
       Result = string.Empty;
     }
 
-    private void button1_Click(object sender, EventArgs e) {
+    private void btnOk_Click(object sender, EventArgs e) {
       Result = textBox1.Text;
     }
 
     private void textBox1_KeyPress(object sender, KeyPressEventArgs e) {
       if (e.KeyChar == 13) {
-        button1_Click(null, null);
+        btnOk_Click(null, null);
         DialogResult = DialogResult.OK;
         Close();
       }

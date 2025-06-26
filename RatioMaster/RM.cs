@@ -1780,16 +1780,5 @@ namespace RatioMaster {
     public override string ToString() {
       return "RatioMaster";
     }
-
-    public void ApplyDefaultPanelsView() {
-      magneticPanelFile.IsCollapsed = false;
-      magneticPanelInfo.IsCollapsed = true;
-      magneticPanelSpeed.IsCollapsed = true;
-      magneticPanelNextSpeed.IsCollapsed = true;
-      magneticPanelOptions.IsCollapsed = true;
-      magneticPanelOther.IsCollapsed = true;
-      magneticPanelProxy.IsCollapsed = true;
-      magneticPanelSimulation.IsCollapsed = true;
-    }
   }
 }

@@ -46,3 +46,4 @@ node_modules/
 # SQL Server files
 *.mdf
 *.ldf
+/RatioMaster/FodyWeavers.xsd

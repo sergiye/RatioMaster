@@ -11,26 +11,66 @@ namespace RatioMaster {
     public static bool _24h_format_enabled;
 
     private readonly RMCollection<RM> data = new RMCollection<RM>();
+    private string themeId;
 
     // RM current;
     private int items;
 
     // RM current;
     private int allit;
-    private bool trayIconBaloonIsUp;
+    private bool trayIconBalloonIsUp;
 
     internal MainForm() {
       InitializeComponent();
       Icon = System.Drawing.Icon.ExtractAssociatedIcon(typeof(MainForm).Assembly.Location);
       Text = Updater.ApplicationTitle;
+
+      Updater.Subscribe(
+              (message, isError) => { MessageBox.Show(message, Updater.ApplicationName, MessageBoxButtons.OK, isError ? MessageBoxIcon.Warning : MessageBoxIcon.Information); },
+              (message) => { return MessageBox.Show(message, Updater.ApplicationName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK; },
+              Application.Exit
+            );
+      var timer = new Timer();
+      timer.Tick += async (s, eArgs) => {
+        timer.Enabled = false;
+        timer.Enabled = !await Updater.CheckForUpdatesAsync(true);
+      };
+      timer.Interval = 3000;
+      timer.Enabled = true;
+
+      LoadSettings();
+      InitializeTheme();
+    }
+
+    private void InitializeTheme() {
+
+      menu.Renderer = new ThemedToolStripRenderer();
+      menuRightClickTray.Renderer = new ThemedToolStripRenderer();
+
+      Theme.Current = new LightTheme();
+      themeMenuItem.Visible = false;
+      return;
+
+      var currentItem = CustomTheme.FillThemesMenu((title, theme, onClick) => {
+        if (theme == null && onClick == null) {
+          themeMenuItem.DropDownItems.Add(title);
+          return null;
+        }
+        var item = new ToolStripRadioButtonMenuItem(title, null, onClick);
+        themeMenuItem.DropDownItems.Add(item);
+        return item;
+      }, () => { themeId = Theme.IsAutoThemeEnabled ? "auto" : Theme.Current.Id; }, 
+      themeId, "RatioMaster.themes");
+      currentItem?.PerformClick();
+      Theme.Current.Apply(this);
     }
 
     private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-      MessageBox.Show($"{Updater.ApplicationTitle} {(Environment.Is64BitProcess ? "x64" : "x32")} ver.{Updater.CurrentVersion}", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      Updater.ShowAbout();
     }
 
     private void goToProgramSiteToolStripMenuItem_Click(object sender, EventArgs e) {
-      Process.Start($"https://github.com/{Updater.ApplicationCompany}/{Updater.ApplicationName}");
+      Updater.VisitAppSite();
     }
 
     private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -49,7 +89,6 @@ namespace RatioMaster {
       // Log += versionChecker.Log;
 
       // lblSize.Text = this.Width + "x" + this.Height;
-      LoadSettings();
 
       // trayIcon.Text += versionChecker.PublicVersion;
       // trayIcon.BalloonTipTitle += " " + versionChecker.PublicVersion;
@@ -108,7 +147,7 @@ namespace RatioMaster {
     }
 
     private void trayIcon_MouseMove(object sender, MouseEventArgs e) {
-      if (checkShowTrayBaloon.Checked && trayIconBaloonIsUp == false) {
+      if (checkShowTrayBaloon.Checked && trayIconBalloonIsUp == false) {
         trayIcon.BalloonTipText = "";
         foreach (TabPage tabb in tab.TabPages) {
           try {
@@ -128,15 +167,15 @@ namespace RatioMaster {
     }
 
     private void trayIcon_BalloonTipClicked(object sender, EventArgs e) {
-      trayIconBaloonIsUp = false;
+      trayIconBalloonIsUp = false;
     }
 
     private void trayIcon_BalloonTipClosed(object sender, EventArgs e) {
-      trayIconBaloonIsUp = false;
+      trayIconBalloonIsUp = false;
     }
 
     private void trayIcon_BalloonTipShown(object sender, EventArgs e) {
-      trayIconBaloonIsUp = true;
+      trayIconBalloonIsUp = true;
     }
 
     #endregion
@@ -157,7 +196,6 @@ namespace RatioMaster {
       var page1 = new TabPage("RM " + allit);
       page1.Name = "RM" + items;
       rm1.Dock = DockStyle.Fill;
-      rm1.ApplyDefaultPanelsView();
       page1.Controls.Add(rm1);
 
       // page1.Enter += new EventHandler(this.TabPage_Enter);
@@ -219,6 +257,7 @@ namespace RatioMaster {
         checkShowTrayBaloon.Checked = ItoB((int) reg.GetValue("BallonTip", false));
         chkMinimize.Checked = ItoB((int) reg.GetValue("MinimizeToTray", true));
         closeToTrayToolStripMenuItem.Checked = ItoB((int) reg.GetValue("CloseToTray", true));
+        themeId = reg.GetValue("Theme")?.ToString();
       }
       catch {
       }
@@ -236,6 +275,8 @@ namespace RatioMaster {
         reg.SetValue("BallonTip", BtoI(checkShowTrayBaloon.Checked), RegistryValueKind.DWord);
         reg.SetValue("MinimizeToTray", BtoI(chkMinimize.Checked), RegistryValueKind.DWord);
         reg.SetValue("CloseToTray", BtoI(closeToTrayToolStripMenuItem.Checked), RegistryValueKind.DWord);
+        reg.SetValue("Theme", themeId, RegistryValueKind.String);
+
         reg.SetValue("Client", rMdata.cmbClient.SelectedItem, RegistryValueKind.String);
         reg.SetValue("ClientVersion", rMdata.cmbVersion.SelectedItem, RegistryValueKind.String);
         reg.SetValue("UploadRate", rMdata.uploadRate.Text, RegistryValueKind.String);
@@ -502,7 +543,7 @@ namespace RatioMaster {
           value = int.Parse(prompt.Result);
         }
         catch {
-          MessageBox.Show("Invalid value!\nTry again!", "Error");
+          MessageBox.Show("Invalid value!\nTry again!", Updater.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
           return;
         }
 
@@ -520,7 +561,7 @@ namespace RatioMaster {
           value = int.Parse(prompt.Result);
         }
         catch {
-          MessageBox.Show("Invalid value!\nTry again!", "Error");
+          MessageBox.Show("Invalid value!\nTry again!", Updater.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
           return;
         }
 
@@ -574,12 +615,12 @@ namespace RatioMaster {
         if (GetFileExtenstion(fileName) == ".torrent") {
           if (MessageBox.Show(
                 "You have successfuly loaded this torrent file:\n" + fileName +
-                "\nDo you want to load this torrent file in a new tab?", "File loaded!", MessageBoxButtons.YesNo) ==
+                "\nDo you want to load this torrent file in a new tab?", Updater.ApplicationName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
               DialogResult.Yes) Add(fileName);
           else EditCurrent(fileName);
         }
         else if (GetFileExtenstion(fileName) == ".session") {
-          MessageBox.Show("You have successfuly loaded this session file:\n" + fileName, "File loaded!");
+          MessageBox.Show("You have successfuly loaded this session file:\n" + fileName, Updater.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Information);
           startthem = false;
           LoadSession(fileName);
         }

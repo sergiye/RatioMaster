@@ -67,9 +67,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PanelBase.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Peer.cs" />
     <Compile Include="PeerList.cs" />
     <Compile Include="ProcessMemoryReader.cs" />
@@ -81,9 +78,6 @@
       <DependentUpon>Prompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SerializerHelper.cs" />
-    <Compile Include="Updater.cs" />
-    <Compile Include="VersionCompatibitity.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -115,12 +109,19 @@
     <BaseApplicationManifest Include="Properties\app.manifest" />
     <None Include="Resources\Main.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="sergiye.Common.UI">
+      <Version>1.*</Version>
+    </PackageReference>
+    <PackageReference Include="Costura.Fody">
+      <PrivateAssets>all</PrivateAssets>
+      <Version>4.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Fody">
+      <Version>6.9.2</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
-    </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
 </Project>

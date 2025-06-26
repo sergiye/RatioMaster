@@ -42,6 +42,16 @@ namespace RatioMaster {
       InitializeTheme();
     }
 
+    protected override void WndProc(ref Message m) {
+      base.WndProc(ref m);
+      if (m.Msg == WinApiHelper.WM_SHOWME) {
+        if (WindowState == FormWindowState.Minimized)
+          WindowState = FormWindowState.Normal;
+        BringToFront();
+        Activate();
+      }
+    }
+
     private void InitializeTheme() {
 
       menu.Renderer = new ThemedToolStripRenderer();

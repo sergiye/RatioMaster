@@ -57,7 +57,6 @@ namespace RatioMaster {
       menuRightClickTray.Renderer = new ThemedToolStripRenderer();
 
       Theme.Current = new LightTheme();
-      themeMenuItem.Visible = false;
       return;
 
       var currentItem = CustomTheme.FillThemesMenu((title, theme, onClick) => {

@@ -25,17 +25,10 @@ namespace RatioMaster {
       Text = Updater.ApplicationTitle;
 
       Updater.Subscribe(
-              (message, isError) => { MessageBox.Show(message, Updater.ApplicationName, MessageBoxButtons.OK, isError ? MessageBoxIcon.Warning : MessageBoxIcon.Information); },
-              (message) => { return MessageBox.Show(message, Updater.ApplicationName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK; },
-              Application.Exit
-            );
-      var timer = new Timer();
-      timer.Tick += async (s, eArgs) => {
-        timer.Enabled = false;
-        timer.Enabled = !await Updater.CheckForUpdatesAsync(true);
-      };
-      timer.Interval = 3000;
-      timer.Enabled = true;
+        (message, isError) => { MessageBox.Show(message, Updater.ApplicationTitle, MessageBoxButtons.OK, isError ? MessageBoxIcon.Warning : MessageBoxIcon.Information); },
+        (message) => { return MessageBox.Show(message, Updater.ApplicationTitle, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK; },
+        Exit
+      );
 
       LoadSettings();
       InitializeTheme();
@@ -82,7 +75,7 @@ namespace RatioMaster {
     }
 
     private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e) {
-      Updater.CheckForUpdates(false);
+      Updater.CheckForUpdates(Updater.CheckUpdatesMode.AllMessages);
     }
 
     private void newToolStripMenuItem_Click(object sender, EventArgs e) {

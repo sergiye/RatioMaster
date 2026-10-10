@@ -1,7 +1,7 @@
 # RatioMaster
-[![Release](https://img.shields.io/github/v/release/sergiye/RatioMaster?style=for-the-badge)](https://github.com/sergiye/RatioMaster/releases/latest)
-![Downloads](https://img.shields.io/github/downloads/sergiye/RatioMaster/total?style=for-the-badge&color=ff4f42)
-![Last commit](https://img.shields.io/github/last-commit/sergiye/RatioMaster?style=for-the-badge&color=00AD00)
+[![Release](https://img.shields.io/github/v/release/sergiye/RatioMaster)](https://github.com/sergiye/RatioMaster/releases/latest)
+![Downloads](https://img.shields.io/github/downloads/sergiye/RatioMaster/total?color=ff4f42)
+![Last commit](https://img.shields.io/github/last-commit/sergiye/RatioMaster?color=00AD00)
 
 ## About
 
@@ -73,7 +73,7 @@ To add a theme, create a `themes` folder next to `RatioMaster.exe` and put a `{t
 
 ## What does it look like?
 
-[<img src="https://github.com/sergiye/RatioMaster/raw/master/preview.png" alt="Themes" width="300"/>](https://github.com/sergiye/RatioMaster/raw/master/preview.png)
+[<img src="https://github.com/sergiye/RatioMaster/raw/master/preview.png" alt="Themes"/>](https://github.com/sergiye/RatioMaster/raw/master/preview.png)
 
 ## Download
 

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using Microsoft.Win32;
@@ -45,8 +48,11 @@ namespace RatioMaster {
         removeCurrentToolStripMenuItem_Click(null, null);
       };
       SuspendLayout();
-      Add("");
-      lblIp.Text = Functions.GetIp();
+      if (!RestoreTabs()) Add("");
+      Shown += async (_, _) => {
+        var ip = await Task.Run(() => Functions.GetIp());
+        if (!IsDisposed) lblIp.Text = ip;
+      };
       tab_TabIndexChanged(null, null);
       ThemeSupport.Apply(this);
       ResumeLayout(false);
@@ -180,14 +186,26 @@ namespace RatioMaster {
       // lblLocation.Text = this.Location.X + "x" + this.Location.Y;
     }
 
+    private bool exiting;
+
     private void Exit() {
+      if (exiting) return;
+      exiting = true;
       SaveSettings((RM) tab.SelectedTab.Controls[0]);
+      SaveTabs();
       foreach (TabPage page in tab.TabPages) {
         ((RM) page.Controls[0]).StopButton_Click(null, null);
       }
 
+      // the tabs send "stopped" to their trackers at the same time: wait for them, but not for long
+      var deadline = DateTime.UtcNow.AddSeconds(3);
+      foreach (TabPage page in tab.TabPages) {
+        var left = (int) (deadline - DateTime.UtcNow).TotalMilliseconds;
+        ((RM) page.Controls[0]).WaitForStop(Math.Max(left, 0));
+      }
+
+      trayIcon.Visible = false;
       Application.Exit();
-      Process.GetCurrentProcess().Kill();
     }
 
     #region Tray items
@@ -292,31 +310,25 @@ namespace RatioMaster {
     #endregion
 
     private void LoadSettings() {
-      var reg = Registry.CurrentUser.OpenSubKey("Software\\RatioMaster", true);
-      if (reg == null) {
-        // The key doesn't exist; create it / open it
-        Registry.CurrentUser.CreateSubKey("Software\\RatioMaster");
-        return;
-      }
-
       try {
-        checkShowTrayBaloon.Checked = ItoB((int) reg.GetValue("BallonTip", false));
-        chkMinimize.Checked = ItoB((int) reg.GetValue("MinimizeToTray", true));
-        closeToTrayToolStripMenuItem.Checked = ItoB((int) reg.GetValue("CloseToTray", true));
-        themeId = reg.GetValue("Theme")?.ToString();
+        using (var reg = Registry.CurrentUser.CreateSubKey(RegistrySettings.KeyPath)) {
+          if (reg == null) return;
+          checkShowTrayBaloon.Checked = reg.GetFlag("BallonTip", false);
+          chkMinimize.Checked = reg.GetFlag("MinimizeToTray", true);
+          closeToTrayToolStripMenuItem.Checked = reg.GetFlag("CloseToTray", true);
+          themeId = reg.GetText("Theme", null);
+        }
       }
-      catch {
+      catch (Exception) {
       }
     }
 
     private void SaveSettings(RM rmData) {
       try {
-        var reg = Registry.CurrentUser.OpenSubKey("Software\\RatioMaster", true);
-        if (reg == null) {
-          // The key doesn't exist; create it / open it
-          reg = Registry.CurrentUser.CreateSubKey("Software\\RatioMaster");
-        }
-
+        var reg = Registry.CurrentUser.CreateSubKey(RegistrySettings.KeyPath);
+        if (reg == null) return;
+        // without it the next run does not read the saved values
+        reg.SetValue("Version", Application.ProductVersion, RegistryValueKind.String);
         reg.SetValue("NewValues", BtoI(rmData.chkNewValues.Checked), RegistryValueKind.DWord);
         reg.SetValue("BallonTip", BtoI(checkShowTrayBaloon.Checked), RegistryValueKind.DWord);
         reg.SetValue("MinimizeToTray", BtoI(chkMinimize.Checked), RegistryValueKind.DWord);
@@ -368,7 +380,7 @@ namespace RatioMaster {
         reg.SetValue("IgnoreFailureReason", BtoI(rmData.checkIgnoreFailureReason.Checked), RegistryValueKind.DWord);
       }
       catch (Exception e) {
-        // Log += "Error in SetSettings(): " + e.Message + "\n";
+        rmData.AddLogLine("Error in SaveSettings(): " + e.Message);
       }
     }
 
@@ -490,12 +502,12 @@ namespace RatioMaster {
       saveSession.ShowDialog();
     }
 
-    private void SaveSession(string path) {
+    private void SaveSession(string path, bool stop) {
       var doc = new XmlDocument();
       var main = doc.CreateElement("main");
       doc.AppendChild(main);
       foreach (TabPage page in tab.TabPages) {
-        if (stopThem) ((RM) page.Controls[0]).StopButton_Click(null, null);
+        if (stop) ((RM) page.Controls[0]).StopButton_Click(null, null);
         var child = doc.CreateElement("RatioMaster");
         main.AppendChild(child);
         NewMainItem(doc, child, (RM) page.Controls[0], page.Text);
@@ -504,58 +516,129 @@ namespace RatioMaster {
       doc.Save(path);
     }
 
-    private void LoadSession(string path) {
+    // The tabs of a session file; returns the number of tabs made. A tab that cannot be restored is reported, the others are loaded.
+    private int LoadSession(string path, bool start) {
       var doc = new XmlDocument();
-      doc.Load(path);
-      XmlNode root = doc.DocumentElement;
-      foreach (XmlNode node in root.ChildNodes) {
-        Add("");
-        tab.SelectedTab.Text = node["Name"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).torrentFile.Text = node["Address"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).openFileDialog1.FileName = node["Address"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).openFileDialog1_FileOk(null, null);
-        ((RM) tab.SelectedTab.Controls[0]).trackerAddress.Text = node["Tracker"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).uploadRate.Text = node["UploadSpeed"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).txtRandUpMin.Text = node["UploadRandMin"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).txtRandUpMax.Text = node["UploadRandMax"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).downloadRate.Text = node["DownloadSpeed"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).txtRandDownMin.Text = node["DownloadRandMin"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).txtRandDownMax.Text = node["DownloadRandMax"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).chkRandUP.Checked = bool.Parse(node["UploadRandom"].InnerText);
-        ((RM) tab.SelectedTab.Controls[0]).chkRandDown.Checked = bool.Parse(node["DownloadRandom"].InnerText);
-        ((RM) tab.SelectedTab.Controls[0]).cmbClient.SelectedItem = node["Client"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).cmbVersion.SelectedItem = node["Version"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).fileSize.Text = node["Finished"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).cmbStopAfter.SelectedItem = node["StopType"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).txtStopValue.Text = node["StopValue"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).customPort.Text = node["Port"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).checkTCPListen.Checked = bool.Parse(node["UseTCP"].InnerText);
-        ((RM) tab.SelectedTab.Controls[0]).checkRequestScrap.Checked = bool.Parse(node["UseScrape"].InnerText);
-        ((RM) tab.SelectedTab.Controls[0]).comboProxyType.SelectedItem = node["ProxyType"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).textProxyUser.Text = node["ProxyUser"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).textProxyPass.Text = node["ProxyPass"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).textProxyHost.Text = node["ProxyHost"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).textProxyPort.Text = node["ProxyPort"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).checkRandomUpload.Checked = bool.Parse(node["NextUpdateUpload"].InnerText);
-        ((RM) tab.SelectedTab.Controls[0]).checkRandomDownload.Checked =
-          bool.Parse(node["NextUpdateDownload"].InnerText);
-        ((RM) tab.SelectedTab.Controls[0]).RandomUploadFrom.Text = node["NextUpdateUploadFrom"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).RandomUploadTo.Text = node["NextUpdateUploadTo"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).RandomDownloadFrom.Text = node["NextUpdateDownloadFrom"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).RandomDownloadTo.Text = node["NextUpdateDownloadTo"].InnerText;
-        ((RM) tab.SelectedTab.Controls[0]).checkIgnoreFailureReason.Checked =
-          bool.Parse(node["IgnoreFailureReason"].InnerText);
-        if (startThem) ((RM) tab.SelectedTab.Controls[0]).StartButton_Click(null, null);
+      try {
+        doc.Load(path);
+      }
+      catch (Exception ex) {
+        MessageBox.Show("Cannot read the session file:\n" + ex.Message, Updater.ApplicationName, MessageBoxButtons.OK,
+          MessageBoxIcon.Warning);
+        return 0;
       }
 
+      var loaded = 0;
+      var errors = new List<string>();
+      foreach (XmlNode node in doc.DocumentElement.ChildNodes) {
+        if (node.NodeType != XmlNodeType.Element) continue;
+        Add("");
+        loaded++;
+        var data = (RM) tab.SelectedTab.Controls[0];
+        try {
+          ApplySession(data, node);
+          if (start) data.StartButton_Click(null, null);
+        }
+        catch (Exception ex) {
+          errors.Add(tab.SelectedTab.Text + ": " + ex.Message);
+        }
+      }
+
+      if (errors.Count > 0)
+        MessageBox.Show("Some tabs of the session were not restored completely:\n\n" + string.Join("\n", errors),
+          Updater.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+      return loaded;
+    }
+
+    private static string Item(XmlNode node, string name, string defaultValue) {
+      return node[name]?.InnerText ?? defaultValue;
+    }
+
+    private static bool Flag(XmlNode node, string name, bool defaultValue) {
+      return bool.TryParse(node[name]?.InnerText, out var value) ? value : defaultValue;
+    }
+
+    // A value that is missing in the file leaves what the tab has.
+    private void ApplySession(RM data, XmlNode node) {
+      tab.SelectedTab.Text = Item(node, "Name", tab.SelectedTab.Text);
+      var address = Item(node, "Address", "");
+      data.torrentFile.Text = address;
+      data.openFileDialog1.FileName = address;
+      data.openFileDialog1_FileOk(null, null);
+      data.trackerAddress.Text = Item(node, "Tracker", data.trackerAddress.Text);
+      data.uploadRate.Text = Item(node, "UploadSpeed", data.uploadRate.Text);
+      data.txtRandUpMin.Text = Item(node, "UploadRandMin", data.txtRandUpMin.Text);
+      data.txtRandUpMax.Text = Item(node, "UploadRandMax", data.txtRandUpMax.Text);
+      data.downloadRate.Text = Item(node, "DownloadSpeed", data.downloadRate.Text);
+      data.txtRandDownMin.Text = Item(node, "DownloadRandMin", data.txtRandDownMin.Text);
+      data.txtRandDownMax.Text = Item(node, "DownloadRandMax", data.txtRandDownMax.Text);
+      data.chkRandUP.Checked = Flag(node, "UploadRandom", data.chkRandUP.Checked);
+      data.chkRandDown.Checked = Flag(node, "DownloadRandom", data.chkRandDown.Checked);
+      data.cmbClient.SelectedItem = Item(node, "Client", (string) data.cmbClient.SelectedItem);
+      data.cmbVersion.SelectedItem = Item(node, "Version", (string) data.cmbVersion.SelectedItem);
+      data.fileSize.Text = Item(node, "Finished", data.fileSize.Text);
+      data.cmbStopAfter.SelectedItem = Item(node, "StopType", (string) data.cmbStopAfter.SelectedItem);
+      data.txtStopValue.Text = Item(node, "StopValue", data.txtStopValue.Text);
+      data.customPort.Text = Item(node, "Port", data.customPort.Text);
+      data.checkTCPListen.Checked = Flag(node, "UseTCP", data.checkTCPListen.Checked);
+      data.checkRequestScrap.Checked = Flag(node, "UseScrape", data.checkRequestScrap.Checked);
+      data.comboProxyType.SelectedItem = Item(node, "ProxyType", (string) data.comboProxyType.SelectedItem);
+      data.textProxyUser.Text = Item(node, "ProxyUser", data.textProxyUser.Text);
+      data.textProxyPass.Text = Item(node, "ProxyPass", data.textProxyPass.Text);
+      data.textProxyHost.Text = Item(node, "ProxyHost", data.textProxyHost.Text);
+      data.textProxyPort.Text = Item(node, "ProxyPort", data.textProxyPort.Text);
+      data.checkRandomUpload.Checked = Flag(node, "NextUpdateUpload", data.checkRandomUpload.Checked);
+      data.checkRandomDownload.Checked = Flag(node, "NextUpdateDownload", data.checkRandomDownload.Checked);
+      data.RandomUploadFrom.Text = Item(node, "NextUpdateUploadFrom", data.RandomUploadFrom.Text);
+      data.RandomUploadTo.Text = Item(node, "NextUpdateUploadTo", data.RandomUploadTo.Text);
+      data.RandomDownloadFrom.Text = Item(node, "NextUpdateDownloadFrom", data.RandomDownloadFrom.Text);
+      data.RandomDownloadTo.Text = Item(node, "NextUpdateDownloadTo", data.RandomDownloadTo.Text);
+      data.checkIgnoreFailureReason.Checked =
+        Flag(node, "IgnoreFailureReason", data.checkIgnoreFailureReason.Checked);
+    }
+
+    // The tabs are kept between the runs of the program in a session file of its own.
+    private static string TabsFile {
+      get {
+        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RatioMaster",
+          "tabs.xml");
+      }
+    }
+
+    private void SaveTabs() {
+      try {
+        Directory.CreateDirectory(Path.GetDirectoryName(TabsFile));
+        SaveSession(TabsFile, false);
+      }
+      catch (Exception ex) {
+        ((RM) tab.SelectedTab.Controls[0]).AddLogLine("Error saving the tabs: " + ex.Message);
+      }
+    }
+
+    // False when there is nothing to restore.
+    private bool RestoreTabs() {
+      try {
+        if (!File.Exists(TabsFile) || LoadSession(TabsFile, false) == 0) return false;
+        foreach (TabPage page in tab.TabPages) {
+          var match = Regex.Match(page.Text, @"^RM (\d+)$");
+          if (match.Success && int.TryParse(match.Groups[1].Value, out var number))
+            lastTabNumber = Math.Max(lastTabNumber, number);
+        }
+
+        tab.SelectedIndex = 0;
+        return true;
+      }
+      catch (Exception) {
+        return false;
+      }
     }
 
     private void saveSession_FileOk(object sender, System.ComponentModel.CancelEventArgs e) {
-      SaveSession(saveSession.FileName);
+      SaveSession(saveSession.FileName, stopThem);
     }
 
     private void loadSession_FileOk(object sender, System.ComponentModel.CancelEventArgs e) {
-      LoadSession(loadSession.FileName);
+      LoadSession(loadSession.FileName, startThem);
     }
 
     #endregion
@@ -666,8 +749,7 @@ namespace RatioMaster {
         }
         else if (GetFileExtension(fileName) == ".session") {
           MessageBox.Show("You have successfuly loaded this session file:\n" + fileName, Updater.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-          startThem = false;
-          LoadSession(fileName);
+          LoadSession(fileName, false);
         }
       }
     }

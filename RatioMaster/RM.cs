@@ -16,6 +16,21 @@ using RatioMaster.BytesRoads;
 namespace RatioMaster {
   internal partial class RM : UserControl {
 
+    // The height of the parts that stay when the log is hidden completely.
+    internal int HeightWithoutLog => panel1.Height + info.Height + panelControls.Height;
+
+    // The whole tree of controls is painted off screen and shown at once, not control by control.
+    protected override CreateParams CreateParams {
+      get {
+        var cp = base.CreateParams;
+        cp.ExStyle |= 0x02000000; // WS_EX_COMPOSITED
+        return cp;
+      }
+    }
+
+    // The width the two halves of the window need.
+    internal int ContentWidth => panMain.Width + panAdvanced.Width;
+
     #region Variables
 
     private bool getNew = true;
@@ -51,6 +66,7 @@ namespace RatioMaster {
 
     internal RM() {
       InitializeComponent();
+      DoubleBuffered = true;
       deployDefaultValues();
       GetPCInfo();
       ReadSettings();

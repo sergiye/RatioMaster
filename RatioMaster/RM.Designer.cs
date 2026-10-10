@@ -1155,7 +1155,7 @@ namespace RatioMaster
       this.panAdvanced.Dock = System.Windows.Forms.DockStyle.Left;
       this.panAdvanced.Location = new System.Drawing.Point(481, 0);
       this.panAdvanced.Name = "panAdvanced";
-      this.panAdvanced.Size = new System.Drawing.Size(480, 235);
+      this.panAdvanced.Size = new System.Drawing.Size(488, 235);
       this.panAdvanced.TabIndex = 33;
       // 
       // panel1
@@ -1178,7 +1178,7 @@ namespace RatioMaster
       this.Controls.Add(this.info);
       this.Controls.Add(this.panel1);
       this.Name = "RM";
-      this.Size = new System.Drawing.Size(963, 424);
+      this.Size = new System.Drawing.Size(971, 424);
       this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
       this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
       this.info.ResumeLayout(false);

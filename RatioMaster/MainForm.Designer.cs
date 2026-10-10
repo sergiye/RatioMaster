@@ -64,7 +64,7 @@
       this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
       this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.tab = new System.Windows.Forms.TabControl();
+      this.tab = new sergiye.Common.ThemedClosableTabControl();
       this.Status = new System.Windows.Forms.StatusStrip();
       this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
       this.lblTabs = new System.Windows.Forms.ToolStripStatusLabel();
@@ -255,12 +255,12 @@
       // settingsToolStripMenuItem
       // 
       this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.themeMenuItem,
-            this.toolStripMenuItem7,
             this.chkMinimize,
             this.closeToTrayToolStripMenuItem,
             this.checkShowTrayBaloon,
-            this.saveSettingsFromCurrentTabToolStripMenuItem});
+            this.saveSettingsFromCurrentTabToolStripMenuItem,
+            this.toolStripMenuItem7,
+            this.themeMenuItem});
       this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
       this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 22);
       this.settingsToolStripMenuItem.Text = "Settings";
@@ -295,7 +295,6 @@
       // 
       // themeMenuItem
       // 
-      this.themeMenuItem.Enabled = false;
       this.themeMenuItem.Name = "themeMenuItem";
       this.themeMenuItem.Size = new System.Drawing.Size(232, 22);
       this.themeMenuItem.Text = "Theme";
@@ -410,6 +409,7 @@
       this.tab.Location = new System.Drawing.Point(0, 24);
       this.tab.Name = "tab";
       this.tab.SelectedIndex = 0;
+      this.tab.ShowToolTips = true;
       this.tab.Size = new System.Drawing.Size(484, 325);
       this.tab.TabIndex = 1;
       this.tab.SelectedIndexChanged += new System.EventHandler(this.tab_TabIndexChanged);
@@ -501,7 +501,6 @@
       this.Controls.Add(this.tab);
       this.Controls.Add(this.menu);
       this.Controls.Add(this.Status);
-      this.IsMdiContainer = true;
       this.MainMenuStrip = this.menu;
       this.MaximizeBox = false;
       this.MaximumSize = new System.Drawing.Size(980, 2000);
@@ -542,7 +541,7 @@
         internal System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         internal System.Windows.Forms.ToolStripMenuItem exitMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem checkShowTrayBaloon;
-        internal System.Windows.Forms.TabControl tab;
+        internal sergiye.Common.ThemedClosableTabControl tab;
         internal System.Windows.Forms.StatusStrip Status;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;

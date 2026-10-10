@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
@@ -11,12 +12,16 @@ namespace RatioMaster {
 
     private readonly RMCollection<RM> data = new RMCollection<RM>();
     private string themeId;
+    private bool shownOnce;
 
     // RM current;
     private int items;
 
     // RM current;
     private int allit;
+
+    // The number in the title of the last tab made: the titles of the other tabs stay when one is closed.
+    private int lastTabNumber;
     private bool trayIconBalloonIsUp;
 
     internal MainForm() {
@@ -32,6 +37,20 @@ namespace RatioMaster {
 
       LoadSettings();
       InitializeTheme();
+
+      // the first tab and the theme are made before the window has a handle: much cheaper than after it
+      tab.ShowCloseOnSingleTab = false;
+      tab.CloseRequested += (_, page) => {
+        tab.SelectedTab = page;
+        removeCurrentToolStripMenuItem_Click(null, null);
+      };
+      SuspendLayout();
+      Add("");
+      lblIp.Text = Functions.GetIp();
+      tab_TabIndexChanged(null, null);
+      ThemeSupport.Apply(this);
+      ResumeLayout(false);
+      Shown += (_, _) => shownOnce = true;
     }
 
     protected override void WndProc(ref Message m) {
@@ -45,25 +64,42 @@ namespace RatioMaster {
     }
 
     private void InitializeTheme() {
+      ThemeSupport.Initialize(themeId, id => {
+        themeId = id;
+        SaveThemeId();
+      }, "RatioMaster.themes");
+      ThemedWindowTitle.Attach(this, menu, WindowTitleStyle.ThemeColors);
 
-      menu.Renderer = new ThemedToolStripRenderer();
-      menuRightClickTray.Renderer = new ThemedToolStripRenderer();
-
-      Theme.Current = new LightTheme();
-      return;
-
-      var currentItem = CustomTheme.FillThemesMenu((title, theme, onClick) => {
+      var current = CustomTheme.FillThemesMenu<ToolStripMenuItem>((title, theme, onClick) => {
         if (theme == null && onClick == null) {
-          themeMenuItem.DropDownItems.Add(title);
+          themeMenuItem.DropDownItems.Add(new ToolStripSeparator());
           return null;
         }
         var item = new ToolStripRadioButtonMenuItem(title, null, onClick);
         themeMenuItem.DropDownItems.Add(item);
         return item;
-      }, () => { themeId = Theme.IsAutoThemeEnabled ? "auto" : Theme.Current.Id; }, 
-      themeId, "RatioMaster.themes");
-      currentItem?.PerformClick();
-      Theme.Current.Apply(this);
+      }, null, ThemeSupport.CurrentId, "RatioMaster.themes");
+      if (current != null)
+        current.Checked = true;
+
+      ThemeSupport.Changed += ApplyStatusColors;
+      ApplyStatusColors();
+    }
+
+    private void ApplyStatusColors() {
+      foreach (var label in new[] {toolStripStatusLabel2, toolStripStatusLabel4})
+        label.ForeColor = Theme.Current.ForegroundColor;
+      foreach (var label in new[] {lblTabs, lblIp})
+        label.ForeColor = Theme.Current.HyperlinkColor;
+    }
+
+    private static void SaveThemeId() {
+      try {
+        using (var reg = Registry.CurrentUser.CreateSubKey("Software\\RatioMaster"))
+          reg?.SetValue("Theme", ThemeSupport.CurrentId, RegistryValueKind.String);
+      }
+      catch {
+      }
     }
 
     private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -93,10 +129,24 @@ namespace RatioMaster {
 
       // trayIcon.Text += versionChecker.PublicVersion;
       // trayIcon.BalloonTipTitle += " " + versionChecker.PublicVersion;
-      Add("");
-      lblIp.Text = Functions.GetIp();
-      tab_TabIndexChanged(null, null);
       // tab.Size = new Size(Width - 8, Height - 80);
+      FitWindow();
+    }
+
+    // The window starts as wide as it can be and the log is hidden at the minimum height.
+    private void FitWindow() {
+      var rm = (RM) tab.SelectedTab.Controls[0];
+      var chrome = new Size(Width - ClientSize.Width, Height - ClientSize.Height);
+      var contentWidth = rm.ContentWidth;
+      var workArea = Screen.FromPoint(Cursor.Position).WorkingArea;
+      var maxWidth = Math.Max(MaximumSize.Width, contentWidth + chrome.Width);
+      MaximumSize = new Size(maxWidth, MaximumSize.Height);
+      var tabExtra = tab.Height - rm.Height;
+      var minHeight = rm.HeightWithoutLog + tabExtra + Status.Height + chrome.Height;
+      MinimumSize = new Size(MinimumSize.Width, minHeight);
+      var height = Math.Min(Math.Max(Height + LogicalToDeviceUnits(100), minHeight), workArea.Height);
+      Size = new Size(Math.Min(maxWidth, workArea.Width), height);
+      Location = new Point(workArea.Left + (workArea.Width - Width) / 2, workArea.Top + (workArea.Height - Height) / 2);
     }
 
     private void WinRestore() {
@@ -117,7 +167,7 @@ namespace RatioMaster {
         Hide();
         trayIcon.Visible = true;
       }
-      else {
+      else if (shownOnce && !Visible) {
         // any other windows state show it.
         Show();
       }
@@ -190,11 +240,12 @@ namespace RatioMaster {
     private void Add(string fileName) {
       items++;
       allit++;
+      lastTabNumber++;
       var rm1 = new RM();
       data.Add(rm1);
 
       // current = rm1;
-      var page1 = new TabPage("RM " + allit);
+      var page1 = new TabPage("RM " + lastTabNumber);
       page1.Name = "RM" + items;
       rm1.Dock = DockStyle.Fill;
       page1.Controls.Add(rm1);
@@ -203,6 +254,7 @@ namespace RatioMaster {
       // page1.BorderStyle = BorderStyle.FixedSingle;
       // page1.BackColor = Color.White;
       tab.Controls.Add(page1);
+      ThemeSupport.Apply(page1);
       tab.SelectedTab = page1;
       lblTabs.Text = allit.ToString();
       if (fileName != "") {
@@ -210,7 +262,6 @@ namespace RatioMaster {
       }
 
       page1.ToolTipText = "Double click to rename this tab";
-      tab.ShowToolTips = true;
     }
 
     private void Remove() {
@@ -220,18 +271,8 @@ namespace RatioMaster {
       allit--;
 
       tab.TabPages.Remove(tab.SelectedTab);
-      tab.SelectedIndex = last;
+      tab.SelectedIndex = Math.Min(last, tab.TabCount - 1);
       lblTabs.Text = allit.ToString();
-    }
-
-    private void RenameTabs() {
-      var curr = 0;
-      foreach (TabPage page in tab.TabPages) {
-        if (page.Text.Contains("RM ")) {
-          curr++;
-          page.Text = "RM " + curr;
-        }
-      }
     }
 
     private void renameCurrentToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -241,7 +282,6 @@ namespace RatioMaster {
 
     private void removeCurrentToolStripMenuItem_Click(object sender, EventArgs e) {
       Remove();
-      RenameTabs();
     }
 
     #endregion
@@ -503,7 +543,6 @@ namespace RatioMaster {
         if (startThem) ((RM) tab.SelectedTab.Controls[0]).StartButton_Click(null, null);
       }
 
-      RenameTabs();
     }
 
     private void saveSession_FileOk(object sender, System.ComponentModel.CancelEventArgs e) {

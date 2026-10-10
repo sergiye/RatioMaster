@@ -8,10 +8,10 @@ namespace RatioMaster {
     [STAThread]
     internal static void Main() {
 
-      if (!OperatingSystemHelper.IsCompatible(false, out var errorMessage, out var fixAction)) {
+      if (!OSHelper.IsCompatible(false, out var errorMessage, out var fixAction)) {
         if (fixAction != null) {
           if (MessageBox.Show(errorMessage, Updater.ApplicationName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
-            fixAction?.Invoke();
+            fixAction.Invoke();
           }
         }
         else {

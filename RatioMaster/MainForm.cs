@@ -64,6 +64,11 @@ namespace RatioMaster {
     }
 
     private void InitializeTheme() {
+      ThemeSupport.StylesItself = (control, theme) => {
+        if (!RM.IsMainButton(control)) return false;
+        RM.StyleMainButton((Button) control, theme);
+        return true;
+      };
       ThemeSupport.Initialize(themeId, id => {
         themeId = id;
         SaveThemeId();

@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using sergiye.Common;
 using RatioMaster.BitTorrent;
 using RatioMaster.BytesRoads;
 
@@ -26,6 +27,37 @@ namespace RatioMaster {
         cp.ExStyle |= 0x02000000; // WS_EX_COMPOSITED
         return cp;
       }
+    }
+
+    // The main buttons take the colors of the theme: the one that can be pressed now is filled with its accent color.
+    internal static bool IsMainButton(Control control) {
+      var name = control.Name;
+      return control is Button && (name == "StartButton" || name == "StopButton" || name == "manualUpdateButton" ||
+                                   name == "btnDefault");
+    }
+
+    internal static void StyleMainButton(Button button, Theme theme) {
+      Color accent;
+      switch (button.Name) {
+        case "StartButton": accent = theme.MessageColor; break;
+        case "StopButton": accent = theme.WarnColor; break;
+        case "manualUpdateButton": accent = theme.HyperlinkColor; break;
+        default: accent = theme.ForegroundColor; break;
+      }
+
+      var enabled = button.Enabled;
+      button.FlatStyle = FlatStyle.Flat;
+      button.UseVisualStyleBackColor = false;
+      button.BackColor = enabled ? ThemeDraw.Mix(theme.BackgroundColor, accent, 0.22) : theme.BackgroundColor;
+      button.ForeColor = enabled ? accent : theme.DisabledColor;
+      button.FlatAppearance.BorderColor = enabled ? accent : theme.StrongLineColor;
+      button.FlatAppearance.MouseOverBackColor = ThemeDraw.Mix(theme.BackgroundColor, accent, 0.38);
+      button.FlatAppearance.MouseDownBackColor = ThemeDraw.Mix(theme.BackgroundColor, accent, 0.5);
+    }
+
+    internal void UpdateButtonColors() {
+      foreach (var button in new[] {StartButton, StopButton, manualUpdateButton, btnDefault})
+        StyleMainButton(button, Theme.Current);
     }
 
     // The width the two halves of the window need.
@@ -67,6 +99,7 @@ namespace RatioMaster {
     internal RM() {
       InitializeComponent();
       DoubleBuffered = true;
+      UpdateButtonColors();
       deployDefaultValues();
       GetPCInfo();
       ReadSettings();
@@ -614,12 +647,10 @@ namespace RatioMaster {
       requestScrap = checkRequestScrap.Checked;
       UpdateScrapStats("", "", "");
       StartButton.Enabled = false;
-      StartButton.BackColor = SystemColors.Control;
       StopButton.Enabled = true;
-      StopButton.BackColor = Color.Silver;
       manualUpdateButton.Enabled = true;
-      manualUpdateButton.BackColor = Color.Silver;
       btnDefault.Enabled = false;
+      UpdateButtonColors();
       interval.ReadOnly = true;
       fileSize.ReadOnly = true;
       cmbClient.Enabled = false;
@@ -659,10 +690,8 @@ namespace RatioMaster {
         StartButton.Enabled = true;
         StopButton.Enabled = false;
         manualUpdateButton.Enabled = false;
-        StartButton.BackColor = Color.Silver;
-        StopButton.BackColor = SystemColors.Control;
-        manualUpdateButton.BackColor = SystemColors.Control;
         btnDefault.Enabled = true;
+        UpdateButtonColors();
         interval.ReadOnly = false;
         fileSize.ReadOnly = false;
         cmbClient.Enabled = true;

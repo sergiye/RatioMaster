@@ -46,6 +46,8 @@
     <Compile Include="$(CommonSourcesDir)sergiye.Common.UI\Themes\ThemeSupport.cs" Link="Common\Themes\ThemeSupport.cs" />
     <Compile Include="$(CommonSourcesDir)sergiye.Common.UI\ToolStripRadioButtonMenuItem.cs" Link="Common\ToolStripRadioButtonMenuItem.cs" />
     <Compile Include="$(CommonSourcesDir)sergiye.Common.UI\SimplTextBox.cs" Link="Common\SimplTextBox.cs" />
+    <Compile Include="$(CommonSourcesDir)sergiye.Common.UI\PersistentSettings.cs" Link="Common\PersistentSettings.cs" />
+    <Compile Include="$(CommonSourcesDir)sergiye.Common\Tools\ISettings.cs" Link="Common\ISettings.cs" />
     <Compile Include="$(CommonSourcesDir)sergiye.Common\Extensions\JsonExtensions.cs" Link="Common\JsonExtensions.cs" />
     <Compile Include="$(CommonSourcesDir)sergiye.Common\Tools\OSHelper.cs" Link="Common\OSHelper.cs" />
     <Compile Include="$(CommonSourcesDir)sergiye.Common\Tools\Updater.cs" Link="Common\Updater.cs" />
@@ -58,6 +60,6 @@
   <ItemGroup>
     <Reference Include="System.Web.Extensions" />
     <PackageReference Include="Costura.Fody" Version="4.1.0" PrivateAssets="all" />
-    <PackageReference Include="Fody" Version="6.9.2" PrivateAssets="all" />
+    <PackageReference Include="Fody" Version="6.9.3" PrivateAssets="all" />
   </ItemGroup>
 </Project>

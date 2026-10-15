@@ -9,7 +9,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
-using Microsoft.Win32;
 using sergiye.Common;
 using RatioMaster.BitTorrent;
 using RatioMaster.BytesRoads;
@@ -96,13 +95,13 @@ namespace RatioMaster {
 
     #region Main Form Events
 
-    internal RM() {
+    internal RM(PersistentSettings settings) {
       InitializeComponent();
       DoubleBuffered = true;
       UpdateButtonColors();
       deployDefaultValues();
       GetPCInfo();
-      ReadSettings();
+      ReadSettings(settings);
     }
 
     internal void Form1_DragDrop(object sender, DragEventArgs e) {
@@ -1551,79 +1550,67 @@ namespace RatioMaster {
 
     #region Settings
 
-    internal void ReadSettings() {
+    internal void ReadSettings(PersistentSettings settings) {
       try {
-        var reg = Registry.CurrentUser.OpenSubKey("Software\\RatioMaster", true);
-
-        // TorrentInfo torrent = new TorrentInfo(0, 0);
-        if (reg == null) {
-          // The key doesn't exist; create it / open it
-          Registry.CurrentUser.CreateSubKey("Software\\RatioMaster");
-          return;
-        }
-
-        var Version = reg.GetText("Version", "none");
+        var Version = settings.GetValue("Version", "none");
         if (Version == "none") {
           btnDefault_Click(null, null);
           return;
         }
 
-        chkNewValues.Checked = reg.GetFlag("NewValues", true);
+        chkNewValues.Checked = settings.GetValue("NewValues", true);
         getNew = false;
-        cmbClient.SelectedItem = reg.GetValue("Client", DefaultClient);
+        cmbClient.SelectedItem = settings.GetValue("Client", DefaultClient);
         getNew = false;
-        cmbVersion.SelectedItem = reg.GetValue("ClientVersion", DefaultClientVersion);
-        uploadRate.Text = reg.GetText("UploadRate", uploadRate.Text);
-        downloadRate.Text = reg.GetText("DownloadRate", downloadRate.Text);
-        fileSize.Text = reg.GetText("fileSize", "0");
-
-        // fileSize.Text = "0";
-        interval.Text = reg.GetValue("Interval", interval.Text).ToString();
-        DefaultDirectory = reg.GetText("Directory", DefaultDirectory);
-        checkTCPListen.Checked = reg.GetFlag("TCPlistener", checkTCPListen.Checked);
-        checkRequestScrap.Checked = reg.GetFlag("ScrapeInfo", checkRequestScrap.Checked);
+        cmbVersion.SelectedItem = settings.GetValue("ClientVersion", DefaultClientVersion);
+        uploadRate.Text = settings.GetValue("UploadRate", uploadRate.Text);
+        downloadRate.Text = settings.GetValue("DownloadRate", downloadRate.Text);
+        fileSize.Text = settings.GetValue("fileSize", "0");
+        interval.Text = settings.GetValue("Interval", interval.Text);
+        DefaultDirectory = settings.GetValue("Directory", DefaultDirectory);
+        checkTCPListen.Checked = settings.GetValue("TCPlistener", checkTCPListen.Checked);
+        checkRequestScrap.Checked = settings.GetValue("ScrapeInfo", checkRequestScrap.Checked);
 
         // Random value
-        chkRandUP.Checked = reg.GetFlag("GetRandUp", chkRandUP.Checked);
-        chkRandDown.Checked = reg.GetFlag("GetRandDown", chkRandDown.Checked);
-        txtRandUpMin.Text = reg.GetText("MinRandUp", txtRandUpMin.Text);
-        txtRandUpMax.Text = reg.GetText("MaxRandUp", txtRandUpMax.Text);
-        txtRandDownMin.Text = reg.GetText("MinRandDown", txtRandDownMin.Text);
-        txtRandDownMax.Text = reg.GetText("MaxRandDown", txtRandDownMax.Text);
+        chkRandUP.Checked = settings.GetValue("GetRandUp", chkRandUP.Checked);
+        chkRandDown.Checked = settings.GetValue("GetRandDown", chkRandDown.Checked);
+        txtRandUpMin.Text = settings.GetValue("MinRandUp", txtRandUpMin.Text);
+        txtRandUpMax.Text = settings.GetValue("MaxRandUp", txtRandUpMax.Text);
+        txtRandDownMin.Text = settings.GetValue("MinRandDown", txtRandDownMin.Text);
+        txtRandDownMax.Text = settings.GetValue("MaxRandDown", txtRandDownMax.Text);
 
         // Custom values
         if (chkNewValues.Checked == false) {
-          customKey.Text = reg.GetText("CustomKey", customKey.Text);
-          customPeerID.Text = reg.GetText("CustomPeerID", customPeerID.Text);
+          customKey.Text = settings.GetValue("CustomKey", customKey.Text);
+          customPeerID.Text = settings.GetValue("CustomPeerID", customPeerID.Text);
           lblGenStatus.Text = "Generation status: " + "using last saved values";
         }
         else {
           SetCustomValues();
         }
 
-        customPort.Text = reg.GetText("CustomPort", customPort.Text);
-        customPeersNum.Text = reg.GetText("CustomPeers", customPeersNum.Text);
+        customPort.Text = settings.GetValue("CustomPort", customPort.Text);
+        customPeersNum.Text = settings.GetValue("CustomPeers", customPeersNum.Text);
 
         // Random value on next
-        checkRandomUpload.Checked = reg.GetFlag("GetRandUpNext", checkRandomUpload.Checked);
-        checkRandomDownload.Checked = reg.GetFlag("GetRandDownNext", checkRandomDownload.Checked);
-        RandomUploadFrom.Text = reg.GetText("MinRandUpNext", RandomUploadFrom.Text);
-        RandomUploadTo.Text = reg.GetText("MaxRandUpNext", RandomUploadTo.Text);
-        RandomDownloadFrom.Text = reg.GetText("MinRandDownNext", RandomDownloadFrom.Text);
-        RandomDownloadTo.Text = reg.GetText("MaxRandDownNext", RandomDownloadTo.Text);
+        checkRandomUpload.Checked = settings.GetValue("GetRandUpNext", checkRandomUpload.Checked);
+        checkRandomDownload.Checked = settings.GetValue("GetRandDownNext", checkRandomDownload.Checked);
+        RandomUploadFrom.Text = settings.GetValue("MinRandUpNext", RandomUploadFrom.Text);
+        RandomUploadTo.Text = settings.GetValue("MaxRandUpNext", RandomUploadTo.Text);
+        RandomDownloadFrom.Text = settings.GetValue("MinRandDownNext", RandomDownloadFrom.Text);
+        RandomDownloadTo.Text = settings.GetValue("MaxRandDownNext", RandomDownloadTo.Text);
 
         // Stop after...
-        cmbStopAfter.SelectedItem = reg.GetValue("StopWhen", "Never");
-        txtStopValue.Text = reg.GetText("StopAfter", txtStopValue.Text);
+        cmbStopAfter.SelectedItem = settings.GetValue("StopWhen", "Never");
+        txtStopValue.Text = settings.GetValue("StopAfter", txtStopValue.Text);
 
         // Proxy
-        comboProxyType.SelectedItem = reg.GetValue("ProxyType", comboProxyType.SelectedItem);
-        textProxyHost.Text = reg.GetText("ProxyAdress", textProxyHost.Text);
-        textProxyUser.Text = reg.GetText("ProxyUser", textProxyUser.Text);
-        textProxyPass.Text = reg.GetText("ProxyPass", textProxyPass.Text);
-        textProxyPort.Text = reg.GetText("ProxyPort", textProxyPort.Text);
-        checkIgnoreFailureReason.Checked =
-          reg.GetFlag("IgnoreFailureReason", checkIgnoreFailureReason.Checked);
+        comboProxyType.SelectedItem = settings.GetValue("ProxyType", comboProxyType.SelectedItem as string);
+        textProxyHost.Text = settings.GetValue("ProxyAdress", textProxyHost.Text);
+        textProxyUser.Text = settings.GetValue("ProxyUser", textProxyUser.Text);
+        textProxyPass.Text = settings.GetValue("ProxyPass", textProxyPass.Text);
+        textProxyPort.Text = settings.GetValue("ProxyPort", textProxyPort.Text);
+        checkIgnoreFailureReason.Checked = settings.GetValue("IgnoreFailureReason", checkIgnoreFailureReason.Checked);
       }
       catch (Exception e) {
         AddLogLine("Error in ReadSettings(): " + e.Message);

@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using Microsoft.Win32;
 using sergiye.Common;
 
 namespace RatioMaster {
   public partial class MainForm : Form {
 
+    private readonly PersistentSettings settings = new PersistentSettings();
     private readonly RMCollection<RM> data = new RMCollection<RM>();
     private string themeId;
     private bool shownOnce;
@@ -38,6 +37,7 @@ namespace RatioMaster {
         Exit
       );
 
+      settings.Load();
       LoadSettings();
       InitializeTheme();
 
@@ -104,13 +104,8 @@ namespace RatioMaster {
         label.ForeColor = Theme.Current.HyperlinkColor;
     }
 
-    private static void SaveThemeId() {
-      try {
-        using (var reg = Registry.CurrentUser.CreateSubKey("Software\\RatioMaster"))
-          reg?.SetValue("Theme", ThemeSupport.CurrentId, RegistryValueKind.String);
-      }
-      catch {
-      }
+    private void SaveThemeId() {
+      settings.SetValue("Theme", ThemeSupport.CurrentId);
     }
 
     private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -264,7 +259,7 @@ namespace RatioMaster {
       items++;
       allit++;
       lastTabNumber++;
-      var rm1 = new RM();
+      var rm1 = new RM(settings);
       data.Add(rm1);
 
       // current = rm1;
@@ -311,76 +306,76 @@ namespace RatioMaster {
 
     private void LoadSettings() {
       try {
-        using (var reg = Registry.CurrentUser.CreateSubKey(RegistrySettings.KeyPath)) {
-          if (reg == null) return;
-          checkShowTrayBaloon.Checked = reg.GetFlag("BallonTip", false);
-          chkMinimize.Checked = reg.GetFlag("MinimizeToTray", true);
-          closeToTrayToolStripMenuItem.Checked = reg.GetFlag("CloseToTray", true);
-          themeId = reg.GetText("Theme", null);
-        }
+        var settings = this.settings;
+        checkShowTrayBaloon.Checked = settings.GetValue("BallonTip", false);
+        chkMinimize.Checked = settings.GetValue("MinimizeToTray", true);
+        closeToTrayToolStripMenuItem.Checked = settings.GetValue("CloseToTray", true);
+        themeId = settings.GetValue("Theme", null);
       }
       catch (Exception) {
       }
     }
 
     private void SaveSettings(RM rmData) {
+      var settings = this.settings;
       try {
-        var reg = Registry.CurrentUser.CreateSubKey(RegistrySettings.KeyPath);
-        if (reg == null) return;
-        // without it the next run does not read the saved values
-        reg.SetValue("Version", Application.ProductVersion, RegistryValueKind.String);
-        reg.SetValue("NewValues", BtoI(rmData.chkNewValues.Checked), RegistryValueKind.DWord);
-        reg.SetValue("BallonTip", BtoI(checkShowTrayBaloon.Checked), RegistryValueKind.DWord);
-        reg.SetValue("MinimizeToTray", BtoI(chkMinimize.Checked), RegistryValueKind.DWord);
-        reg.SetValue("CloseToTray", BtoI(closeToTrayToolStripMenuItem.Checked), RegistryValueKind.DWord);
-        reg.SetValue("Theme", themeId, RegistryValueKind.String);
+        settings.WaitCommit = true;
+        settings.SetValue("Version", Application.ProductVersion);
+        settings.SetValue("NewValues", rmData.chkNewValues.Checked);
+        settings.SetValue("BallonTip", checkShowTrayBaloon.Checked);
+        settings.SetValue("MinimizeToTray", chkMinimize.Checked);
+        settings.SetValue("CloseToTray", closeToTrayToolStripMenuItem.Checked);
+        settings.SetValue("Theme", themeId);
 
-        reg.SetValue("Client", rmData.cmbClient.SelectedItem, RegistryValueKind.String);
-        reg.SetValue("ClientVersion", rmData.cmbVersion.SelectedItem, RegistryValueKind.String);
-        reg.SetValue("UploadRate", rmData.uploadRate.Text, RegistryValueKind.String);
-        reg.SetValue("DownloadRate", rmData.downloadRate.Text, RegistryValueKind.String);
-        reg.SetValue("Interval", rmData.interval.Text, RegistryValueKind.String);
-        reg.SetValue("fileSize", rmData.fileSize.Text, RegistryValueKind.String);
-        reg.SetValue("Directory", rmData.DefaultDirectory, RegistryValueKind.String);
-        reg.SetValue("TCPlistener", BtoI(rmData.checkTCPListen.Checked), RegistryValueKind.DWord);
-        reg.SetValue("ScrapeInfo", BtoI(rmData.checkRequestScrap.Checked), RegistryValueKind.DWord);
+        settings.SetValue("Client", rmData.cmbClient.SelectedItem as string);
+        settings.SetValue("ClientVersion", rmData.cmbVersion.SelectedItem as string);
+        settings.SetValue("UploadRate", rmData.uploadRate.Text);
+        settings.SetValue("DownloadRate", rmData.downloadRate.Text);
+        settings.SetValue("Interval", rmData.interval.Text);
+        settings.SetValue("fileSize", rmData.fileSize.Text);
+        settings.SetValue("Directory", rmData.DefaultDirectory);
+        settings.SetValue("TCPlistener", rmData.checkTCPListen.Checked);
+        settings.SetValue("ScrapeInfo", rmData.checkRequestScrap.Checked);
 
         // Random value
-        reg.SetValue("GetRandUp", BtoI(rmData.chkRandUP.Checked), RegistryValueKind.DWord);
-        reg.SetValue("GetRandDown", BtoI(rmData.chkRandDown.Checked), RegistryValueKind.DWord);
-        reg.SetValue("MinRandUp", rmData.txtRandUpMin.Text, RegistryValueKind.String);
-        reg.SetValue("MaxRandUp", rmData.txtRandUpMax.Text, RegistryValueKind.String);
-        reg.SetValue("MinRandDown", rmData.txtRandDownMin.Text, RegistryValueKind.String);
-        reg.SetValue("MaxRandDown", rmData.txtRandDownMax.Text, RegistryValueKind.String);
+        settings.SetValue("GetRandUp", rmData.chkRandUP.Checked);
+        settings.SetValue("GetRandDown", rmData.chkRandDown.Checked);
+        settings.SetValue("MinRandUp", rmData.txtRandUpMin.Text);
+        settings.SetValue("MaxRandUp", rmData.txtRandUpMax.Text);
+        settings.SetValue("MinRandDown", rmData.txtRandDownMin.Text);
+        settings.SetValue("MaxRandDown", rmData.txtRandDownMax.Text);
 
         // Custom values
-        reg.SetValue("CustomKey", rmData.customKey.Text, RegistryValueKind.String);
-        reg.SetValue("CustomPeerID", rmData.customPeerID.Text, RegistryValueKind.String);
-        reg.SetValue("CustomPeers", rmData.customPeersNum.Text, RegistryValueKind.String);
-        reg.SetValue("CustomPort", rmData.customPort.Text, RegistryValueKind.String);
+        settings.SetValue("CustomKey", rmData.customKey.Text);
+        settings.SetValue("CustomPeerID", rmData.customPeerID.Text);
+        settings.SetValue("CustomPeers", rmData.customPeersNum.Text);
+        settings.SetValue("CustomPort", rmData.customPort.Text);
 
         // Stop after...
-        reg.SetValue("StopWhen", rmData.cmbStopAfter.SelectedItem, RegistryValueKind.String);
-        reg.SetValue("StopAfter", rmData.txtStopValue.Text, RegistryValueKind.String);
+        settings.SetValue("StopWhen", rmData.cmbStopAfter.SelectedItem as string);
+        settings.SetValue("StopAfter", rmData.txtStopValue.Text);
 
         // Proxy
-        reg.SetValue("ProxyType", rmData.comboProxyType.SelectedItem, RegistryValueKind.String);
-        reg.SetValue("ProxyAdress", rmData.textProxyHost.Text, RegistryValueKind.String);
-        reg.SetValue("ProxyUser", rmData.textProxyUser.Text, RegistryValueKind.String);
-        reg.SetValue("ProxyPass", rmData.textProxyPass.Text, RegistryValueKind.String);
-        reg.SetValue("ProxyPort", rmData.textProxyPort.Text, RegistryValueKind.String);
+        settings.SetValue("ProxyType", rmData.comboProxyType.SelectedItem as string);
+        settings.SetValue("ProxyAdress", rmData.textProxyHost.Text);
+        settings.SetValue("ProxyUser", rmData.textProxyUser.Text);
+        settings.SetValue("ProxyPass", rmData.textProxyPass.Text);
+        settings.SetValue("ProxyPort", rmData.textProxyPort.Text);
 
         // Random value on next
-        reg.SetValue("GetRandUpNext", BtoI(rmData.checkRandomUpload.Checked), RegistryValueKind.DWord);
-        reg.SetValue("GetRandDownNext", BtoI(rmData.checkRandomDownload.Checked), RegistryValueKind.DWord);
-        reg.SetValue("MinRandUpNext", rmData.RandomUploadFrom.Text, RegistryValueKind.String);
-        reg.SetValue("MaxRandUpNext", rmData.RandomUploadTo.Text, RegistryValueKind.String);
-        reg.SetValue("MinRandDownNext", rmData.RandomDownloadFrom.Text, RegistryValueKind.String);
-        reg.SetValue("MaxRandDownNext", rmData.RandomDownloadTo.Text, RegistryValueKind.String);
-        reg.SetValue("IgnoreFailureReason", BtoI(rmData.checkIgnoreFailureReason.Checked), RegistryValueKind.DWord);
+        settings.SetValue("GetRandUpNext", rmData.checkRandomUpload.Checked);
+        settings.SetValue("GetRandDownNext", rmData.checkRandomDownload.Checked);
+        settings.SetValue("MinRandUpNext", rmData.RandomUploadFrom.Text);
+        settings.SetValue("MaxRandUpNext", rmData.RandomUploadTo.Text);
+        settings.SetValue("MinRandDownNext", rmData.RandomDownloadFrom.Text);
+        settings.SetValue("MaxRandDownNext", rmData.RandomDownloadTo.Text);
+        settings.SetValue("IgnoreFailureReason", rmData.checkIgnoreFailureReason.Checked);
       }
       catch (Exception e) {
         rmData.AddLogLine("Error in SaveSettings(): " + e.Message);
+      }
+      finally {
+        settings.Save(true);
       }
     }
 

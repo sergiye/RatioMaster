@@ -308,8 +308,8 @@ namespace RatioMaster {
       try {
         var settings = this.settings;
         checkShowTrayBaloon.Checked = settings.GetValue("BallonTip", false);
-        chkMinimize.Checked = settings.GetValue("MinimizeToTray", true);
-        closeToTrayToolStripMenuItem.Checked = settings.GetValue("CloseToTray", true);
+        chkMinimize.Checked = settings.GetValue("MinimizeToTray", false);
+        closeToTrayToolStripMenuItem.Checked = settings.GetValue("CloseToTray", false);
         themeId = settings.GetValue("Theme", null);
       }
       catch (Exception) {
@@ -320,13 +320,12 @@ namespace RatioMaster {
       var settings = this.settings;
       try {
         settings.WaitCommit = true;
-        settings.SetValue("Version", Application.ProductVersion);
-        settings.SetValue("NewValues", rmData.chkNewValues.Checked);
         settings.SetValue("BallonTip", checkShowTrayBaloon.Checked);
         settings.SetValue("MinimizeToTray", chkMinimize.Checked);
         settings.SetValue("CloseToTray", closeToTrayToolStripMenuItem.Checked);
         settings.SetValue("Theme", themeId);
 
+        settings.SetValue("NewValues", rmData.chkNewValues.Checked);
         settings.SetValue("Client", rmData.cmbClient.SelectedItem as string);
         settings.SetValue("ClientVersion", rmData.cmbVersion.SelectedItem as string);
         settings.SetValue("UploadRate", rmData.uploadRate.Text);
@@ -409,7 +408,7 @@ namespace RatioMaster {
     }
 
     internal void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
-      if (closeToTrayToolStripMenuItem.Checked && chkMinimize.Checked) {
+      if (!exiting && closeToTrayToolStripMenuItem.Checked && chkMinimize.Checked) {
         e.Cancel = true;
         WindowState = FormWindowState.Minimized;
         Hide();

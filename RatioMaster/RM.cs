@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Net.Security;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -1363,10 +1364,10 @@ namespace RatioMaster {
     private const int MaxRedirects = 5;
     private const int ConnectAttempts = 3;
 
-    private bool ConnectToTracker(SocketEx sock, string host, int port) {
+    private bool ConnectToTracker(Action connect, string host, int port) {
       for (var attempt = 1; attempt <= ConnectAttempts; attempt++) {
         try {
-          sock.Connect(host, port);
+          connect();
           AddLogLine("Connected Successfully");
           return true;
         }
@@ -1376,41 +1377,25 @@ namespace RatioMaster {
         }
       }
 
+      AddLogLine("Could not connect to the tracker (" + host + ":" + port + ")");
       return false;
     }
 
     private TrackerResponse MakeWebRequestEx(Uri reqUri, int redirects = 0) {
-      var usedEnc = Encoding.GetEncoding(0x4e4);
-      SocketEx sock = null;
       try {
         var host = reqUri.Host;
         var port = reqUri.Port;
-        var path = reqUri.PathAndQuery;
-        AddLogLine("Connecting to tracker (" + host + ") in port " + port);
-        sock = CreateSocket();
-        if (sock == null) return null;
-        sock.PreAuthenticate = false;
-        if (!ConnectToTracker(sock, host, port)) {
-          AddLogLine("Could not connect to the tracker (" + host + ":" + port + ")");
-          return null;
-        }
+        var https = reqUri.Scheme == Uri.UriSchemeHttps;
+        var headers = currentClient.Headers.Replace("{host}", host);
+        // the response is read until the server closes the connection, HTTPS trackers often keep it alive otherwise
+        if (https && headers.IndexOf("Connection:", StringComparison.OrdinalIgnoreCase) < 0)
+          headers += "Connection: close\r\n";
+        var cmd = "GET " + reqUri.PathAndQuery + " " + currentClient.HttpProtocol + "\r\n" + headers + "\r\n";
 
-        var cmd = "GET " + path + " " + currentClient.HttpProtocol + "\r\n" +
-                  currentClient.Headers.Replace("{host}", host) + "\r\n";
-        AddLogLine("======== Sending Command to Tracker ========");
-        AddLogLine(cmd);
-        sock.Send(usedEnc.GetBytes(cmd));
-
-        // read while there is data
         TrackerResponse trackerResponse;
         using (var memStream = new MemoryStream()) {
-          var data = new byte[32 * 1024];
-          while (true) {
-            var dataLen = sock.Receive(data);
-            if (0 == dataLen)
-              break;
-            memStream.Write(data, 0, dataLen);
-          }
+          var sent = https ? SendHttpsRequest(host, port, cmd, memStream) : SendHttpRequest(host, port, cmd, memStream);
+          if (!sent) return null;
 
           if (memStream.Length == 0) {
             AddLogLine("Error : Tracker Response is empty");
@@ -1426,8 +1411,6 @@ namespace RatioMaster {
             return null;
           }
 
-          sock.Close();
-          sock = null;
           return MakeWebRequestEx(new Uri(trackerResponse.RedirectionURL), redirects + 1);
         }
 
@@ -1444,9 +1427,64 @@ namespace RatioMaster {
         AddLogLine("Tracker request error: " + ex.Message);
         return null;
       }
-      finally {
-        sock?.Close();
+    }
+
+    private bool SendHttpRequest(string host, int port, string cmd, Stream response) {
+      AddLogLine("Connecting to tracker (" + host + ") in port " + port);
+      using (var sock = CreateSocket()) {
+        if (sock == null) return false;
+        sock.PreAuthenticate = false;
+        if (!ConnectToTracker(() => sock.Connect(host, port), host, port)) return false;
+
+        AddLogLine("======== Sending Command to Tracker ========");
+        AddLogLine(cmd);
+        sock.Send(Encoding.GetEncoding(0x4e4).GetBytes(cmd));
+
+        // read while there is data
+        var data = new byte[32 * 1024];
+        int dataLen;
+        while ((dataLen = sock.Receive(data)) > 0)
+          response.Write(data, 0, dataLen);
       }
+
+      return true;
+    }
+
+    private bool SendHttpsRequest(string host, int port, string cmd, Stream response) {
+      // TLS is not tunneled through the proxy: refuse rather than bypass the proxy
+      if (currentProxy.ProxyType != ProxyType.None) {
+        AddLogLine("HTTPS trackers are not supported through a proxy, the request is stopped");
+        return false;
+      }
+
+      AddLogLine("Connecting to tracker (" + host + ") in port " + port + " over HTTPS");
+      TcpClient tcp = null;
+      if (!ConnectToTracker(() => tcp = new TcpClient(host, port), host, port)) return false;
+
+      using (tcp)
+      using (var ssl = new SslStream(tcp.GetStream())) {
+        tcp.ReceiveTimeout = SocketTimeoutMs;
+        tcp.SendTimeout = SocketTimeoutMs;
+        // default validation: the certificate must chain to a trusted root and match the host name
+        ssl.AuthenticateAsClient(host);
+
+        AddLogLine("======== Sending Command to Tracker ========");
+        AddLogLine(cmd);
+        var cmdBytes = Encoding.GetEncoding(0x4e4).GetBytes(cmd);
+        ssl.Write(cmdBytes, 0, cmdBytes.Length);
+
+        var data = new byte[32 * 1024];
+        try {
+          int dataLen;
+          while ((dataLen = ssl.Read(data, 0, data.Length)) > 0)
+            response.Write(data, 0, dataLen);
+        }
+        catch (IOException) when (response.Length > 0) {
+          // some servers drop the connection without a TLS close_notify, keep what was received
+        }
+      }
+
+      return true;
     }
 
     internal void RemainingWork_Tick(object sender, EventArgs e) {

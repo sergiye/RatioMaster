@@ -196,14 +196,10 @@ namespace RatioMaster {
 
     internal void GetPCInfo() {
       try {
-        AddLogLine("CurrentDirectory: " + Environment.CurrentDirectory);
         AddLogLine("HasShutdownStarted: " + Environment.HasShutdownStarted);
-        AddLogLine("MachineName: " + Environment.MachineName);
         AddLogLine("OSVersion: " + Environment.OSVersion);
         AddLogLine("ProcessorCount: " + Environment.ProcessorCount);
-        AddLogLine("UserDomainName: " + Environment.UserDomainName);
         AddLogLine("UserInteractive: " + Environment.UserInteractive);
-        AddLogLine("UserName: " + Environment.UserName);
         AddLogLine("Version: " + Environment.Version);
         AddLogLine("WorkingSet: " + Environment.WorkingSet);
         AddLogLine("");
@@ -1354,8 +1350,7 @@ namespace RatioMaster {
       AddLogLine("proxyType = " + curProxy.ProxyType);
       AddLogLine("proxyServer = " + curProxy.ProxyServer);
       AddLogLine("proxyPort = " + curProxy.ProxyPort);
-      AddLogLine("proxyUser = " + enc.GetString(curProxy.ProxyUser));
-      AddLogLine("proxyPassword = " + enc.GetString(curProxy.ProxyPassword) + "\n" + "\n");
+      AddLogLine("proxyUser = " + enc.GetString(curProxy.ProxyUser) + "\n" + "\n");
       return curProxy;
     }
 
